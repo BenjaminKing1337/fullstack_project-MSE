@@ -1,6 +1,6 @@
-import { ref, computed } from "vue";
-import { useRoute /* useRouter */ } from "vue-router";
-import baseURL from "./baseURL";
+import { ref, computed } from 'vue';
+import { useRoute /* useRouter */ } from 'vue-router';
+import baseURL from './baseURL';
 
 const GetProperties = () => {
   const Route = useRoute();
@@ -8,15 +8,15 @@ const GetProperties = () => {
   const PropertyId = computed(() => Route.params.id);
 
   const pState = ref({
-    number: "",
-    address: "",
-    name: "",
+    number: '',
+    address: '',
+    name: '',
     Properties: {},
   });
 
   const GetAllProperties = async () => {
     try {
-      await fetch(baseURL + "/api/properties")
+      await fetch(baseURL + '/api/properties')
         .then((Res) => Res.json())
         .then((Data) => {
           pState.value.Properties = Data.result;
@@ -29,10 +29,10 @@ const GetProperties = () => {
   const Property = ref({});
   const GetSpecificProperty = async () => {
     try {
-      fetch(baseURL + "/api/properties/")
+      fetch(baseURL + '/api/properties/' + PropertyId.value)
         .then((Res) => Res.json())
         .then((Data) => {
-          Property.value = Data.result[0];
+          Property.value = Data.result;
           // Property.value = Data.result[0].filter((L) => L.id === PropertyId.value);
         });
     } catch (Error) {
