@@ -1,5 +1,6 @@
 const sql = require("mssql");
 const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 
 // Handle CORS + middleware
@@ -34,10 +35,16 @@ const config = {
   },
   encrypt: false,
 };
+sql.on("error", (err) => {
+    console.log(err.message);
+  });
+
+
 
 // Body Parser Middleware
-app.use(express.json());
+app.use(bodyParser.json());
 
+//GetALL Properties
 app.get("/api/properties", function (req, res) {
   sql
     .connect(config)
@@ -48,7 +55,7 @@ app.get("/api/properties", function (req, res) {
     .then((result) => {
       //   console.log(result.recordset[0]);
       res.status(200).json({
-        result: result,
+        result: result.recordsets[0],
       });
       sql.close();
     })
@@ -57,6 +64,7 @@ app.get("/api/properties", function (req, res) {
       sql.close();
     });
 });
+//Get Property byID
 app.get("/api/property/:id", function (req, res) {
   sql
     .connect(config)

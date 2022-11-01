@@ -11,13 +11,16 @@
         v-for="Property in pState.Properties"
         :key="Property.id"
       >
+
+      <br>
+        <div>{{ Property.name }}</div>
         <div style="border: 1px solid black; border-radius:15px;">
-          No.:&nbsp;&nbsp;{{ Property.recordset[0].number }} <br>
+          ID:&nbsp;&nbsp;{{ Property.id }} <br>
+          No.:&nbsp;&nbsp;{{ Property.number }}<br>
           Address:&nbsp;&nbsp;{{ Property.address }} <br>
           Name:&nbsp;&nbsp;{{ Property.name }}
         </div>
 
-        <div>all properties: {{Property.recordsets}}</div>
         
       </div>
     </div>

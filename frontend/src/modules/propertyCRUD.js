@@ -19,7 +19,7 @@ const GetProperties = () => {
       await fetch(baseURL + "/api/properties")
         .then((Res) => Res.json())
         .then((Data) => {
-          pState.value.Properties = Data;
+          pState.value.Properties = Data.result;
         });
     } catch (Error) {
       console.log(Error);
