@@ -44,18 +44,10 @@ const GetProperties = () => {
   // };
   const GetSpecificProperty = async () => {
     try {
-<<<<<<< Updated upstream
-      fetch(baseURL + '/api/properties/' + PropertyId.value)
-        .then((Res) => Res.json())
-        .then((Data) => {
-          Property.value = Data.result;
-          // Property.value = Data.result[0].filter((L) => L.id === PropertyId.value);
-=======
       fetch(baseURL + "/api/properties/" + PropertyId.value)
         .then((Res) => Res.json())
         .then((Data) => {
           Property.value = Data.result;
->>>>>>> Stashed changes
         });
     } catch (Error) {
       console.log(Error);

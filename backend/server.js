@@ -62,13 +62,8 @@ app.get('/api/properties', function (req, res) {
       sql.close();
     });
 });
-<<<<<<< Updated upstream
-//Get Property byID
-app.get('/api/properties/:id', function (req, res) {
-=======
 // Get Property byID
 app.get("/api/properties/:id", function (req, res) {
->>>>>>> Stashed changes
   sql
     .connect(config)
     .then((pool) => {
