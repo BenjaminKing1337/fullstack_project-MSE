@@ -50,7 +50,7 @@ app.get("/api/properties", function (req, res) {
     .connect(config)
     .then((pool) => {
       return pool.request().query("select * from tblProperty");
-      //   .execute("GetProperty");
+      //   .execute("spGetProperty");
     })
     .then((result) => {
       //   console.log(result.recordset[0]);
@@ -65,14 +65,14 @@ app.get("/api/properties", function (req, res) {
     });
 });
 //Get Property byID
-app.get("/api/property/:id", function (req, res) {
+app.get("/api/properties/:id", function (req, res) {
   sql
     .connect(config)
     .then((pool) => {
       return pool
         .request()
         .input("id", sql.Int, parseInt(req.params.id))
-        .execute("GetProperty");
+        .execute("spGetProperty");
     })
     .then((result) => {
       //   console.log(result.recordset[0]);

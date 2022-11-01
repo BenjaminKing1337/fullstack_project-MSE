@@ -29,10 +29,11 @@ const GetProperties = () => {
   const Property = ref({});
   const GetSpecificProperty = async () => {
     try {
-      fetch(baseURL + "/api/property/")
+      fetch(baseURL + "/api/properties/")
         .then((Res) => Res.json())
         .then((Data) => {
-          Property.value = Data.filter((L) => L._id === PropertyId.value);
+          Property.value = Data.result[0];
+          // Property.value = Data.result[0].filter((L) => L.id === PropertyId.value);
         });
     } catch (Error) {
       console.log(Error);

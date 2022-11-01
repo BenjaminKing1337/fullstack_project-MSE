@@ -20,7 +20,12 @@
           Address:&nbsp;&nbsp;{{ Property.address }} <br>
           Name:&nbsp;&nbsp;{{ Property.name }}
         </div>
-
+       
+        <router-link :to="`/properties/${Property.id}`" class="remove_linkStyle">
+          <button class="full-width">
+            <strong>Open</strong>
+          </button>
+        </router-link>
         
       </div>
     </div>

@@ -47,7 +47,7 @@ async function getDBProperty() {
     let result2 = await pool
       .request()
       .input("id", sql.Int, 2)
-      .execute("GetProperty");
+      .execute("spGetProperty");
     // .query('select * from tblProperty where id = @id');
     console.log(result1.recordset[0]);
     console.log(result2.recordset[0]);
@@ -70,7 +70,7 @@ async function getDBProperty() {
 //     // .request()
 //     // .input("id", sql.Int, 3)
 //     // .query("select * from tblProperty where id = @id")
-//     return pool.request().input("id", sql.Int, 3).execute("GetProperty");
+//     return pool.request().input("id", sql.Int, 3).execute("spGetProperty");
 //   })
 //   .then((result) => {
 //     console.log(result.recordset[0]);
@@ -100,7 +100,7 @@ sql.connect(config, (err) => {
     //   });
     new sql.Request()
       .input("id", sql.Int, 3)
-      .execute("GetProperty", (err, result) => {
+      .execute("spGetProperty", (err, result) => {
         if (err) {
           console.log(err.message);
           sql.close();
