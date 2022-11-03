@@ -16,10 +16,10 @@ const GetProperties = () => {
 
   const GetAllProperties = async () => {
     try {
-      await fetch(baseURL + '/api/properties')
+      await fetch(baseURL + '/properties')
         .then((Res) => Res.json())
         .then((Data) => {
-          pState.value.Properties = Data.result;
+          pState.value.Properties = Data;
         });
     } catch (Error) {
       console.log(Error);
@@ -44,10 +44,10 @@ const GetProperties = () => {
   // };
   const GetSpecificProperty = async () => {
     try {
-      fetch(baseURL + "/api/properties/" + PropertyId.value)
+      fetch(baseURL + "/properties/get/" + PropertyId.value)
         .then((Res) => Res.json())
         .then((Data) => {
-          Property.value = Data.result;
+          Property.value = Data;
         });
     } catch (Error) {
       console.log(Error);

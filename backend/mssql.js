@@ -1,4 +1,5 @@
 const sql = require("mssql");
+const { server } = require("./dbconfig");
 
 const config = {
   server: "localhost\\SQLEXPRESS",
@@ -111,3 +112,68 @@ sql.connect(config, (err) => {
       });
   }
 });
+
+
+
+
+
+// server.js examples
+
+// // Get All
+// router.route('/properties').get((req,res)=>{
+//   propertyRoutes.getProperties().then(result => {
+//     res.json(result[0]);
+//   })
+// })
+// // Get by Id
+// router.route('/properties/:id').get((req,res)=>{
+//   propertyRoutes.getProperty().then(result => {
+//     res.json(result[0]);
+//   })
+// })
+
+
+
+
+//GetALL Properties
+// app.get('/api/properties', function (req, res) {
+//   sql
+//     .connect(config)
+//     .then((pool) => {
+//       return pool.request().query('select * from tblProperty');
+//       //   .execute("spGetProperty");
+//     })
+//     .then((result) => {
+//       //   console.log(result.recordset[0]);
+//       res.status(200).json({
+//         result: result.recordsets[0],
+//       });
+//       sql.close();
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//       sql.close();
+//     });
+// });
+// // Get Property byID
+// app.get("/api/properties/:id", function (req, res) {
+//   sql
+//     .connect(config)
+//     .then((pool) => {
+//       return pool
+//         .request()
+//         .input('id', sql.Int, parseInt(req.params.id))
+//         .execute('spGetProperty');
+//     })
+//     .then((result) => {
+//       //   console.log(result.recordset[0]);
+//       res.status(200).json({
+//         result: result.recordset[0],
+//       });
+//       sql.close();
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//       sql.close();
+//     });
+// });
