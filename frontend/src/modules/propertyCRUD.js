@@ -53,12 +53,33 @@ const GetProperties = () => {
       console.log(Error);
     }
   };
+  const NewProperty = () => {
+    const RequestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // UserId: localStorage.getItem('userid'),
+        number: pState.value.number,
+        address: pState.value.address,
+        name: pState.value.name,
+      }),
+    };
+    fetch((baseURL + "/properties/new"), RequestOptions).then(() => {
+      GetAllProperties(); // Updates page
+    });
+  };
+
+
+
   return {
     Property,
     PropertyId,
     GetSpecificProperty,
     pState,
     GetAllProperties,
+    NewProperty
   };
 };
 

@@ -5,6 +5,34 @@
       Here you can create and manage your Properties
     </p>
 
+
+    <div>
+      <div>
+        <div>
+          <div>Create new Property</div>
+        </div>
+
+        <div>
+          <input
+            v-model="pState.number"
+          /> <br>
+          <input
+            v-model="pState.address"
+          /> <br>
+          <input
+            v-model="pState.name"
+          />
+          <div>
+          </div>
+        </div>
+
+        <div>
+          <button @click="NewProperty()">Create New Property</button>
+        </div>
+      </div>
+    </div>
+
+
     <h6>My Properties</h6>
     <div>
       <div
@@ -41,7 +69,8 @@ export default {
     const {
       pState,
       GetAllProperties,
-      GetSpecificProperty
+      GetSpecificProperty,
+      NewProperty
     } = PropertyCRUD();
 
 
@@ -52,7 +81,8 @@ export default {
     return {
       pState,
       GetAllProperties,
-      GetSpecificProperty
+      GetSpecificProperty,
+      NewProperty
     };
   },
 };
