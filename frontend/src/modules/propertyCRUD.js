@@ -71,6 +71,14 @@ const GetProperties = () => {
       GetAllProperties(); // Updates page
     });
   };
+  
+  const DeleteProperty = (PropertyId) => {
+    fetch(baseURL + "/properties/delete/" + PropertyId.value, {
+      method: "DELETE",
+    }).then(() => {
+      GetAllProperties(); // Updates page
+    });
+  };
 
 
 
@@ -80,7 +88,8 @@ const GetProperties = () => {
     GetSpecificProperty,
     pState,
     GetAllProperties,
-    NewProperty
+    NewProperty,
+    DeleteProperty
   };
 };
 

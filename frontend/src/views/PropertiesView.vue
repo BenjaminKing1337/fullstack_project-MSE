@@ -54,6 +54,7 @@
             <strong>Open</strong>
           </button>
         </router-link>
+        <button @click="DeleteProperty(Property.id)">Delete</button>
         
       </div>
     </div>
@@ -70,7 +71,8 @@ export default {
       pState,
       GetAllProperties,
       GetSpecificProperty,
-      NewProperty
+      NewProperty,
+      DeleteProperty
     } = PropertyCRUD();
 
 
@@ -82,7 +84,8 @@ export default {
       pState,
       GetAllProperties,
       GetSpecificProperty,
-      NewProperty
+      NewProperty,
+      DeleteProperty
     };
   },
 };
