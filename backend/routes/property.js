@@ -9,7 +9,9 @@ const Property = require("../classes/Property");
 router.get("/", async (req, res) => {
   try {
     let pool = await sql.connect(config);
-    const Properties = await pool.request().execute("spGetAllProperties");
+    const Properties = await pool
+    .request()
+    .execute("spGetAllProperties");
     res.json(Properties.recordsets[0]);
     sql.close();
   } catch (error) {
@@ -21,11 +23,11 @@ router.get("/", async (req, res) => {
 router.get("/get/:id", async (req, res) => {
   try {
     let pool = await sql.connect(config);
-    const Property = await pool
+    const PropertyById = await pool
       .request()
       .input("id", sql.Int, parseInt(req.params.id))
       .execute("spGetProperty");
-    res.json(Property.recordset[0]);
+    res.json(PropertyById.recordset[0]);
     sql.close();
   } catch (error) {
     res.status(400).json({ error });
@@ -35,18 +37,21 @@ router.get("/get/:id", async (req, res) => {
 //CreateNew
 router.post("/new", async (req, res) => {
   try {
+    const NewProperty = new Property(req.body);
+    console.log(NewProperty);
     let pool = await sql.connect(config);
-    const NewProperty = await pool
-    .request()
-    // .input('id', sql.Int, property.id)
-    .input('number', sql.NVarChar, property.number)
-    .input('address', sql.NVarChar, property.address)
-    .input('name', sql.NVarChar, property.name)
-    .query("insert into tblProperty");
-    res.json(NewProperty.recordsets[0]);
+    const SavedProperty = await pool
+    .request(NewProperty)
+    .input("number", sql.NVarChar, NewProperty.number)
+    .input("address", sql.NVarChar, NewProperty.address)
+    .input("name", sql.NVarChar, NewProperty.name)
+    .query("insert number, address, name into tblProperty");
+    res.json(SavedProperty.recordsets);
+    console.log(SavedProperty)
     sql.close();
   } catch (error) {
     res.status(400).json({ error });
+    
     sql.close();
   }
 })
