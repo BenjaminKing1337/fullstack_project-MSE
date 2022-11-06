@@ -55,7 +55,24 @@ router.post('/new', async (req, res) => {
     sql.close();
   } catch (error) {
     res.status(400).json({ error });
+    sql.close();
+  }
+});
 
+//Delete
+router.post("/delete/:id", async (req, res) => {
+  try {
+    let pool = await sql.connect(config);
+    const DeleteProperty = await pool
+    .request()
+    // .input("id", sql.Int, Property.id)
+    .input("name", sql.Int, parseInt(req.params.id))
+    .query("delete from tblProperty where id=@id");
+    res.json(DeleteProperty.recordsets);
+    sql.close();
+    res.redirect('/');
+  } catch (error) {
+    res.status(400).json({ error });
     sql.close();
   }
 });
