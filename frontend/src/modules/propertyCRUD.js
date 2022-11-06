@@ -61,6 +61,7 @@ const GetProperties = () => {
       },
       body: JSON.stringify({
         // UserId: localStorage.getItem('userid'),
+        // id: "",
         number: pState.value.number,
         address: pState.value.address,
         name: pState.value.name,

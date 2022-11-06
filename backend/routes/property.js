@@ -37,17 +37,17 @@ router.get("/get/:id", async (req, res) => {
 //CreateNew
 router.post("/new", async (req, res) => {
   try {
-    const NewProperty = new Property(req.body);
+    const NewProperty = new Property(req.body.id, req.body.number, req.body.address, req.body.name);
     console.log(NewProperty);
     let pool = await sql.connect(config);
     const SavedProperty = await pool
-    .request(NewProperty)
-    .input("number", sql.NVarChar, NewProperty.number)
-    .input("address", sql.NVarChar, NewProperty.address)
-    .input("name", sql.NVarChar, NewProperty.name)
-    .query("insert number, address, name into tblProperty");
+    .request()
+    // .input("id", sql.Int, Property.id)
+    .input("number", sql.NVarChar, Property.number)
+    .input("address", sql.NVarChar, Property.address)
+    .input("name", sql.NVarChar, Property.name)
+    .query("insert into tblProperty values (number, address, name)");
     res.json(SavedProperty.recordsets);
-    console.log(SavedProperty)
     sql.close();
   } catch (error) {
     res.status(400).json({ error });
