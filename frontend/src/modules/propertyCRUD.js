@@ -93,7 +93,7 @@ const GetProperties = () => {
       }),
     };
     fetch(baseURL + "/properties/update/" + PropertyId.value, RequestOptions)
-      .then((Res) => Res.body)
+      .then((res) => res.body)
     Router.push("/properties");
   };
 

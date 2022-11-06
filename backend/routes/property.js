@@ -66,7 +66,7 @@ router.post("/delete/:id", async (req, res) => {
     const DeleteProperty = await pool
     .request()
     // .input("id", sql.Int, Property.id)
-    .input("name", sql.Int, parseInt(req.params.id))
+    .input("id", sql.Int, parseInt(req.params.id))
     .query("delete from tblProperty where id=@id");
     res.json(DeleteProperty.recordsets);
     sql.close();
