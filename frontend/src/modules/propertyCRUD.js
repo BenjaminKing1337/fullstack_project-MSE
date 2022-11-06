@@ -1,10 +1,10 @@
 import { ref, computed } from 'vue';
-import { useRoute /* useRouter */ } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import baseURL from './baseURL';
 
 const GetProperties = () => {
   const Route = useRoute();
-  // const Router = useRouter();
+  const Router = useRouter();
   const PropertyId = computed(() => Route.params.id);
 
   const pState = ref({
@@ -80,6 +80,23 @@ const GetProperties = () => {
     });
   };
 
+  const EditProperty = () => {
+    const RequestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        number: pState.value.number,
+        address: pState.value.address,
+        name: pState.value.name,
+      }),
+    };
+    fetch(baseURL + "/properties/update/" + PropertyId.value, RequestOptions)
+      .then((Res) => Res.body)
+    Router.push("/properties");
+  };
+
 
 
   return {
@@ -89,7 +106,8 @@ const GetProperties = () => {
     pState,
     GetAllProperties,
     NewProperty,
-    DeleteProperty
+    DeleteProperty,
+    EditProperty
   };
 };
 

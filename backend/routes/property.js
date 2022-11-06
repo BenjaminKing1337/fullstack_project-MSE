@@ -76,5 +76,19 @@ router.post("/delete/:id", async (req, res) => {
     sql.close();
   }
 });
+router.put("/update/:id", async (req, res) => {
+  try {
+    let pool = await sql.connect(config);
+    const UpdateProperty = await pool
+    .request()
+    .input("id", sql.Int, parseInt(req.params.id))
+    .query("update tblProperty set number = @number, address = @address, name = @name where id = @id")
+    res.json(UpdateProperty.recordsets);
+    sql.close();
+  } catch (error) {
+    res.status(400).json({ error });
+    sql.close();
+  }
+})
 
 module.exports = router;
