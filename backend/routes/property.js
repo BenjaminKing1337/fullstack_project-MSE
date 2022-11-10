@@ -11,10 +11,10 @@ router.get("/", async (req, res) => {
     let pool = await sql.connect(config);
     const Properties = await pool.request().execute("spGetAllProperties");
     res.json(Properties.recordsets[0]);
-    sql.close();
+    // sql.close();
   } catch (error) {
     res.status(400).json({ error });
-    sql.close();
+    // sql.close();
   }
 });
 

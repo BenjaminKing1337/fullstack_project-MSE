@@ -60,10 +60,10 @@ const GetProperties = () => {
     }; 
     fetch(baseURL + "/properties/new", RequestOptions
     )
-    await GetAllProperties();
-    // .then(async() => {
-    //     return await GetAllProperties(); // Updates page
-    //   })
+    await GetAllProperties()
+    .then(async() => {
+       await GetAllProperties(); // Updates page
+      })
   };
 
   // DELETE PROPERTY BY ID
