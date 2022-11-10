@@ -44,7 +44,7 @@ const GetProperties = () => {
   // };
 
   // CREATE NEW PROPERTY
-  const NewProperty = async () => {
+  const NewProperty = () => {
     const RequestOptions = {
       method: "POST",
       headers: {
@@ -60,9 +60,9 @@ const GetProperties = () => {
     }; 
     fetch(baseURL + "/properties/new", RequestOptions
     )
-    await GetAllProperties()
-    .then(async() => {
-       await GetAllProperties(); // Updates page
+    GetAllProperties()
+    .then(() => {
+       GetAllProperties(); // Updates page
       })
   };
 
