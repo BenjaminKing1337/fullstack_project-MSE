@@ -94,7 +94,7 @@ const GetProperties = () => {
       RequestOptions
     ).then((res) => res.body);
     Router.push("/properties");
-    // GetAllProperties();
+    GetAllProperties();
   };
 
   // GET PROPERTY BY ID

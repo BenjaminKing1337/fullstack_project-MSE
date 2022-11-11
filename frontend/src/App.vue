@@ -1,10 +1,26 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/properties">Properties</router-link>
-  </nav>
-  <router-view />
+  <div>
+    <Nav />
+  </div>
 </template>
+
+<style lang="scss">
+</style>
+
+<script>
+import Nav from "./components/NavComp.vue";
+
+export default {
+  components: {
+    Nav,
+  },
+
+  setup() {
+    return {};
+  },
+};
+</script>
+
 
 <style lang="scss">
 #app {
