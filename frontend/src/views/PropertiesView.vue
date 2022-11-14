@@ -39,7 +39,6 @@
         v-for="Property in pState.Properties"
         :key="Property.id"
       >
-
       <br>
         <div>{{ Property.name }}</div>
         <div style="border: 1px solid black; border-radius:15px;">
@@ -64,7 +63,6 @@
 <script>
 import PropertyCRUD from "../modules/propertyCRUD";
 import { onMounted } from "vue";
-
 export default {
   setup() {
     const {
