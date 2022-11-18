@@ -5,19 +5,19 @@
 
     <h6>My Property</h6>
 
-    <!-- <div v-for="Item in Property" :key="Item.id"> -->
+    <div v-for="Item in Property" :key="Item._id">
     <div>
       <div style="border: 1px solid black; border-radius: 15px">
-        No.:&nbsp;&nbsp;{{ Property.number }}<br />
-        Address:&nbsp;&nbsp;{{ Property.address }} <br />
-        Name:&nbsp;&nbsp;{{ Property.name }}
+        No.:&nbsp;&nbsp;{{ Item.number }}<br />
+        Address:&nbsp;&nbsp;{{ Item.address }} <br />
+        Name:&nbsp;&nbsp;{{ Item.name }}
       </div>
       <form @submit.prevent="EditProperty">
-        <input type="text" placeholder="Number" required v-model="Property.number" />
+        <input type="text" placeholder="Number" required v-model="pState.number" />
         <br />
-        <input type="text" placeholder="Address" v-model="Property.address" />
+        <input type="text" placeholder="Address" v-model="pState.address" />
         <br />
-        <input type="text" placeholder="Name" v-model="Property.name" />
+        <input type="text" placeholder="Name" v-model="pState.name" />
         <br />
         <button type="submit">Update</button>
       </form>
@@ -25,7 +25,7 @@
     </div>
 
     <!-- {{ Property.id }} -->
-    <!-- </div> -->
+    </div>
   </body>
 </template>
 

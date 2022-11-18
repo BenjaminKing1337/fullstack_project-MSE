@@ -42,18 +42,18 @@
       <br>
         <div>{{ Property.name }}</div>
         <div style="border: 1px solid black; border-radius:15px;">
-          ID:&nbsp;&nbsp;{{ Property.id }} <br>
+          ID:&nbsp;&nbsp;{{ Property._id }} <br>
           No.:&nbsp;&nbsp;{{ Property.number }}<br>
           Address:&nbsp;&nbsp;{{ Property.address }} <br>
           Name:&nbsp;&nbsp;{{ Property.name }}
         </div>
        
-        <router-link :to="`/properties/${Property.id}`" class="remove_linkStyle">
+        <router-link :to="`/properties/${Property._id}`" class="remove_linkStyle">
           <button class="full-width">
             <strong>Open</strong>
           </button>
         </router-link>
-        <button @click="DeleteProperty(Property.id)">Delete</button>
+        <button @click="DeleteProperty(Property._id)">Delete</button>
         
       </div>
     </div>

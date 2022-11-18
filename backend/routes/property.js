@@ -24,7 +24,7 @@ router.post("/new", async (req, res) => {
 // Get Properties by User id route
 router.get("/get/:id", async (req, res) => {
   try {
-    const IdProperty = await Property.find({ _id: req.params.id });
+    const IdProperty = await Property.findById({ _id: req.params.id });
     res.json(IdProperty);
   } catch (error) {
     res.status(400).json({ error });

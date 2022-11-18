@@ -61,15 +61,15 @@ const GetProperties = () => {
     }; 
     fetch(baseURL + "/properties/new", RequestOptions
     )
-    GetAllProperties()
+    // GetAllProperties()
     .then(() => { 
        GetAllProperties(); // Updates page
       })
   };
 
   // DELETE PROPERTY BY ID
-  const DeleteProperty = (PropertyId) => {
-    fetch(baseURL + "/properties/delete/" + PropertyId, {
+  const DeleteProperty = (_id) => {
+    fetch(baseURL + "/properties/delete/" + _id, {
       method: "DELETE",
     }).then(() => {
       GetAllProperties(); // Updates page
@@ -85,9 +85,9 @@ const GetProperties = () => {
       },
       body: JSON.stringify({
         // id:Route.params.id,
-        number: Property.value.number,
-        address: Property.value.address,
-        name: Property.value.name,
+        number: pState.value.number,
+        address: pState.value.address,
+        name: pState.value.name,
       }),
     };
     fetch(
@@ -95,18 +95,18 @@ const GetProperties = () => {
       RequestOptions
     ).then((res) => res.body);
     Router.push("/properties");
-    GetAllProperties();
+    // GetAllProperties();
   };
 
   // GET PROPERTY BY ID
   const Property = ref({});
   const GetSpecificProperty = async () => {
     try {
-      fetch(baseURL + "/properties/get/" + PropertyId.value)
-        .then((Res) => Res.json())
-        .then((Data) => {
-          Property.value = Data;
-        });
+      fetch(baseURL + "/properties/")
+      .then((Res) => Res.json())
+      .then((Data) => {
+        Property.value = Data.filter((P) => P._id === PropertyId.value);
+      });
     } catch (Error) {
       console.log(Error);
     }
