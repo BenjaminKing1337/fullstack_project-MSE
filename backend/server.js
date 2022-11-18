@@ -41,6 +41,9 @@ app.use(cors());
 // Property routes
 const propertyRoutes = require('./routes/property');
 app.use("/api/properties", propertyRoutes);
+// User routes
+const userRoutes = require('./routes/user');
+app.use("/api/users", userRoutes);
 
 
 

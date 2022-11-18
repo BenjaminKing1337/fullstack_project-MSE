@@ -1,11 +1,13 @@
 <template>
   <div id="LoginPage">Login
-    <form id="LoginForm" 
+    <div class="formContainer">
+      <form id="LoginForm" 
     @submit.prevent="onSubmit"
     @reset="onReset">
-    <input type="text">
-    <input type="text">
+    <input placeholder="Email" type="text">
+    <input placeholder="Password" type="text">
     </form>
+    </div>
   </div>
 </template>
 
