@@ -1,11 +1,9 @@
+const sql = require('mssql');
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
-// const router = express.Router();
-require("dotenv-flow").config();
-
+const router = express.Router();
 
 // Handle CORS + middleware
 app.use((req, res, next) => {
@@ -22,15 +20,10 @@ app.use((req, res, next) => {
 });
 
 // DB CONNECTION
-mongoose
-  .connect(process.env.DBHOST, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .catch((error) => console.log("Error connecting to MongoDB:" + error));
-mongoose.connection.once("open", () =>
-  console.log("Successfully connected to MongoDB")
-);
+var config = require('./dbconfig')
+sql.on("error", (err) => {
+  console.log(err.message);
+});
 
 
 
@@ -49,14 +42,14 @@ app.use(cors());
 const propertyRoutes = require('./routes/property');
 app.use("/api/properties", propertyRoutes);
 // User routes
-// const userRoutes = require('./routes/user');
-// app.use("/api/users", userRoutes);
+const userRoutes = require('./routes/user');
+app.use("/api/users", userRoutes);
 
 
-const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+
+app.listen(3000, () => {
   console.log('listening on port 3000');
 });
 
-module.exports = app
+module.exports = router
