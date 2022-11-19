@@ -44,16 +44,18 @@ const GetUsers = () => {
     fetch(baseURL + "/users/register", RequestOptions
     )
     GetAllUsers()
-    .then(() => { 
-       GetAllUsers(); // Updates page
-      })
+    // .then(() => { 
+    //    GetAllUsers(); // Updates page
+    //   })
   };
 
   // DELETE User BY ID
   const DeleteUser = (UserId) => {
     fetch(baseURL + "/users/delete/" + UserId, {
       method: "DELETE",
-    }).then(() => {
+    })
+    // GetAllUsers() // Updates page
+    .then(() => {
       GetAllUsers(); // Updates page
     });
   };
@@ -67,16 +69,16 @@ const GetUsers = () => {
       },
       body: JSON.stringify({
         // id:Route.params.id,
-        number: User.value.number,
-        address: User.value.address,
-        name: User.value.name,
+        email: User.value.email,
+        password: User.value.password,
+        userlevel: User.value.userlevel,
       }),
     };
     fetch(
       baseURL + "/users/update/" + UserId.value,
       RequestOptions
     ).then((res) => res.body);
-    Router.push("/users");
+    Router.push("/register");
     GetAllUsers();
   };
 
@@ -87,7 +89,7 @@ const GetUsers = () => {
       fetch(baseURL + "/users/get/" + UserId.value)
         .then((Res) => Res.json())
         .then((Data) => {
-          User.value = Data;
+          User.value = Data[0];
         });
     } catch (Error) {
       console.log(Error);

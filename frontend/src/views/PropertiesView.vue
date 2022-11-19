@@ -50,7 +50,7 @@
        
         <router-link :to="`/properties/${Property.id}`" class="remove_linkStyle">
           <button class="full-width">
-            <strong>Open</strong>
+            <strong>Edit</strong>
           </button>
         </router-link>
         <button @click="DeleteProperty(Property.id)">Delete</button>

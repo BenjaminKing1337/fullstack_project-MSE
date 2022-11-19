@@ -39,6 +39,13 @@
         Email:&nbsp;&nbsp;{{ User.email }}<br />
         Password:&nbsp;&nbsp;{{ User.password }} <br />
       </div>
+      <router-link :to="`/edituser/${User.id}`" class="remove_linkStyle">
+          <button class="full-width">
+            <strong>Edit</strong>
+          </button>
+        </router-link>
+      <button @click="DeleteUser(User.id)">Delete</button>
+        
     </div>
 
   </div>
