@@ -13,11 +13,11 @@
         Name:&nbsp;&nbsp;{{ Property.name }}
       </div>
       <form @submit.prevent="EditProperty">
-        <input type="text" placeholder="Number" required v-model="pState.number" />
+        <input type="text" placeholder="Number" required v-model="Property.number" />
         <br />
-        <input type="text" placeholder="Address" v-model="pState.address" />
+        <input type="text" placeholder="Address" v-model="Property.address" />
         <br />
-        <input type="text" placeholder="Name" v-model="pState.name" />
+        <input type="text" placeholder="Name" v-model="Property.name" />
         <br />
         <button type="submit">Update</button>
       </form>

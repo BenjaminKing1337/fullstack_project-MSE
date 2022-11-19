@@ -27,6 +27,7 @@ const GetProperties = () => {
     }
   };
 
+
   // const GetSpecificProperty = async () => {
   //   try {
   //     fetch(baseURL + "/api/properties")
@@ -61,7 +62,7 @@ const GetProperties = () => {
     fetch(baseURL + "/properties/new", RequestOptions
     )
     GetAllProperties()
-    .then(() => {
+    .then(() => { 
        GetAllProperties(); // Updates page
       })
   };
@@ -84,9 +85,9 @@ const GetProperties = () => {
       },
       body: JSON.stringify({
         // id:Route.params.id,
-        number: pState.value.number,
-        address: pState.value.address,
-        name: pState.value.name,
+        number: Property.value.number,
+        address: Property.value.address,
+        name: Property.value.name,
       }),
     };
     fetch(

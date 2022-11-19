@@ -27,6 +27,11 @@ const routes = [
     name: "register",
     component: () => import("../components/RegisterComp.vue"),
   },
+  {
+    path: "/edituser/:id",
+    name: "edituser",
+    component: () => import("../components/EditUser.vue"),
+  },
 ]
 
 const router = createRouter({
