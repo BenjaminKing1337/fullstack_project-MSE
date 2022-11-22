@@ -13,28 +13,34 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
-  name: "LoginComp",
+  name: 'LoginComp',
   data() {
     return {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     };
   },
   methods: {
     async onSubmit() {
-      const response = await axios.post("users/login", {
-        email: this.email,
-        password: this.password,
-      });
-      console.log(response);
-      // localStorage.setItem("Token", response.data.data.Token);
-      localStorage.setItem("name", response.data.email);
-      localStorage.setItem("level", response.data.userlevel);
-      localStorage.setItem("userid", response.data.id);
-      this.$router.push("/");
+      await axios
+        .post('users/login', {
+          email: this.email,
+          password: this.password,
+        })
+        .then(function (response) {
+          console.log(response);
+          // localStorage.setItem('Token', response.data.data.Token);
+          localStorage.setItem('name', response.data[0].email);
+          localStorage.setItem('level', response.data[0].userlevel);
+          localStorage.setItem('userid', response.data[0].id);
+          this.$router.push('/'); // ?????
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     onReset() {
       this.email = null;
@@ -44,5 +50,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

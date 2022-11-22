@@ -1,18 +1,18 @@
 // var config = require("../dbconfig");
 // const sql = require("mssql");
-let knex = require("../dbknex");
+let knex = require('../dbknex');
 
-const router = require("express").Router();
-const User = require("../classes/user");
+const router = require('express').Router();
+const User = require('../classes/user');
 // const Bcrypt = require("bcrypt");
 
 // GET ALL
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const GetAllUsers = () => {
       knex
-        .select("*")
-        .from("tblUser")
+        .select('*')
+        .from('tblUser')
         .then(function (users) {
           return res.status(200).json(users);
         });
@@ -24,13 +24,13 @@ router.get("/", async (req, res) => {
 });
 
 // GetById
-router.get("/get/:id", async (req, res) => {
+router.get('/get/:id', async (req, res) => {
   try {
     const UserById = () => {
       knex
-        .select("*")
-        .from("tblUser")
-        .where("id", req.params.id)
+        .select('*')
+        .from('tblUser')
+        .where('id', req.params.id)
         .then(function (user) {
           return res.status(200).json(user);
         });
@@ -42,16 +42,16 @@ router.get("/get/:id", async (req, res) => {
 });
 
 // CREATE NEW
-router.post("/register", async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const NewUser = (email, password, userlevel) => {
-      knex("tblUser")
+      knex('tblUser')
         .insert({
           email: req.body.email,
           password: req.body.password,
           userlevel: req.body.userlevel,
         })
-        .returning("id")
+        .returning('id')
         .then((id) => {
           // console.log(id);
           console.log(`New user created with ` + JSON.stringify(id));
@@ -65,21 +65,21 @@ router.post("/register", async (req, res) => {
 });
 
 // LOGIN
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const LoginUser = () => {
       const Authenticate = (email, password) => {
         return knex
-          .select("*")
-          .from("tblUser")
-          .where("email", email)
-          .andWhere("password", password)
+          .select('*')
+          .from('tblUser')
+          .where('email', email)
+          .andWhere('password', password)
           .then((tblUser) => {
-            if (tblUser.length > 0) {
-              console.log(tblUser);
-              return /* Promise.resolve( */tblUser/* ) */;
+            if (Object.keys(tblUser).length > 0) {
+              // return /* Promise.resolve( */tblUser/
+              return res.status(200).json(tblUser);
             } else {
-              return Promise.resolve(false);
+              return res.status(500);
             }
           });
       };
@@ -88,10 +88,10 @@ router.post("/login", async (req, res) => {
         if (!user) {
           console.log("Sorry, user doesn't exist");
         } else {
-          console.log("User Exists");
+          console.log('User Exists');
         }
       });
-    }
+    };
     LoginUser();
   } catch (error) {
     console.log(error);
@@ -100,11 +100,11 @@ router.post("/login", async (req, res) => {
 });
 
 // DELETE USER
-router.delete("/delete/:id", async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   try {
     const DeleteUser = (id) => {
-      knex("tblUser")
-        .where("id", req.params.id)
+      knex('tblUser')
+        .where('id', req.params.id)
         .del()
         .then((countRows) => {
           console.log(`${countRows} number of users have been deleted`);
@@ -118,11 +118,11 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 // UPDATE USER
-router.put("/update/:id", async (req, res) => {
+router.put('/update/:id', async (req, res) => {
   try {
     const UpdateUser = (email, password, userlevel) => {
-      knex("tblUser")
-        .where("id", req.params.id)
+      knex('tblUser')
+        .where('id', req.params.id)
         .update({
           email: req.body.email,
           password: req.body.password,
