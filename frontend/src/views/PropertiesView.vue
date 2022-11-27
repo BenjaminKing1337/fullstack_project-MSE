@@ -37,7 +37,7 @@
     <div>
       <div
         v-for="Property in pState.Properties"
-        :key="Property.id"
+        :key="Property._id"
       >
       <br>
         <div>{{ Property.name }}</div>

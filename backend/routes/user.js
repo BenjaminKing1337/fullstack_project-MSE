@@ -1,52 +1,100 @@
-var config = require("../dbconfig");
-const sql = require("mssql");
-
 const router = require("express").Router();
-const User = require("../classes/user");
-// const Bcrypt = require("bcrypt");
+const User = require("../models/user");
+const Bcrypt = require("bcrypt");
+const Jwt = require("jsonwebtoken");
+const {
+  RegisterValidation,
+  LoginValidation,
+  VerifyToken,
+} = require("../validation");
 
-
-// GetALL
-router.get("/", async (req, res) => {
-    try {
-      let pool = await sql.connect(config);
-      const Users = await pool.request().query("select * from tblUser");
-      res.json(Users.recordsets[0]);
-      sql.close();
-    } catch (error) {
-      res.status(400).json({ error });
-      sql.close();
-    }
-  });
-
-router.post("/register", async (req, res) => {
-try {
-    const NewUser = new User(
-        undefined,
-        req.body.email,
-        req.body.password,
-        req.body.userlevel
-    );
-    // const {email, password, passcheck} = req.body;
-    // const hash = await Bcrypt.hash(password, 10);
-    let pool = await sql.connect(config);
-    const SavedUser = await pool
-    .request()
-    .input("email", sql.NVarChar, NewUser.email)
-    .input("password", sql.NVarChar, NewUser.password)
-    .input("userlevel", sql.NVarChar, NewUser.userlevel)
-    .query("insert into tblUser(email, password, userlevel) values (@email, @password, @userlevel)"
-    );
-    res.status(200);
-    sql.close();
-} catch (error) {
-    res.status(400).json({ error });
-    sql.close();
-}
+// Read all users - GET
+router.get("/", (req, res) => {
+  User.find()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
 });
 
-// router.post("/login", async (req, res) => { 
+//Get user by ID - GET
+router.get("/user", VerifyToken, (req, res) => {
+  User.findById(req.user.id)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+});
 
-// };
+// ROUTE - /registration
+router.post("/register", async (req, res) => {
+  // input validation
+  const { error } = RegisterValidation(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
+  // Does email exist?
+  const EmailExist = await User.findOne({ email: req.body.email });
+  if (EmailExist) {
+    return res.status(400).json({ error: "Email already exists" });
+  }
+  // password hashing
+  const Salt = await Bcrypt.genSalt(10);
+  const Pwd = await Bcrypt.hash(req.body.password, Salt);
+  // save data as user in db
+  const UserObject = new User({
+    email: req.body.email,
+    password: Pwd,
+  });
+  try {
+    const SavedUser = await UserObject.save();
+    res.json({ error: null, data: SavedUser._id });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+});
 
+// ROUTE - /login
+router.post("/login", async (req, res) => {
+  // login info validation
+  const { error } = LoginValidation(req.body);
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
+  // if valid, find in db
+  const user = await User.findOne({ email: req.body.email });
+  // if not found
+  if (!user) {
+    return res.status(400).json({ error: "Email is wrong" });
+  }
+  // if found - check password
+  const ValidPass = await Bcrypt.compare(req.body.password, user.password);
+  if (!ValidPass) {
+    return res.status(400).json({ error: "Password is wrong" });
+  }
+  // token creation
+  const Token = Jwt.sign(
+    {
+      email: user.email,
+      userlevel: user.userlevel,
+      id: user._id,
+    },
+    process.env.TOKEN_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES_IN },
+  );
+  // attach auth token to header
+  res.header("auth-token", Token).json({
+    error: null,
+    data: { Token },
+    email: user.email,
+    level: user.userlevel,
+    id: user._id
+  });
+});
+
+// modular exportation
 module.exports = router;
