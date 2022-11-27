@@ -1,23 +1,27 @@
 #App {
+  #LoginPage {
+    #LoginForm {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 
-    
-    
-    #LoginPage {
-        #LoginForm {
-            display: flex;
-            flex-direction: column;
-        }
+  #RegisterPage {
+    #RegisterForm {
+      display: flex;
+      flex-direction: column;
     }
-    
-    #RegisterPage {
-        #RegisterForm {
-            display: flex;
-            flex-direction: column;
-        }
-    }
+  }
 
-    .formContainer {
-        margin: 0 auto;
-        width: 300px;
-    }
+  .formContainer {
+    margin: 0 auto;
+    width: 300px;
+  }
+}
+
+// Global classes
+.grid3x3 {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }

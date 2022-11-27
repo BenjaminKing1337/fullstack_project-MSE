@@ -49,8 +49,8 @@ app.use(cors());
 const propertyRoutes = require('./routes/property');
 app.use("/api/properties", propertyRoutes);
 // User routes
-// const userRoutes = require('./routes/user');
-// app.use("/api/users", userRoutes);
+const userRoutes = require('./routes/user');
+app.use("/api/users", userRoutes);
 
 
 const PORT = process.env.PORT || 3000;

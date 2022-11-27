@@ -1,67 +1,80 @@
 <template>
   <div id="RegisterPage">
     Register
-    <!-- <div class="formContainer">
+    <div class="formContainer">
       <form id="RegisterForm" @submit.prevent="onSubmit" @reset="onReset">
-        <input placeholder="Email" type="text" v-model="uState.email" />
-        <input placeholder="Password" type="text" v-model="uState.password" />
-        <input placeholder="Confirm Password" type="text" />
+        <input placeholder="Email" type="email" v-model="email" />
+        <input placeholder="Password" type="password" v-model="password" />
+        <div>
+          <button type="submit">Register</button>
+          <button type="reset">Reset</button>
+        </div>
       </form>
-      <div><button @click="NewUser()">Create New User</button></div>
-    </div> -->
- <div>
-      <div>
-        <div>
-          <div>Create new User</div>
+    </div>
+    <br />
+    <br />
+      Current Users:
+    <div class="grid3x3">
+      <div  v-for="User in uState.Users" :key="User._id">
+        <div style="border: 1px solid black; border-radius: 15px">
+          Email:&nbsp;&nbsp;{{ User.email }}
         </div>
-
-        <div>
-          <input
-            v-model="uState.email"
-          /> <br>
-          <input
-            v-model="uState.password"
-          /> <br>
-          <div>
-          </div>
-        </div>
-
-        <div>
-          <button @click="NewUser()">Create New User</button>
-        </div>
+        <br>
       </div>
     </div>
-    <div v-for="User in uState.Users" :key="User.id">
-      <br />
-      <div>{{ User.email }}</div>
-      <div style="border: 1px solid black; border-radius: 15px">
-        ID:&nbsp;&nbsp;{{ User.id }} <br />
-        Email:&nbsp;&nbsp;{{ User.email }}<br />
-        Password:&nbsp;&nbsp;{{ User.password }} <br />
-      </div>
-    </div>
-
   </div>
 </template>
 
 <script>
 import UserCRUD from "../modules/userCRUD";
+import { ref } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-export default {
-  setup() {
-    const { uState, GetAllUsers, GetSpecificUser, NewUser, DeleteUser } =
-      UserCRUD();
 
+export default {
+  name: "RegisterComp",
+
+  setup() {
+    const email = ref(null);
+    const password = ref(null);
+    const router = useRouter();
+    const { uState, GetAllUsers } = UserCRUD();
     onMounted(() => {
       GetAllUsers();
     });
-
     return {
+      email,
+      password,
       uState,
       GetAllUsers,
-      GetSpecificUser,
-      NewUser,
-      DeleteUser,
+
+      async created() {
+        try {
+          const response = await axios.get(`users/`);
+          this.posts = response.data;
+        } catch (e) {
+          this.errors.push(e);
+        }
+      },
+
+      async onSubmit() {
+        try {
+          await axios.post("users/register", {
+            email: email.value,
+            password: password.value,
+          });
+          router.push("/login");
+        } catch (err) {
+          let msg = err.response.data.error;
+          console.log(msg);
+        }
+      },
+
+      onReset() {
+        email.value = null;
+        password.value = null;
+      },
     };
   },
 };

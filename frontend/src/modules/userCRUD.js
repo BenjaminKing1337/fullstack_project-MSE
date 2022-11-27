@@ -28,26 +28,7 @@ const GetUsers = () => {
   };
 
 
-  // CREATE NEW User
-  const NewUser = () => {
-    const RequestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: uState.value.email,
-        password: uState.value.password,
-        userlevel: "user"
-      })
-    }; 
-    fetch(baseURL + "/users/register", RequestOptions
-    )
-    GetAllUsers()
-    .then(() => { 
-       GetAllUsers(); // Updates page
-      })
-  };
+
 
   // DELETE User BY ID
   const DeleteUser = (UserId) => {
@@ -67,17 +48,15 @@ const GetUsers = () => {
       },
       body: JSON.stringify({
         // id:Route.params.id,
-        number: User.value.number,
-        address: User.value.address,
-        name: User.value.name,
+        email: User.value.email,
+        password: User.value.password,
       }),
     };
     fetch(
       baseURL + "/users/update/" + UserId.value,
       RequestOptions
     ).then((res) => res.body);
-    Router.push("/users");
-    GetAllUsers();
+    Router.push("/");
   };
 
   // GET User BY ID
@@ -100,7 +79,6 @@ const GetUsers = () => {
     GetSpecificUser,
     uState,
     GetAllUsers,
-    NewUser,
     DeleteUser,
     EditUser,
   };
