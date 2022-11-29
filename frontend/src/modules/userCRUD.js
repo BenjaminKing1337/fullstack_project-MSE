@@ -26,7 +26,7 @@ const GetUsers = () => {
       console.log(Error);
     }
   };
-
+  // POST Register User 
   const RegisterUser = () => {
     const RequestOptions = {
       method: "POST",
@@ -42,7 +42,7 @@ const GetUsers = () => {
     fetch(baseURL + "/users/register", RequestOptions).then((res) => res.body);
     Router.push("/login");
   };
-
+//  POST Login User 
   const LoginUser = async () => {
     try {
       const RequestOptions = {
@@ -72,7 +72,6 @@ const GetUsers = () => {
       console.log(error);
     }
   };
-
   // DELETE User BY ID
   const DeleteUser = (UserId) => {
     fetch(baseURL + "/users/delete/" + UserId, {
@@ -81,7 +80,6 @@ const GetUsers = () => {
       GetAllUsers(); // Updates page
     });
   };
-
   // UPDATE User BY ID
   const EditUser = async () => {
     const RequestOptions = {
