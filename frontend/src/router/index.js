@@ -32,6 +32,12 @@ const routes = [
     beforeEnter: LoggedInGuard,
   },
   {
+    path: "/users/:id",
+    name: "user",
+    component: () => import("../components/UpdateUserComp.vue"),
+    beforeEnter: LoggedInGuard,
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("../components/LoginComp.vue"),

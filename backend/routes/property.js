@@ -21,7 +21,7 @@ router.post("/new", async (req, res) => {
   }
 });
 
-// Get Properties by User id route
+// Get Properties by id route
 router.get("/get/:id", async (req, res) => {
   try {
     const IdProperty = await Property.findById({ _id: req.params.id });

@@ -3,8 +3,12 @@
     Login
     <div class="formContainer">
       <form id="LoginForm" @submit.prevent="onSubmit" @reset="onReset">
-        <input placeholder="Email" type="email" v-model="email" />
-        <input placeholder="Password" type="password" v-model="password" />
+        <input placeholder="Email" type="email" v-model="uState.email" />
+        <input
+          placeholder="Password"
+          type="password"
+          v-model="uState.password"
+        />
         <button type="submit">Login</button>
         <button type="reset">Reset</button>
       </form>
@@ -13,35 +17,30 @@
 </template>
 
 <script>
-import axios from "axios";
+import UserCRUD from "../modules/userCRUD";
 
 export default {
   name: "LoginComp",
-  data() {
+
+  setup() {
+    const { uState, LoginUser } = UserCRUD();
     return {
       email: "",
       password: "",
-    };
-  },
-  methods: {
-    async onSubmit() {
-      const response = await axios.post("users/login", {
-        email: this.email,
-        password: this.password,
-      });
+      uState,
+      LoginUser,
 
-      localStorage.setItem("Token", response.data.data.Token);
-      // localStorage.setItem("name", response.data.name);
-      localStorage.setItem("level", response.data.level);
-      localStorage.setItem("userid", response.data.id);
-      this.$router.go("/");
-    },
-    onReset() {
+      async onSubmit() {
+        LoginUser();
+      },
+      onReset() {
         this.email = null;
         this.password = null;
       },
+    };
   },
-};</script>
+};
+</script>
 
 <style lang="scss" scoped>
 </style>

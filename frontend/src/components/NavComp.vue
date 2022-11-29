@@ -1,6 +1,6 @@
 <template>
   <div id="App">
-    <nav style="display: flex; justify-content: space-between">
+    <nav style="display: flex; justify-content: space-between; align-items:center;">
       <div>
         <router-link to="/"
           ><img src="@/assets/logo.png" style="width: 50px; height: 50px"
