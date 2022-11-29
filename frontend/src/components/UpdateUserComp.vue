@@ -2,7 +2,7 @@
   <body>
     <h6>My Profile</h6>
 
-    <div v-for="User in User" :key="User._id">
+    <!-- <div v-for="User in User" :key="User._id"> -->
       <div>
         <div style="border: 1px solid black; border-radius: 15px">
           Email:&nbsp;&nbsp;{{ User.email }}<br />
@@ -10,16 +10,14 @@
         </div>
       </div>
       <form @submit.prevent="EditUser">
-        <input type="text" placeholder="Email" required v-model="uState.email" />
+        <input type="text" placeholder="Email" required v-model="User.email" />
         <br />
-        <input type="text" placeholder="Password" v-model="uState.password" />
-        <br />
-        <input type="text" placeholder="Level" v-model="uState.userlevel" />
+        <input type="text" placeholder="Level" v-model="User.userlevel" />
         <br />
         <button type="submit">Update</button>
       </form>
       <button type="button" @click="goBack()">Back</button>
-    </div>
+    <!-- </div> -->
   </body>
 </template>
 

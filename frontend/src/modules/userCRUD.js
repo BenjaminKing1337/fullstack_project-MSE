@@ -26,7 +26,7 @@ const GetUsers = () => {
       console.log(Error);
     }
   };
-  // POST Register User 
+  // POST Register User
   const RegisterUser = () => {
     const RequestOptions = {
       method: "POST",
@@ -42,7 +42,7 @@ const GetUsers = () => {
     fetch(baseURL + "/users/register", RequestOptions).then((res) => res.body);
     Router.push("/login");
   };
-//  POST Login User 
+  //  POST Login User
   const LoginUser = async () => {
     try {
       const RequestOptions = {
@@ -89,12 +89,12 @@ const GetUsers = () => {
       },
       body: JSON.stringify({
         // id:Route.params.id,
-        email: uState.value.email,
-        password: uState.value.password,
-        userlevel: uState.value.userlevel,
+        email: User.value.email,
+        // password: User.value.password,
+        userlevel: User.value.userlevel,
       }),
     };
-    await GetSpecificUser();
+    // await GetSpecificUser();
     await fetch(baseURL + "/users/update/" + UserId.value, RequestOptions)
       .then((res) => res.body)
       .then(() => {
@@ -102,15 +102,40 @@ const GetUsers = () => {
       });
     Router.push("/register");
   };
+  // UPDATE User BY ID
+  const confirmPwd = ref('');
+  const EditPwd = async () => {
+    const RequestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // id:Route.params.id,
+        password: uState.value.password,
+      }),
+    };
+    if (uState.value.password === confirmPwd.value) {
+      await fetch(baseURL + "/users/update/" + UserId.value, RequestOptions)
+        .then((res) => res.body)
+        .then(() => {
+          GetAllUsers();
+        });
+      Router.push("/register");
+    } else {
+      console.log("wrong password");
+    }
+  };
 
   // GET User BY ID
   const User = ref({});
   const GetSpecificUser = async () => {
     try {
-      await fetch(baseURL + "/users/")
+      await fetch(baseURL + "/users/get/" + UserId.value)
         .then((Res) => Res.json())
         .then((Data) => {
-          User.value = Data.filter((U) => U._id === UserId.value);
+          User.value = Data;
+          // .filter((U) => U._id === UserId.value);
         });
     } catch (Error) {
       console.log(Error);
@@ -125,6 +150,8 @@ const GetUsers = () => {
     GetAllUsers,
     DeleteUser,
     EditUser,
+    confirmPwd,
+    EditPwd,
     RegisterUser,
     LoginUser,
   };

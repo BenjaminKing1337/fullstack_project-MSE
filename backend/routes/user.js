@@ -5,7 +5,7 @@ const Jwt = require("jsonwebtoken");
 const {
   RegisterValidation,
   LoginValidation,
-  VerifyToken,
+  // VerifyToken,
 } = require("../validation");
 
 // Read all users - GET
@@ -20,8 +20,8 @@ router.get("/", (req, res) => {
 });
 
 //Get user by ID - GET
-router.get("get/:id", VerifyToken, (req, res) => {
-  User.findById(req.user.id)
+router.get("/get/:id", /* VerifyToken, */ (req, res) => {
+  User.findById({_id: req.params.id})
     .then((data) => {
       res.json(data);
     })

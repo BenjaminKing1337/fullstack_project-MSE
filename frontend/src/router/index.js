@@ -38,6 +38,12 @@ const routes = [
     beforeEnter: LoggedInGuard,
   },
   {
+    path: "/pwd/:id",
+    name: "change pwd",
+    component: () => import("../components/UpdatePwdComp.vue"),
+    beforeEnter: LoggedInGuard,
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("../components/LoginComp.vue"),

@@ -25,7 +25,12 @@
         </div>
         <router-link :to="`/users/${User._id}`" class="remove_linkStyle">
           <button class="full-width">
-            <strong>Edit</strong>
+            <strong>Edit Email</strong>
+          </button>
+        </router-link>
+        <router-link :to="`/pwd/${User._id}`" class="remove_linkStyle">
+          <button class="full-width">
+            <strong>Edit Password</strong>
           </button>
         </router-link>
         <button @click="DeleteUser(User._id)">Delete</button>
