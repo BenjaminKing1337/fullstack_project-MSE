@@ -61,7 +61,7 @@ export default {
       EditPwd,
       goBack() {
         // return Router.go(-1);
-        Router.push("/register");
+        Router.push("/users/" + UserId.value);
       },
     };
   },

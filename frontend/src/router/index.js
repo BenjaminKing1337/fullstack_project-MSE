@@ -5,7 +5,9 @@ import AuthGuard from "./auth-guard";
 // Import user check that redirects to Landing page (if token null pass, if not go to "/")
 import LoggedInGuard from "./loggedin-guard";
 // Import admin check
-// import AdminGuard from "./admin-guard";
+import AdminGuard from "./admin-guard";
+// Import user check for correct user when changing password
+import PwdGuard from "./pwd-guard";
 
 const routes = [
   {
@@ -26,22 +28,34 @@ const routes = [
     beforeEnter: AuthGuard,
   },
   {
+    path: "/tenants",
+    name: "tenants",
+    component: () => import("../views/TenantsView.vue"),
+    beforeEnter: AuthGuard,
+  },
+  {
+    path: "/tenants/:id",
+    name: "tenant",
+    component: () => import("../views/TenantView.vue"),
+    beforeEnter: AuthGuard,
+  },
+  {
     path: "/register",
     name: "register",
     component: () => import("../components/RegisterComp.vue"),
-    beforeEnter: LoggedInGuard,
+    // beforeEnter: LoggedInGuard,
   },
   {
     path: "/users/:id",
     name: "user",
     component: () => import("../components/UpdateUserComp.vue"),
-    beforeEnter: LoggedInGuard,
+    beforeEnter: AdminGuard,
   },
   {
     path: "/pwd/:id",
     name: "change pwd",
     component: () => import("../components/UpdatePwdComp.vue"),
-    beforeEnter: LoggedInGuard,
+    beforeEnter: PwdGuard,
   },
   {
     path: "/login",

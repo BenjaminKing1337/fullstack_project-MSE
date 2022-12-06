@@ -17,24 +17,21 @@
     </div>
     <br />
     <br />
-    Current Users:
-    <div class="grid3x3">
-      <div v-for="User in uState.Users" :key="User._id">
-        <div style="border: 1px solid black; border-radius: 15px">
-          Email:&nbsp;&nbsp;{{ User.email }}
+    <div v-if="adminAuth()">
+      Current Users:
+      <div class="grid3x3">
+        <div v-for="User in uState.Users" :key="User._id">
+          <div style="border: 1px solid black; border-radius: 15px">
+            Email:&nbsp;&nbsp;{{ User.email }}
+          </div>
+          <router-link :to="`/users/${User._id}`" class="remove_linkStyle">
+            <button class="full-width">
+              <strong>Edit User</strong>
+            </button>
+          </router-link>
+          <button @click="DeleteUser(User._id)">Delete</button>
+          <br />
         </div>
-        <router-link :to="`/users/${User._id}`" class="remove_linkStyle">
-          <button class="full-width">
-            <strong>Edit Email</strong>
-          </button>
-        </router-link>
-        <router-link :to="`/pwd/${User._id}`" class="remove_linkStyle">
-          <button class="full-width">
-            <strong>Edit Password</strong>
-          </button>
-        </router-link>
-        <button @click="DeleteUser(User._id)">Delete</button>
-        <br />
       </div>
     </div>
   </div>
@@ -51,7 +48,7 @@ export default {
   setup() {
     const email = ref(null);
     const password = ref(null);
-    const { uState, GetAllUsers, DeleteUser, EditUser, RegisterUser } =
+    const { uState, GetAllUsers, DeleteUser, EditUser, RegisterUser, RegisterUserByAdmin } =
       UserCRUD();
     onMounted(() => {
       GetAllUsers();
@@ -64,18 +61,32 @@ export default {
       DeleteUser,
       EditUser,
       RegisterUser,
+      RegisterUserByAdmin,
 
       async created() {
         GetAllUsers();
       },
 
       async onSubmit() {
-        RegisterUser();
+        if (localStorage.getItem("level") === "admin") {
+          RegisterUserByAdmin();
+        } else {
+          RegisterUser();
+        }
       },
 
       onReset() {
         email.value = null;
         password.value = null;
+      },
+      userAuth() {
+        return (
+          localStorage.getItem("Token") !== null &&
+          localStorage.getItem("Token") !== undefined
+        );
+      },
+      adminAuth() {
+        return localStorage.getItem("level") === "admin";
       },
     };
   },

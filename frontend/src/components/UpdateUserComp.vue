@@ -1,29 +1,38 @@
 <template>
   <body>
     <h6>My Profile</h6>
-
-    <!-- <div v-for="User in User" :key="User._id"> -->
-      <div>
-        <div style="border: 1px solid black; border-radius: 15px">
-          Email:&nbsp;&nbsp;{{ User.email }}<br />
-          Level:&nbsp;&nbsp;{{ User.userlevel }}
-        </div>
-      </div>
-      <form @submit.prevent="EditUser">
+    <form @submit.prevent="EditUser">
+      <div style="border: 1px solid black; border-radius: 15px">
+        ID: {{ User._id }} <br />
+        Email:
         <input type="text" placeholder="Email" required v-model="User.email" />
         <br />
-        <input type="text" placeholder="Level" v-model="User.userlevel" />
-        <br />
-        <button type="submit">Update</button>
-      </form>
-      <button type="button" @click="goBack()">Back</button>
-    <!-- </div> -->
+        <div v-if="adminAuth()">
+          Level:
+          <input type="text" placeholder="Level" v-model="User.userlevel" />
+          <br />
+        </div>
+      </div>
+      <button type="submit">Update Email</button>
+    </form>
+    <router-link :to="`/pwd/${User._id}`" class="remove_linkStyle">
+      <button class="full-width">
+        <strong>Edit Password</strong>
+      </button>
+    </router-link>
+    <br />
+    <br />
+
+    
+
+    <button type="button" @click="goBack()">Back</button>
   </body>
 </template>
 
 <script>
 import UserCRUD from "../modules/userCRUD";
 import { useRouter } from "vue-router";
+import { onMounted } from "vue";
 
 export default {
   setup() {
@@ -36,9 +45,10 @@ export default {
       EditUser,
     } = UserCRUD();
     
-    GetSpecificUser();
 
-    console.log(User.value);
+    onMounted(() => {
+      GetSpecificUser();
+    });
 
     const Router = useRouter();
 
@@ -52,6 +62,9 @@ export default {
       goBack() {
         // return Router.go(-1);
         Router.push("/register");
+      },
+      adminAuth() {
+        return localStorage.getItem("level") === "admin";
       },
     };
   },

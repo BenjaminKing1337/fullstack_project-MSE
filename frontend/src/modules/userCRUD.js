@@ -42,6 +42,23 @@ const GetUsers = () => {
     fetch(baseURL + "/users/register", RequestOptions).then((res) => res.body);
     Router.push("/login");
   };
+  const RegisterUserByAdmin = () => {
+    const RequestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // id:Route.params.id,
+        email: uState.value.email,
+        password: uState.value.password,
+      }),
+    };
+    fetch(baseURL + "/users/register", RequestOptions).then((res) => res.body)
+    .then(() => {
+      GetAllUsers(); // Updates page
+    });
+  };
   //  POST Login User
   const LoginUser = async () => {
     try {
@@ -121,7 +138,7 @@ const GetUsers = () => {
         .then(() => {
           GetAllUsers();
         });
-      Router.push("/register");
+      Router.push("/users/" + UserId.value);
     } else {
       console.log("wrong password");
     }
@@ -153,6 +170,7 @@ const GetUsers = () => {
     confirmPwd,
     EditPwd,
     RegisterUser,
+    RegisterUserByAdmin,
     LoginUser,
   };
 };

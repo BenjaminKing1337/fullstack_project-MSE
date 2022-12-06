@@ -43,6 +43,9 @@ app.use('/api/properties', propertyRoutes);
 // User routes
 const userRoutes = require('./routes/user');
 app.use("/api/users", userRoutes);
+// Tenant routes
+const tenantRoutes = require('./routes/tenant');
+app.use("/api/tenants", tenantRoutes);
 
 const PORT = process.env.PORT || 3000;
 

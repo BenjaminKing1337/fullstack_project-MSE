@@ -50,26 +50,27 @@ const PropertySchema = new Mongoose.Schema({
     ref: 'Customer',
     required: true,
   },
-  building_id: {
-    // If building_id is null, it's a house
-    // FK
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Building',
-    required: true,
-  },
+  // building_id: {
+  //   // If building_id is null, it's a house
+  //   // FK
+  //   type: Mongoose.Schema.Types.ObjectId,
+  //   ref: 'Building',
+  //   required: true,
+  // },
   renter_id: {
     // FK
     type: Mongoose.Schema.Types.ObjectId,
     ref: 'Tenant',
-    required: true,
+    // required: true,
   },
   // If owner and renter id are null, the property is empty.
   // The customer still owns the property. No owner or renter
   owner_id: {
     // FK
+    // type: String,
     type: Mongoose.Schema.Types.ObjectId,
     ref: 'Tenant',
-    required: true,
+    // required: true,
   },
   created_at: {
     type: Date,

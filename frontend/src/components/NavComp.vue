@@ -3,11 +3,17 @@
     <nav style="display: flex; justify-content: space-between; align-items:center;">
       <div>
         <router-link to="/"
-          ><img src="@/assets/logo.png" style="width: 50px; height: 50px"
+          ><img src="@/assets/logo.png" style="width: 60px; height: 40px"
         /></router-link>
       </div>
-      <div v-if="userAuth()">
+      <div v-if="adminAuth()">
         <router-link to="/properties">Properties</router-link>
+      </div>
+      <div v-if="adminAuth()">
+        <router-link to="/tenants">Tenants</router-link>
+      </div>
+      <div v-if="adminAuth()">
+        <router-link to="/register">Register</router-link>
       </div>
       <div v-if="!userAuth()">
         <router-link to="/register">Register</router-link>

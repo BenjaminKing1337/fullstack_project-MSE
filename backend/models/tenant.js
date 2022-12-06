@@ -3,7 +3,7 @@ const TenantSchema = new Mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ['owner', 'renter'], // Only accepts these 2 types
+    enum: ['Owner', 'Renter'], // Only accepts these 2 types
   },
   forename: {
     type: String,
@@ -55,13 +55,20 @@ const TenantSchema = new Mongoose.Schema({
     required: true,
   },
   lease: {
-    type: Buffer,
+    type: String,
+    // type: Buffer,
     required: false,
   },
   user_id: {
     // FK
     type: Mongoose.Schema.Types.ObjectId,
     ref: 'User',
+    required: true,
+  },
+  customer_id: {
+    // FK
+    type: Mongoose.Schema.Types.ObjectId,
+    ref: 'Customer',
     required: true,
   },
   created_at: {
