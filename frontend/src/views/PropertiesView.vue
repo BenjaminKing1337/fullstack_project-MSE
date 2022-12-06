@@ -73,8 +73,8 @@
           Value:&nbsp;&nbsp;{{ Property.value }} <br />
           Bank Note:&nbsp;&nbsp;{{ Property.bank_note }} <br />
           Customer ID:&nbsp;&nbsp;{{ Property.customer_id }} <br />
-          <!-- Building ID:&nbsp;&nbsp;{{ Property.building_id }} <br>
-          Renter ID:&nbsp;&nbsp;{{ Property.renter_id }} <br> -->
+          <!-- Building ID:&nbsp;&nbsp;{{ Property.building_id }} <br> -->
+          Renter ID:&nbsp;&nbsp;{{ Property.renter_id }} <br>
           Owner ID:&nbsp;&nbsp;{{ Property.owner_id }} <br>
         </div>
 
