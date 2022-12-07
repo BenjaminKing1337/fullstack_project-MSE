@@ -80,15 +80,15 @@
             <input type="text" placeholder="Lease" v-model="tState.lease" />
             <br />
             Assigned User Login:
-          <select v-model="tState.user_id">
-            <option
-              v-for="User in uState.Users"
-              :key="User._id"
-              :value="User._id"
-            >
-              {{ User.email }}
-            </option>
-          </select>
+            <select v-model="tState.user_id">
+              <option
+                v-for="User in uState.Users"
+                :key="User._id"
+                :value="User._id"
+              >
+                {{ User.email }}
+              </option>
+            </select>
           </div>
           <button type="submit">Add Tenant</button>
         </form>
@@ -114,7 +114,7 @@
           Move Out:&nbsp;&nbsp; {{ Tenant.move_out }} <br />
           Lease:&nbsp;&nbsp; {{ Tenant.lease }} <br />
           User ID: &nbsp;&nbsp; {{ Tenant.user_id }} <br />
-          Customer ID: &nbsp;&nbsp; {{ Tenant.customer_id }} <br />
+          Created by: &nbsp;&nbsp; {{ Tenant.created_by }} <br />
         </div>
 
         <router-link :to="`/tenants/${Tenant._id}`" class="remove_linkStyle">
@@ -129,9 +129,9 @@
 </template>
 
 <script>
-import TenantCRUD from "../modules/tenantCRUD";
-import UserCRUD from "../modules/userCRUD";
-import { onMounted } from "vue";
+import TenantCRUD from '../modules/tenantCRUD';
+import UserCRUD from '../modules/userCRUD';
+import { onMounted } from 'vue';
 export default {
   setup() {
     const {
@@ -149,7 +149,7 @@ export default {
       GetUsersTenants();
       // GetSpecificUser();
       GetAllUsers();
-      GetAllTenants();
+      // GetAllTenants();
     });
 
     return {
@@ -170,5 +170,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

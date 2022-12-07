@@ -17,8 +17,8 @@
           Postal Code: <input v-model="pState.postal_code" /> <br />
           Value: <input v-model="pState.value" /> <br />
           Bank Note: <input v-model="pState.bank_note" /> <br />
-          <!-- Customer ID: <input
-            v-model="pState.customer_id"
+          <!-- Created by: <input
+            v-model="pState.created_by"
           /> <br>
           Building ID: <input
             v-model="pState.building_id"
@@ -31,6 +31,7 @@
           /> <br> -->
           Owner:
           <select v-model="pState.owner_id">
+            <option>None</option>
             <option
               v-for="Tenant in tState.Tenants"
               :key="Tenant._id"
@@ -38,9 +39,11 @@
             >
               {{ Tenant.email }}
             </option>
-          </select> <br>
+          </select>
+          <br />
           Renter:
           <select v-model="pState.renter_id">
+            <option>None</option>
             <option
               v-for="Tenant in tState.Tenants"
               :key="Tenant._id"
@@ -72,10 +75,10 @@
           Postal Code:&nbsp;&nbsp;{{ Property.postal_code }} <br />
           Value:&nbsp;&nbsp;{{ Property.value }} <br />
           Bank Note:&nbsp;&nbsp;{{ Property.bank_note }} <br />
-          Customer ID:&nbsp;&nbsp;{{ Property.customer_id }} <br />
-          <!-- Building ID:&nbsp;&nbsp;{{ Property.building_id }} <br> -->
-          Renter ID:&nbsp;&nbsp;{{ Property.renter_id }} <br>
-          Owner ID:&nbsp;&nbsp;{{ Property.owner_id }} <br>
+          Created by:&nbsp;&nbsp;{{ Property.created_by }} <br />
+          Building ID:&nbsp;&nbsp;{{ Property.building_id }} <br />
+          Renter ID:&nbsp;&nbsp;{{ Property.renter_id }} <br />
+          Owner ID:&nbsp;&nbsp;{{ Property.owner_id }} <br />
         </div>
 
         <router-link
@@ -93,10 +96,10 @@
 </template>
 
 <script>
-import PropertyCRUD from "../modules/propertyCRUD";
-import UserCRUD from "../modules/userCRUD";
-import TenantCRUD from "../modules/tenantCRUD";
-import { onMounted } from "vue";
+import PropertyCRUD from '../modules/propertyCRUD';
+import UserCRUD from '../modules/userCRUD';
+import TenantCRUD from '../modules/tenantCRUD';
+import { onMounted } from 'vue';
 export default {
   setup() {
     const {
@@ -137,5 +140,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

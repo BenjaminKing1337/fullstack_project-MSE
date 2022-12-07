@@ -61,14 +61,12 @@ const TenantSchema = new Mongoose.Schema({
   },
   user_id: {
     // FK
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
-  customer_id: {
+  created_by: {
     // FK
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
+    type: String,
     required: true,
   },
   created_at: {

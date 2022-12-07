@@ -31,8 +31,12 @@ const CustomerSchema = new Mongoose.Schema({
   },
   user_id: {
     // FK
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
+    required: false,
+  },
+  created_by: {
+    // FK
+    type: String,
     required: true,
   },
   created_at: {

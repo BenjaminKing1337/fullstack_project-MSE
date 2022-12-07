@@ -1,6 +1,8 @@
 <template>
   <div id="App">
-    <nav style="display: flex; justify-content: space-between; align-items:center;">
+    <nav
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
       <div>
         <router-link to="/"
           ><img src="@/assets/logo.png" style="width: 60px; height: 40px"
@@ -24,28 +26,32 @@
       <div v-else>
         <router-link to="/login">Login</router-link>
       </div>
+      <div v-if="userAuth()">Hello, {{ email }}</div>
     </nav>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 export default {
   setup() {
+    const email = ref('');
     return {
       userAuth() {
+        email.value = localStorage.getItem('email');
         return (
-          localStorage.getItem("Token") !== null &&
-          localStorage.getItem("Token") !== undefined
+          localStorage.getItem('Token') !== null &&
+          localStorage.getItem('Token') !== undefined
         );
       },
       adminAuth() {
-        return localStorage.getItem("level") === "admin";
+        return localStorage.getItem('level') === 'admin';
       },
+      email,
     };
   },
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
