@@ -24,9 +24,9 @@
         Add Tenants:
         <br />
         <div>
-          Assign Owner:
           <select v-model="pState.owner_id">
-            <option>None</option>
+            <option>Assign Owner</option>
+            <!-- <option>None</option> -->
             <option
               v-for="Tenant in tState.Tenants"
               :key="Tenant._id"
@@ -38,9 +38,8 @@
           </select>
         </div>
         <div>
-          Assign Renter:
           <select v-model="pState.renter_id">
-            <option>None</option>
+            <option>Assign Renter</option>
             <option
               v-for="Tenant in tState.Tenants"
               :key="Tenant._id"
@@ -131,9 +130,15 @@
               :key="Tenant._id"
               :value="Tenant._id"
             >
-              <div v-if="Property.renter_id === Tenant._id">Renter ID:</div>
+              <div v-if="Property.renter_id === Tenant._id">Renter:</div>
               <div v-if="Property.renter_id === Tenant._id">
                 {{ Tenant.forename }} {{ Tenant.surname }}
+              </div>
+            </div>
+            <div v-if="Property.renter_id === 'None'">
+              <div class="spaced">
+                <div>Renter:</div>
+                <div>None</div>
               </div>
             </div>
             <div
@@ -142,9 +147,15 @@
               :key="Tenant._id"
               :value="Tenant._id"
             >
-              <div v-if="Property.owner_id === Tenant._id">Owner ID:</div>
+              <div v-if="Property.owner_id === Tenant._id">Owner:</div>
               <div v-if="Property.owner_id === Tenant._id">
                 {{ Tenant.forename }} {{ Tenant.surname }}
+              </div>
+            </div>
+            <div v-if="Property.owner_id === 'None'">
+              <div class="spaced">
+                <div>Owner:</div>
+                <div>None</div>
               </div>
             </div>
             <br />

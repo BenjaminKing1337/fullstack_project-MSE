@@ -59,7 +59,7 @@
           <div class="spaced">
             <div>Owner:</div>
             <select v-model="Property.owner_id">
-              <option>None</option>
+              <option>Assign Owner</option>
               <option
                 v-for="Tenant in tState.Tenants"
                 :key="Tenant._id"
@@ -73,7 +73,7 @@
           <div class="spaced">
             <div>Renter:</div>
             <select v-model="Property.renter_id">
-              <option>None</option>
+              <option>Assign Renter</option>
               <option
                 v-for="Tenant in tState.Tenants"
                 :key="Tenant._id"

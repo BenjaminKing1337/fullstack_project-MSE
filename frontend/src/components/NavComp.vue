@@ -1,5 +1,5 @@
 <template>
-  <div id="App">
+  <div id="app">
     <nav
       style="display: flex; justify-content: space-between; align-items: center"
     >
@@ -26,27 +26,30 @@
       <div v-else>
         <router-link to="/login">Login</router-link>
       </div>
-      <div v-if="userAuth()">Hello, {{ email.split('@')[0] }}</div>
+      <div v-if="userAuth()">
+        Hello, <br />
+        <b class="login-name">{{ email.split("@")[0] }}</b>
+      </div>
     </nav>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref } from "vue";
 export default {
   setup() {
-    const email = ref('');
+    const email = ref("");
     return {
       userAuth() {
-        email.value = localStorage.getItem('email');
+        email.value = localStorage.getItem("email");
         return (
-          localStorage.getItem('Token') !== null &&
-          localStorage.getItem('Token') !== undefined
+          localStorage.getItem("Token") !== null &&
+          localStorage.getItem("Token") !== undefined
         );
       },
       adminAuth() {
-        return localStorage.getItem('level') === 'admin';
+        return localStorage.getItem("level") === "admin";
       },
       email,
     };

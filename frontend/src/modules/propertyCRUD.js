@@ -16,9 +16,9 @@ const GetProperties = () => {
     value: '',
     bank_note: '',
     created_by: localStorage.getItem('userid'),
-    building_id: 'None',
-    renter_id: 'None',
-    owner_id: 'None',
+    building_id: 'Assign Building',
+    renter_id: 'Assign Renter',
+    owner_id: 'Assign Owner',
     Properties: {},
   });
 
@@ -57,8 +57,6 @@ const GetProperties = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // UserId: localStorage.getItem('userid'),
-        // id: "",
         name: pState.value.name,
         floor: pState.value.floor,
         number: pState.value.number,
@@ -67,11 +65,11 @@ const GetProperties = () => {
         value: pState.value.value,
         bank_note: pState.value.bank_note,
         created_by: pState.value.created_by,
-        building_id: pState.value.building_id,
-        renter_id: pState.value.renter_id,
-        owner_id: pState.value.owner_id,
+        building_id: pState.value.building_id=='Assign Building' ? "None" : pState.value.building_id,
+        renter_id: pState.value.renter_id=='Assign Renter' ? "None" : pState.value.renter_id,
+        owner_id: pState.value.owner_id=='Assign Owner' ? "None" : pState.value.owner_id,
       }),
-    };
+    }; 
     fetch(baseURL + '/properties/new', RequestOptions)
       // GetAllProperties()
       .then(() => {

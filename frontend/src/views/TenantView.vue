@@ -73,7 +73,7 @@
           <div class="spaced">
             <div>Move In:</div>
             <input
-              type="text"
+              type="date"
               placeholder="Move In Date"
               v-model="Tenant.move_in"
             />
@@ -81,7 +81,7 @@
           <div class="spaced">
             <div>Move Out:</div>
             <input
-              type="text"
+              type="date"
               placeholder="Move Out Date"
               v-model="Tenant.move_out"
             />
@@ -131,8 +131,6 @@ export default {
 
     GetSpecificTenant();
     GetAllUsers();
-
-    console.log(Tenant.value);
 
     const Router = useRouter();
 

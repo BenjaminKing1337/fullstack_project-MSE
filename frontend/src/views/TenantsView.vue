@@ -9,12 +9,15 @@
           <div class="title">
             <div class="cardheader">Create New Tenant</div>
           </div>
-          Type:
+          <br />
+          Type: <br />
           <select v-model="tState.type">
             <option>Owner</option>
             <option>Renter</option>
           </select>
           <br />
+          <br />
+          Personal Info: <br />
           <input
             type="text"
             placeholder="First Name"
@@ -33,6 +36,11 @@
           <br />
           <input
             type="text"
+            placeholder="Account Number"
+            v-model="tState.account_number"
+          /><br />
+          <input
+            type="text"
             placeholder="Number of Keys"
             v-model="tState.keys_number"
           />
@@ -43,26 +51,7 @@
             v-model="tState.closest_neighbour"
           />
           <br />
-          <input
-            type="text"
-            placeholder="Account Number"
-            v-model="tState.account_number"
-          />
-          <br />
-          <input
-            type="date"
-            placeholder="Move In Date"
-            v-model="tState.move_in"
-          />
-          <br />
-          <input
-            type="date"
-            placeholder="Move Out Date"
-            v-model="tState.move_out"
-          />
-          <br />
           <input type="text" placeholder="Lease" v-model="tState.lease" />
-          <br />
           <br />
           <div>Assigned User Login:</div>
           <div>
@@ -76,7 +65,22 @@
                 {{ User.email }}
               </option>
             </select>
-          </div>
+          </div> <br>
+          Move In Date: <br />
+          <input
+            type="date"
+            placeholder="Move In Date"
+            v-model="tState.move_in"
+          />
+          <br />
+          Move Out Date: <br />
+          <input
+            type="date"
+            placeholder="Move Out Date"
+            v-model="tState.move_out"
+          />
+          <br />
+          
           <br />
           <button class="create-btn" type="submit">Add Tenant</button>
         </div>
@@ -160,7 +164,9 @@
               :value="User._id"
             >
               <div v-if="Tenant.created_by === User._id">Created by:</div>
-              <div v-if="Tenant.created_by === User._id">{{ User.email.split('@')[0] }}</div>
+              <div v-if="Tenant.created_by === User._id">
+                {{ User.email.split("@")[0] }}
+              </div>
             </div>
             <br />
             <div class="show-btns">
