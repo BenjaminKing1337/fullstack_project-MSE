@@ -7,8 +7,9 @@ const DocumentSchema = new Mongoose.Schema({
     max: 255,
   },
   content: {
-    type: Buffer,
-    required: false,
+    // type: Buffer,
+    type: String,
+    required: true,
   },
   type: [
     {
@@ -24,18 +25,14 @@ const DocumentSchema = new Mongoose.Schema({
       },
     },
   ],
-  //we can only have property, building or customer as "not null".
+  // we can have property or building as "not null"
+  // or both if it is for a specific property .
   property_id: {
     // FK
     type: String,
     required: false,
   },
   building_id: {
-    // FK
-    type: String,
-    required: false,
-  },
-  created_by: {
     // FK
     type: String,
     required: false,
