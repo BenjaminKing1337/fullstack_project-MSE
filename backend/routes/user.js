@@ -5,7 +5,7 @@ const Jwt = require("jsonwebtoken");
 const {
   RegisterValidation,
   LoginValidation,
-  VerifyToken,
+  // VerifyToken,
 } = require("../validation");
 
 // Read all users - GET
@@ -20,8 +20,8 @@ router.get("/", (req, res) => {
 });
 
 //Get user by ID - GET
-router.get("/user", VerifyToken, (req, res) => {
-  User.findById(req.user.id)
+router.get("/get/:id", /* VerifyToken, */ (req, res) => {
+  User.findById({_id: req.params.id})
     .then((data) => {
       res.json(data);
     })
@@ -84,7 +84,7 @@ router.post("/login", async (req, res) => {
       id: user._id,
     },
     process.env.TOKEN_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES_IN },
+    { expiresIn: process.env.JWT_EXPIRES_IN }
   );
   // attach auth token to header
   res.header("auth-token", Token).json({
@@ -92,9 +92,39 @@ router.post("/login", async (req, res) => {
     data: { Token },
     email: user.email,
     level: user.userlevel,
-    id: user._id
+    id: user._id,
   });
 });
 
+// Delete by id route
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const DelUser = await User.findByIdAndDelete({ _id: req.params.id });
+    res.json(DelUser);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+});
+
+// Update by id route
+router.put("/update/:id", async (req, res) => {
+  try {
+    if (req.body.password) {
+      // password hashing
+      const Salt = await Bcrypt.genSalt(10);
+      const Pwd = await Bcrypt.hash(req.body.password, Salt);
+      req.body.password = Pwd;
+    }
+    const UpdUser = await User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      // { Pwd: req.body.password }
+    );
+    console.log(req.body);
+    res.json(UpdUser);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+});
 // modular exportation
 module.exports = router;

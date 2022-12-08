@@ -12,12 +12,6 @@ const DocumentSchema = new Mongoose.Schema({
   },
   type: [
     {
-      customer_id: {
-        // FK
-        type: Mongoose.Schema.Types.ObjectId,
-        ref: 'Customer',
-        required: true,
-      },
       name: {
         type: String,
         required: true,
@@ -33,21 +27,23 @@ const DocumentSchema = new Mongoose.Schema({
   //we can only have property, building or customer as "not null".
   property_id: {
     // FK
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Property',
+    type: String,
     required: false,
   },
   building_id: {
     // FK
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Building',
+    type: String,
     required: false,
   },
-  customer_id: {
+  created_by: {
     // FK
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
+    type: String,
     required: false,
+  },
+  created_by: {
+    // FK
+    type: String,
+    required: true,
   },
   created_at: {
     type: Date,

@@ -18,10 +18,9 @@ const BuildingSchema = new Mongoose.Schema({
     min: 2,
     max: 10,
   },
-  customer_id: {
+  created_by: {
     // FK
-    type: Mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
+    type: String,
     required: true,
   },
   created_at: {

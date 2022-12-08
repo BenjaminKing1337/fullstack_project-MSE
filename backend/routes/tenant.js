@@ -1,65 +1,63 @@
 const Express = require('express');
 const router = Express.Router();
-const Property = require('../models/property');
+const Tenant = require('../models/tenant');
 
-// Get all Property routes
+// Get all Tenant routes
 router.get('/', async (req, res) => {
-  const Properties = await Property.find();
-  res.json(Properties);
+  const Tenants = await Tenant.find();
+  res.json(Tenants);
 });
 
-// Create new Property route
+// Create new Tenant route
 router.post('/new', async (req, res) => {
   try {
-    const NewProperty = new Property(
+    const NewTenant = new Tenant(
       req.body // What the Vue App is sending
     );
-    const SavedProperty = await NewProperty.save(); // mongo save method
-    res.json(SavedProperty); // respond with json to our post endpoint
+    const SavedTenant = await NewTenant.save(); // mongo save method
+    res.json(SavedTenant); // respond with json to our post endpoint
   } catch (error) {
     res.status(400).json({ error });
   }
 });
 
-// Get Properties by id route
+// Get Tenants by id route
 router.get('/get/:id', async (req, res) => {
   try {
-    const IdProperty = await Property.findById({ _id: req.params.id });
-    res.json(IdProperty);
+    const IdTenant = await Tenant.findById({ _id: req.params.id });
+    res.json(IdTenant);
   } catch (error) {
     res.status(400).json({ error });
   }
 });
-// Get Properties by user id route
+// Get Tenants by user id route
 router.get('/get/byUser/:id', async (req, res) => {
   try {
-    const IdProperty = await Property.find({ created_by: req.params.id });
-    res.json(IdProperty);
+    const IdTenant = await Tenant.find({ created_by: req.params.id });
+    res.json(IdTenant);
   } catch (error) {
     res.status(400).json({ error });
   }
 });
 
-// Delete Property by id route
+// Delete Tenant by id route
 router.delete('/delete/:id', async (req, res) => {
   try {
-    const DelProperty = await Property.findByIdAndDelete({
-      _id: req.params.id,
-    });
-    res.json(DelProperty);
+    const DelTenant = await Tenant.findByIdAndDelete({ _id: req.params.id });
+    res.json(DelTenant);
   } catch (error) {
     res.status(400).json({ error });
   }
 });
 
-// Update Property by id route
+// Update Tenant by id route
 router.put('/update/:id', async (req, res) => {
   try {
-    const UpdProperty = await Property.updateOne(
+    const UpdTenant = await Tenant.updateOne(
       { _id: req.params.id },
       { $set: req.body }
     );
-    res.json(UpdProperty);
+    res.json(UpdTenant);
   } catch (error) {
     res.status(400).json({ error });
   }

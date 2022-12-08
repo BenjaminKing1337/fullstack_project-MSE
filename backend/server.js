@@ -12,7 +12,7 @@ app.use((req, res, next) => {
   res.header(
     'Access-Control-Allow-Methods',
     'GET,HEAD,OPTIONS,POST,PUT,DELETE'
-  ); // If using .fetch and not axios
+  );
   res.header(
     'Access-Control-Allow-Headers',
     'auth-token, Origin, X-Requested-With, Content-Type, Accept'
@@ -43,6 +43,9 @@ app.use('/api/properties', propertyRoutes);
 // User routes
 const userRoutes = require('./routes/user');
 app.use("/api/users", userRoutes);
+// Tenant routes
+const tenantRoutes = require('./routes/tenant');
+app.use("/api/tenants", tenantRoutes);
 
 const PORT = process.env.PORT || 3000;
 

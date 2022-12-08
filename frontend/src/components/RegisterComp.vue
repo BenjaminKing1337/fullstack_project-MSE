@@ -3,8 +3,12 @@
     Register
     <div class="formContainer">
       <form id="RegisterForm" @submit.prevent="onSubmit" @reset="onReset">
-        <input placeholder="Email" type="email" v-model="email" />
-        <input placeholder="Password" type="password" v-model="password" />
+        <input placeholder="Email" type="email" v-model="uState.email" />
+        <input
+          placeholder="Password"
+          type="password"
+          v-model="uState.password"
+        />
         <div>
           <button type="submit">Register</button>
           <button type="reset">Reset</button>
@@ -13,13 +17,21 @@
     </div>
     <br />
     <br />
+    <div v-if="adminAuth()">
       Current Users:
-    <div class="grid3x3">
-      <div  v-for="User in uState.Users" :key="User._id">
-        <div style="border: 1px solid black; border-radius: 15px">
-          Email:&nbsp;&nbsp;{{ User.email }}
+      <div class="grid3x3">
+        <div v-for="User in uState.Users" :key="User._id">
+          <div style="border: 1px solid black; border-radius: 15px">
+            Email:&nbsp;&nbsp;{{ User.email }}
+          </div>
+          <router-link :to="`/users/${User._id}`" class="remove_linkStyle">
+            <button class="full-width">
+              <strong>Edit User</strong>
+            </button>
+          </router-link>
+          <button @click="DeleteUser(User._id)">Delete</button>
+          <br />
         </div>
-        <br>
       </div>
     </div>
   </div>
@@ -28,8 +40,6 @@
 <script>
 import UserCRUD from "../modules/userCRUD";
 import { ref } from "vue";
-import axios from "axios";
-import { useRouter } from "vue-router";
 import { onMounted } from "vue";
 
 export default {
@@ -38,8 +48,8 @@ export default {
   setup() {
     const email = ref(null);
     const password = ref(null);
-    const router = useRouter();
-    const { uState, GetAllUsers } = UserCRUD();
+    const { uState, GetAllUsers, DeleteUser, EditUser, RegisterUser, RegisterUserByAdmin } =
+      UserCRUD();
     onMounted(() => {
       GetAllUsers();
     });
@@ -48,32 +58,35 @@ export default {
       password,
       uState,
       GetAllUsers,
+      DeleteUser,
+      EditUser,
+      RegisterUser,
+      RegisterUserByAdmin,
 
       async created() {
-        try {
-          const response = await axios.get(`users/`);
-          this.posts = response.data;
-        } catch (e) {
-          this.errors.push(e);
-        }
+        GetAllUsers();
       },
 
       async onSubmit() {
-        try {
-          await axios.post("users/register", {
-            email: email.value,
-            password: password.value,
-          });
-          router.push("/login");
-        } catch (err) {
-          let msg = err.response.data.error;
-          console.log(msg);
+        if (localStorage.getItem("level") === "admin") {
+          RegisterUserByAdmin();
+        } else {
+          RegisterUser();
         }
       },
 
       onReset() {
         email.value = null;
         password.value = null;
+      },
+      userAuth() {
+        return (
+          localStorage.getItem("Token") !== null &&
+          localStorage.getItem("Token") !== undefined
+        );
+      },
+      adminAuth() {
+        return localStorage.getItem("level") === "admin";
       },
     };
   },

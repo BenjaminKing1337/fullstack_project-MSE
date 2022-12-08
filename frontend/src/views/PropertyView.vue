@@ -1,36 +1,76 @@
 <template>
   <body>
-    <h4>Welcome to A single Property's page</h4>
-    <p>Here you can create and manage your individual Property</p>
+    <h4>Single Property's page</h4>
+    <p>Here you can edit and manage your individual Property</p>
 
-    <h6>My Property</h6>
-
-    <div v-for="Item in Property" :key="Item._id">
     <div>
-      <div style="border: 1px solid black; border-radius: 15px">
-        No.:&nbsp;&nbsp;{{ Item.number }}<br />
-        Address:&nbsp;&nbsp;{{ Item.address }} <br />
-        Name:&nbsp;&nbsp;{{ Item.name }}
-      </div>
       <form @submit.prevent="EditProperty">
-        <input type="text" placeholder="Number" required v-model="pState.number" />
-        <br />
-        <input type="text" placeholder="Address" v-model="pState.address" />
-        <br />
-        <input type="text" placeholder="Name" v-model="pState.name" />
-        <br />
+        <div style="border: 1px solid black; border-radius: 15px">
+          Name: <input type="text" placeholder="Name" v-model="Property.name" />
+          <br />
+          Floor:
+          <input type="text" placeholder="Floor" v-model="Property.floor" />
+          <br />
+          No.:<input
+            type="text"
+            placeholder="Number"
+            required
+            v-model="Property.number"
+          />
+          <br />
+          Address:
+          <input type="text" placeholder="Address" v-model="Property.address" />
+          <br />
+          Postal Code:
+          <input
+            type="text"
+            placeholder="Postal Code"
+            v-model="Property.postal_code"
+          />
+          <br />
+          Value:
+          <input type="text" placeholder="Value" v-model="Property.value" />
+          <br />
+          Bank Note:
+          <input
+            type="text"
+            placeholder="Bank Note"
+            v-model="Property.bank_note"
+          />
+          <br />
+          Owner:
+          <select v-model="Property.owner_id">
+            <option>None</option>
+            <option
+              v-for="Tenant in tState.Tenants"
+              :key="Tenant._id"
+              :value="Tenant._id"
+            >
+              {{ Tenant.forename }} {{ Tenant.surname }}
+            </option>
+          </select>
+          Renter:
+          <select v-model="Property.renter_id">
+            <option>None</option>
+            <option
+              v-for="Tenant in tState.Tenants"
+              :key="Tenant._id"
+              :value="Tenant._id"
+            >
+              {{ Tenant.forename }} {{ Tenant.surname }}
+            </option>
+          </select>
+        </div>
         <button type="submit">Update</button>
       </form>
       <button type="button" @click="goBack()">Back</button>
-    </div>
-
-    <!-- {{ Property.id }} -->
     </div>
   </body>
 </template>
 
 <script>
 import PropertyCRUD from "../modules/propertyCRUD";
+import TenantCRUD from "../modules/tenantCRUD";
 import { useRouter } from "vue-router";
 
 export default {
@@ -43,16 +83,22 @@ export default {
       GetSpecificProperty,
       EditProperty,
     } = PropertyCRUD();
+    const { tState, Tenant, TenantId, GetAllTenants } = TenantCRUD();
 
     GetSpecificProperty();
+    GetAllTenants();
+
 
     const Router = useRouter();
 
     return {
+      tState,
+      Tenant,
+      TenantId,
       pState,
       Property,
       PropertyId,
-      // GetAllProperties,
+      GetAllTenants,
       GetSpecificProperty,
       EditProperty,
       goBack() {
