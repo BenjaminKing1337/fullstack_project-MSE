@@ -26,7 +26,7 @@
       <div v-else>
         <router-link to="/login">Login</router-link>
       </div>
-      <div v-if="userAuth()">Hello, {{ email }}</div>
+      <div v-if="userAuth()">Hello, {{ email.split('@')[0] }}</div>
     </nav>
     <router-view></router-view>
   </div>

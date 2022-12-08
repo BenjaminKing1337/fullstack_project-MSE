@@ -2,34 +2,29 @@
   <body>
     <h4>Welcome to Properties page</h4>
     <p>Here you can create and manage your Properties</p>
-
-    <div>
-      <div>
-        <div>
-          <div>Create new Property</div>
-        </div>
-
-        <div>
-          Name: <input v-model="pState.name" /> <br />
-          Floor: <input v-model="pState.floor" /> <br />
-          Number: <input v-model="pState.number" /> <br />
-          Address: <input v-model="pState.address" /> <br />
-          Postal Code: <input v-model="pState.postal_code" /> <br />
-          Value: <input v-model="pState.value" /> <br />
-          Bank Note: <input v-model="pState.bank_note" /> <br />
-          <!-- Created by: <input
-            v-model="pState.created_by"
-          /> <br>
-          Building ID: <input
+    <!-- Create New -->
+    <div class="create-card">
+      <div class="title">
+        <div class="cardheader">Create new Property</div>
+      </div>
+      <br />
+      <input placeholder="Name" v-model="pState.name" /> <br />
+      <input placeholder="Floor" v-model="pState.floor" /> <br />
+      <input placeholder="Number" v-model="pState.number" /> <br />
+      <input placeholder="Address" v-model="pState.address" /> <br />
+      <input placeholder="Postal Code" v-model="pState.postal_code" /> <br />
+      <input placeholder="Value" v-model="pState.value" /> <br />
+      <input placeholder="Bank Note" v-model="pState.bank_note" /> <br />
+      <!-- Building ID: <input
             v-model="pState.building_id"
-          /> <br>
-          Renter ID: <input
-            v-model="pState.renter_id"
-          /> <br>
-          Owner ID: <input
-            v-model="pState.owner_id"
-          /> <br> -->
-          Owner:
+          /> -->
+
+      <div>
+        <br />
+        Add Tenants:
+        <br />
+        <div>
+          Assign Owner:
           <select v-model="pState.owner_id">
             <option>None</option>
             <option
@@ -37,11 +32,13 @@
               :key="Tenant._id"
               :value="Tenant._id"
             >
-              {{ Tenant.email }}
+              <div>{{ Tenant.forename }} {{ Tenant.surname }}</div>
+              <br />
             </option>
           </select>
-          <br />
-          Renter:
+        </div>
+        <div>
+          Assign Renter:
           <select v-model="pState.renter_id">
             <option>None</option>
             <option
@@ -49,57 +46,131 @@
               :key="Tenant._id"
               :value="Tenant._id"
             >
-              {{ Tenant.email }}
+              <div>{{ Tenant.forename }} {{ Tenant.surname }}</div>
             </option>
           </select>
-          <div></div>
-        </div>
-
-        <div>
-          <button @click="NewProperty()">Create New Property</button>
         </div>
       </div>
+      <br />
+      <div>
+        <button class="create-btn" @click="NewProperty()">
+          Create New Property
+        </button>
+      </div>
     </div>
-
-    <h6>My Properties</h6>
+    <!-- Show All -->
     <div>
-      <div v-for="Property in pState.Properties" :key="Property._id">
-        <br />
-        <div>{{ Property.name }}</div>
-        <div style="border: 1px solid black; border-radius: 15px">
-          ID:&nbsp;&nbsp;{{ Property._id }} <br />
-          Name:&nbsp;&nbsp;{{ Property.name }} <br />
-          Floor:&nbsp;&nbsp;{{ Property.floor }} <br />
-          No.:&nbsp;&nbsp;{{ Property.number }}<br />
-          Address:&nbsp;&nbsp;{{ Property.address }} <br />
-          Postal Code:&nbsp;&nbsp;{{ Property.postal_code }} <br />
-          Value:&nbsp;&nbsp;{{ Property.value }} <br />
-          Bank Note:&nbsp;&nbsp;{{ Property.bank_note }} <br />
-          Created by:&nbsp;&nbsp;{{ Property.created_by }} <br />
-          Building ID:&nbsp;&nbsp;{{ Property.building_id }} <br />
-          Renter ID:&nbsp;&nbsp;{{ Property.renter_id }} <br />
-          Owner ID:&nbsp;&nbsp;{{ Property.owner_id }} <br />
+      <h5>My Properties</h5>
+      <div class="grid3x3">
+        <div v-for="Property in pState.Properties" :key="Property._id">
+          <br />
+          <div class="show-card">
+            <div class="title">
+              <div class="cardheader">
+                <b>{{ Property.name }}</b>
+              </div>
+            </div>
+            <br />
+            <br />
+            <!-- <div class="spaced">
+              <div>ID:</div>
+              <div>{{ Property._id }}</div>
+            </div> -->
+            <!-- <div class="spaced">
+              <div>Name:</div>
+              <div>{{ Property.name }}</div>
+            </div> -->
+            <div class="spaced">
+              <div>Floor No.:</div>
+              <div>{{ Property.floor }}</div>
+            </div>
+            <div class="spaced">
+              <div>Number:</div>
+              <div>{{ Property.number }}</div>
+            </div>
+            <div class="spaced">
+              <div>Address:</div>
+              <div>{{ Property.address }}</div>
+            </div>
+            <div class="spaced">
+              <div>Postal Code:</div>
+              <div>{{ Property.postal_code }}</div>
+            </div>
+            <div class="spaced">
+              <div>Value:</div>
+              <div>{{ Property.value }}</div>
+            </div>
+            <div class="spaced">
+              <div>Bank Note:</div>
+              <div>{{ Property.bank_note }}</div>
+            </div>
+            <div
+              class="spaced"
+              v-for="User in uState.Users"
+              :key="User._id"
+              :value="User._id"
+            >
+              <div v-if="Property.created_by === User._id">Created by:</div>
+              <div v-if="Property.created_by === User._id">
+                {{ User.email.split("@")[0] }}
+              </div>
+            </div>
+            <!-- <div class="spaced"
+              v-for="Building in bState.Buildings"
+              :key="Building._id"
+              :value="Building._id"
+            >
+              <div v-if="Property.building_id === Tenant._id">Building ID:</div>
+              <div v-if="Property.building_id === Tenant._id">
+                {{ Building._id }}
+              </div>
+            </div> -->
+            <div
+              class="spaced"
+              v-for="Tenant in tState.Tenants"
+              :key="Tenant._id"
+              :value="Tenant._id"
+            >
+              <div v-if="Property.renter_id === Tenant._id">Renter ID:</div>
+              <div v-if="Property.renter_id === Tenant._id">
+                {{ Tenant.forename }} {{ Tenant.surname }}
+              </div>
+            </div>
+            <div
+              class="spaced"
+              v-for="Tenant in tState.Tenants"
+              :key="Tenant._id"
+              :value="Tenant._id"
+            >
+              <div v-if="Property.owner_id === Tenant._id">Owner ID:</div>
+              <div v-if="Property.owner_id === Tenant._id">
+                {{ Tenant.forename }} {{ Tenant.surname }}
+              </div>
+            </div>
+            <br />
+            <div class="show-btns">
+              <router-link
+                :to="`/properties/${Property._id}`"
+                class="remove_linkStyle"
+              >
+                <button class="full-width">
+                  <strong>Update</strong>
+                </button>
+              </router-link>
+              <button @click="DeleteProperty(Property._id)">Delete</button>
+            </div>
+          </div>
         </div>
-
-        <router-link
-          :to="`/properties/${Property._id}`"
-          class="remove_linkStyle"
-        >
-          <button class="full-width">
-            <strong>Update</strong>
-          </button>
-        </router-link>
-        <button @click="DeleteProperty(Property._id)">Delete</button>
       </div>
     </div>
   </body>
 </template>
 
 <script>
-import PropertyCRUD from '../modules/propertyCRUD';
-import UserCRUD from '../modules/userCRUD';
-import TenantCRUD from '../modules/tenantCRUD';
-import { onMounted } from 'vue';
+import PropertyCRUD from "../modules/propertyCRUD";
+import UserCRUD from "../modules/userCRUD";
+import TenantCRUD from "../modules/tenantCRUD";
+import { onMounted } from "vue";
 export default {
   setup() {
     const {

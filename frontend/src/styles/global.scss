@@ -1,3 +1,12 @@
+$cs: (
+  1: black,
+  2: red,
+  3: green,
+  4: magenta,
+  5: blue,
+  bg: white,
+);
+
 #App {
   #LoginPage {
     #LoginForm {
@@ -24,4 +33,55 @@
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.create-card {
+  border: 1px solid black;
+  border-radius: 15px;
+  display: inline-block;
+  padding: 0 2%;
+  .title {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    .cardheader {
+      // display: inline-block;
+      background-color: map-get($cs, bg);
+      float: left;
+    }
+  }
+  .create-btn {
+    float: right;
+    margin-top: 10px;
+    margin-bottom: -10px;
+  }
+}
+.show-card {
+  border: 1px solid black;
+  border-radius: 15px;
+  display: inline-block;
+  padding: 0 2%;
+  .title {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    .cardheader {
+      // display: inline-block;
+      background-color: map-get($cs, bg);
+      float: left;
+    }
+  }
+  .spaced {
+    display: flex;
+    justify-content: space-between;
+    select {
+      width: 158px;
+    }
+    input {
+      width: 150px;
+    }
+  }
+  .show-btns {
+    margin-top: 10px;
+    margin-bottom: -10px;
+    float: right;
+  }
 }

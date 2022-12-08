@@ -21,7 +21,7 @@ const GetTenants = () => {
     move_in: '',
     move_out: '',
     lease: '',
-    user_id: '',
+    user_id: 'None',
     created_by: localStorage.getItem('userid'),
     Tenants: {},
   });

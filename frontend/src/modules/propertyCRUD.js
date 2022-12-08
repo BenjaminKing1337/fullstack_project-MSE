@@ -16,9 +16,9 @@ const GetProperties = () => {
     value: '',
     bank_note: '',
     created_by: localStorage.getItem('userid'),
-    building_id: '',
-    renter_id: '',
-    owner_id: '',
+    building_id: 'None',
+    renter_id: 'None',
+    owner_id: 'None',
     Properties: {},
   });
 

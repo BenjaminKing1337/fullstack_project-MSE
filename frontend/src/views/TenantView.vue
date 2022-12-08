@@ -3,37 +3,112 @@
     <h4>Single Tenant's page</h4>
     <p>Here you can edit and manage your individual Tenant</p>
 
-    <div>
-        
+    <div class="show-card">
+      <div class="title">
+        <div class="cardheader">Update Tenant</div>
+      </div>
+      <br />
       <form @submit.prevent="EditTenant">
-      <div style="border: 1px solid black; border-radius: 15px">
-        ID:&nbsp;&nbsp;
-Type:&nbsp;&nbsp;<input type="text" placeholder="Type" v-model="Tenant.type" /><br />
-First Name:&nbsp;&nbsp;<input type="text" placeholder="First Name" v-model="Tenant.forename" /><br />
-Last Name:&nbsp;&nbsp;<input type="text" placeholder="Last Name" v-model="Tenant.surname" /><br />
-Email:&nbsp;&nbsp;<input type="text" placeholder="Email" v-model="Tenant.email" /><br />
-Phone no:&nbsp;&nbsp;<input type="text" placeholder="Phone Number" v-model="Tenant.phone_number" /><br />
-Number of Keys:&nbsp;&nbsp;<input type="text" placeholder="Number of Keys" v-model="Tenant.keys_number" /><br />
-Closest Neighbour:&nbsp;&nbsp;<input type="text" placeholder="Closest Neighbour" v-model="Tenant.closest_neighbour" /><br />
-Account Number:&nbsp;&nbsp;<input type="text" placeholder="Account Number" v-model="Tenant.account_number" /><br />
-Move In:&nbsp;&nbsp;<input type="text" placeholder="Move In Date" v-model="Tenant.move_in" /><br />
-Move Out:&nbsp;&nbsp;<input type="text" placeholder="Move Out Date" v-model="Tenant.move_out" /><br />
-Lease:&nbsp;&nbsp;<input type="text" placeholder="Lease" v-model="Tenant.lease" /><br />
-User ID: &nbsp;&nbsp;<select v-model="Tenant.user_id">
+        <div>
+          <!-- <div class="spaced">
+            <div>ID:</div>
+            {{ Tenant._id }}
+          </div> -->
+          <div class="spaced">
+            <div>Type:</div>
+            <input type="text" placeholder="Type" v-model="Tenant.type" />
+          </div>
+          <div class="spaced">
+            <div>First Name:</div>
+            <input
+              type="text"
+              placeholder="First Name"
+              v-model="Tenant.forename"
+            />
+          </div>
+          <div class="spaced">
+            <div>Last Name:</div>
+            <input
+              type="text"
+              placeholder="Last Name"
+              v-model="Tenant.surname"
+            />
+          </div>
+          <div class="spaced">
+            <div>Email:</div>
+            <input type="text" placeholder="Email" v-model="Tenant.email" />
+          </div>
+          <div class="spaced">
+            <div>Phone no:</div>
+            <input
+              type="text"
+              placeholder="Phone Number"
+              v-model="Tenant.phone_number"
+            />
+          </div>
+          <div class="spaced">
+            <div>Number of Keys:</div>
+            <input
+              type="text"
+              placeholder="Number of Keys"
+              v-model="Tenant.keys_number"
+            />
+          </div>
+          <div class="spaced">
+            <div>Closest Neighbour:</div>
+            <input
+              type="text"
+              placeholder="Closest Neighbour"
+              v-model="Tenant.closest_neighbour"
+            />
+          </div>
+          <div class="spaced">
+            <div>Account Number:</div>
+            <input
+              type="text"
+              placeholder="Account Number"
+              v-model="Tenant.account_number"
+            />
+          </div>
+          <div class="spaced">
+            <div>Move In:</div>
+            <input
+              type="text"
+              placeholder="Move In Date"
+              v-model="Tenant.move_in"
+            />
+          </div>
+          <div class="spaced">
+            <div>Move Out:</div>
+            <input
+              type="text"
+              placeholder="Move Out Date"
+              v-model="Tenant.move_out"
+            />
+          </div>
+          <div class="spaced">
+            <div>Lease:</div>
+            <input type="text" placeholder="Lease" v-model="Tenant.lease" />
+          </div>
+          <div class="spaced">
+            <div>User ID:</div>
+            <select v-model="Tenant.user_id">
               <option
                 v-for="User in uState.Users"
                 :key="User._id"
                 :value="User._id"
               >
-               {{ User.email }}
+                {{ User.email }}
               </option>
             </select>
-      </div>
-        <button type="submit">Update</button>
+          </div>
+        </div>
+        <div class="show-btns">
+          <button type="submit">Update</button>
+          <button type="button" @click="goBack()">Back</button>
+        </div>
       </form>
-      <button type="button" @click="goBack()">Back</button>
     </div>
-
   </body>
 </template>
 
@@ -52,17 +127,11 @@ export default {
       GetSpecificTenant,
       EditTenant,
     } = TenantCRUD();
-    const {
-      uState,
-      User,
-      UserId,
-      GetAllUsers
-    } = UserCRUD();
+    const { uState, User, UserId, GetAllUsers } = UserCRUD();
 
     GetSpecificTenant();
     GetAllUsers();
 
-    
     console.log(Tenant.value);
 
     const Router = useRouter();
