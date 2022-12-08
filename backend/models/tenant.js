@@ -24,9 +24,9 @@ const TenantSchema = new Mongoose.Schema({
     max: 255,
   },
   phone_number: {
-    type: Number,
+    type: String,
     required: false,
-    min: 8,
+    min: 2,
   },
   keys_number: {
     type: String,

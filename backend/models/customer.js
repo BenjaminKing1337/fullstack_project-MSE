@@ -25,9 +25,9 @@ const CustomerSchema = new Mongoose.Schema({
     max: 255,
   },
   contact_number: {
-    type: Number,
+    type: String,
     required: false,
-    min: 8,
+    min: 2,
   },
   user_id: {
     // FK

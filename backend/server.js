@@ -42,10 +42,19 @@ const propertyRoutes = require('./routes/property');
 app.use('/api/properties', propertyRoutes);
 // User routes
 const userRoutes = require('./routes/user');
-app.use("/api/users", userRoutes);
+app.use('/api/users', userRoutes);
 // Tenant routes
 const tenantRoutes = require('./routes/tenant');
-app.use("/api/tenants", tenantRoutes);
+app.use('/api/tenants', tenantRoutes);
+// Customer routes
+const customerRoutes = require('./routes/customer');
+app.use('/api/customers', customerRoutes);
+// Building routes
+const buildingRoutes = require('./routes/building');
+app.use('/api/buildings', buildingRoutes);
+// Document routes
+const documentRoutes = require('./routes/document');
+app.use('/api/documents', documentRoutes);
 
 const PORT = process.env.PORT || 3000;
 
