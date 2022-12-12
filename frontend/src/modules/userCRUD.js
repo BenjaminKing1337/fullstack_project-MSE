@@ -85,8 +85,8 @@ const GetUsers = () => {
           localStorage.setItem('userid', data.id);
           localStorage.setItem('email', data.email);
           // localStorage.setItem("name", response.data.name);
-          Router.push('https://mainsolutionestates.netlify.app/');
-          // Router.reload();
+          Router.push('/');
+          location.reload();
         });
     } catch (error) {
       console.log(error);
