@@ -20,7 +20,7 @@ export default {
   methods: {
     onLogout() {
       localStorage.clear();
-      this.$router.go("https://mainsolutionestates.netlify.app/");
+      this.$router.push("/");
     },
     onRegret() {
       this.$router.push("/");
