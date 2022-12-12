@@ -31,6 +31,7 @@
         <b class="login-name">{{ email.charAt(0).toUpperCase() + email.slice(1).split("@")[0] }}</b>
       </div>
     </nav>
+    <router-view></router-view>
   </div>
 </template>
 
