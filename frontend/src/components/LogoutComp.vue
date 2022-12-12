@@ -20,7 +20,7 @@ export default {
   methods: {
     onLogout() {
       localStorage.clear();
-      this.$router.go("/");
+      this.$router.go("../");
     },
     onRegret() {
       this.$router.push("/");
