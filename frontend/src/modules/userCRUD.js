@@ -85,7 +85,6 @@ const GetUsers = () => {
           localStorage.setItem("userid", data.id);
           localStorage.setItem("email", data.email);
           // localStorage.setItem("name", response.data.name);
-          window.location.reload(true);
           Router.push({path: '/'});
         });
     } catch (error) {
