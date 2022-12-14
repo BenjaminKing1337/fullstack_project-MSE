@@ -25,7 +25,6 @@ export default {
     },
     onRegret() {
       this.$router.push("/");
-      window.location.reload(true);
     },
   },
 };
