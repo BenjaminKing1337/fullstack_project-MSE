@@ -21,6 +21,7 @@ export default {
     onLogout() {
       localStorage.clear();
       this.$router.go("/");
+      window.location.reload(true);
     },
     onRegret() {
       this.$router.push("/");
