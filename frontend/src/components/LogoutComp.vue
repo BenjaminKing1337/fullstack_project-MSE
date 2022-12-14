@@ -21,9 +21,11 @@ export default {
     onLogout() {
       localStorage.clear();
       this.$router.push("/");
+      window.location.reload(true);
     },
     onRegret() {
       this.$router.push("/");
+      window.location.reload(true);
     },
   },
 };
