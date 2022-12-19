@@ -13,13 +13,9 @@ let UserSchema = new Schema({
     min: 6,
     max: 255,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
   userlevel: {
     type: String,
-    required: true,
+    required: false,
     enum: ['superadmin', 'admin', 'user'], // Only accepts these 3 types
     default: 'user',
   },

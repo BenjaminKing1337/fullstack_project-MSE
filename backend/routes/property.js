@@ -55,7 +55,7 @@ router.delete('/delete/:id', async (req, res) => {
 // Update Property by id route
 router.put('/update/:id', async (req, res) => {
   try {
-    const UpdProperty = await Property.updateOne(
+    const UpdProperty = await Property.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: req.body }
     );

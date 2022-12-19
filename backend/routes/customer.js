@@ -55,7 +55,7 @@ router.delete('/delete/:id', async (req, res) => {
 // Update Customer by id
 router.put('/update/:id', async (req, res) => {
   try {
-    const UpdCustomer = await Customer.updateOne(
+    const UpdCustomer = await Customer.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: req.body }
     );
