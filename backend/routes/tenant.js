@@ -53,7 +53,7 @@ router.delete('/delete/:id', async (req, res) => {
 // Update Tenant by id route
 router.put('/update/:id', async (req, res) => {
   try {
-    const UpdTenant = await Tenant.updateOne(
+    const UpdTenant = await Tenant.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: req.body }
     );

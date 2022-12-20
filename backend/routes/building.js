@@ -55,7 +55,7 @@ router.delete('/delete/:id', async (req, res) => {
 // Update Building by id
 router.put('/update/:id', async (req, res) => {
   try {
-    const UpdBuilding = await Building.updateOne(
+    const UpdBuilding = await Building.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: req.body }
     );
