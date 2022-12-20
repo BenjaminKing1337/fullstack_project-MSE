@@ -20,10 +20,10 @@
       <div v-if="adminAuth()">
         <router-link to="/tenants">Tenants</router-link>
       </div>
-      <div v-if="adminAuth()">
+      <!-- <div v-if="adminAuth() || superadminAuth()">
         <router-link to="/register">Register</router-link>
-      </div>
-      <div v-if="!userAuth() || superadminAuth()">
+      </div> -->
+      <div v-if="userAuth() && !userlevelAuth()">
         <router-link to="/register">Register</router-link>
       </div>
       <div v-if="userAuth()">
@@ -55,6 +55,9 @@ export default {
           localStorage.getItem('Token') !== null &&
           localStorage.getItem('Token') !== undefined
         );
+      },
+      userlevelAuth() {
+        return localStorage.getItem('level') === 'user';
       },
       adminAuth() {
         return localStorage.getItem('level') === 'admin';
