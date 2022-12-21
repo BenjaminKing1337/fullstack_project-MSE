@@ -22,6 +22,12 @@ const routes = [
     beforeEnter: AuthGuard,
   },
   {
+    path: '/newcustomer',
+    name: 'newcustomer',
+    component: () => import('../views/CustomersCreateView.vue'),
+    beforeEnter: AuthGuard,
+  },
+  {
     path: '/customers/:id',
     name: 'customer',
     component: () => import('../views/CustomerView.vue'),
@@ -31,6 +37,12 @@ const routes = [
     path: '/buildings',
     name: 'buildings',
     component: () => import('../views/BuildingsView.vue'),
+    beforeEnter: AuthGuard,
+  },
+  {
+    path: '/newbuilding',
+    name: 'newbuilding',
+    component: () => import('../views/BuildingsCreateView.vue'),
     beforeEnter: AuthGuard,
   },
   {
@@ -46,6 +58,12 @@ const routes = [
     beforeEnter: AuthGuard,
   },
   {
+    path: '/newproperty',
+    name: 'newproperty',
+    component: () => import('../views/PropertiesCreateView.vue'),
+    beforeEnter: AuthGuard,
+  },
+  {
     path: '/properties/:id',
     name: 'property',
     component: () => import('../views/PropertyView.vue'),
@@ -58,6 +76,12 @@ const routes = [
     beforeEnter: AuthGuard,
   },
   {
+    path: '/newtenant',
+    name: 'newtenant',
+    component: () => import('../views/TenantsCreateView.vue'),
+    beforeEnter: AuthGuard,
+  },
+  {
     path: '/tenants/:id',
     name: 'tenant',
     component: () => import('../views/TenantView.vue'),
@@ -67,6 +91,12 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import('../components/RegisterComp.vue'),
+    // beforeEnter: LoggedInGuard,
+  },
+  {
+    path: '/users',
+    name: 'users',
+    component: () => import('../components/UsersComp.vue'),
     // beforeEnter: LoggedInGuard,
   },
   {

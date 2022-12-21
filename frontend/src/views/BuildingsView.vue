@@ -1,23 +1,5 @@
 <template>
   <body>
-    <h4>Welcome to Buildings page</h4>
-    <p>Here you can create and manage your Buildings</p>
-    <!-- Create New -->
-    <div class="create-card">
-      <div class="title">
-        <div class="cardheader">Create new Building</div>
-      </div>
-      <br />
-      <input placeholder="Name" v-model="bState.name" /> <br />
-      <input placeholder="Number" v-model="bState.number" /> <br />
-      <input placeholder="Postal Code" v-model="bState.postal_code" /> <br />
-      <br />
-      <div>
-        <button class="create-btn" @click="NewBuilding()">
-          Create New Building
-        </button>
-      </div>
-    </div>
     <!-- Show All -->
     <div>
       <h5>My Buildings</h5>

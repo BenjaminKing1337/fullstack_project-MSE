@@ -1,8 +1,10 @@
 $cs: (
-  1: black,
+  text: black,
   2: red,
   user: green,
-  highlight: magenta,
+  highlight: lightgrey,
+  highlight2: grey,
+  highlight-active: Magenta,
   5: blue,
   bg: white,
 );
@@ -30,13 +32,12 @@ $cs: (
 
 // Global classes
 :root {
-  background-color: map-get($cs, bg );
-  #app{
-    
+  background-color: map-get($cs, bg);
+  #app {
   }
 }
 .login-name {
-  color: map-get($cs, user );
+  color: map-get($cs, user);
 }
 
 .grid3x3 {
@@ -102,4 +103,52 @@ $cs: (
     margin-bottom: -10px;
     float: right;
   }
+}
+
+//Nav bar dropdowns
+.dropdown {
+  position: relative;
+  display: inline-block;
+  &:hover .dropdown-content {
+    display: block;
+  }
+  &:hover .dropbtn {
+    background-color: map-get($cs, highlight);
+  }
+  &.router-link-exact-active .dropbtn {
+    color: map-get($cs, highlight-active);
+  }
+  .dropbtn {
+    background-color: map-get($cs, bg);
+    color: map-get($cs, text);
+    padding: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px 15px 0 0;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: map-get($cs, bg);
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 100%;
+    a {
+      color: map-get($cs, text);
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      border-radius: 15px;
+      &.router-link-exact-active {
+        color: map-get($cs, highlight-active);
+      }
+    }
+    a:hover {
+      background-color: map-get($cs, highlight2);
+    }
+  }
+  
 }

@@ -39,7 +39,7 @@ nav {
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: map-get($cs, highlight);
+      color: map-get($cs, highlight-active);
     }
   }
 }

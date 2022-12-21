@@ -1,23 +1,23 @@
 <template>
   <div id="RegisterPage">
-    Register
-    <div class="formContainer">
-      <form id="RegisterForm" @submit.prevent="onSubmit" @reset="onReset">
-        <input placeholder="Email" type="email" v-model="uState.email" />
-        <input
-          placeholder="Password"
-          type="password"
-          v-model="uState.password"
-        />
-        <div>
-          <button type="submit">Register</button>
-          <button type="reset">Reset</button>
+    <h2>Currently Registered User Profiles</h2>
+    <br>
+    <div v-if="adminAuth()">
+      <div class="grid3x3">
+        <div v-for="User in uState.Users" :key="User._id">
+          <div style="border: 1px solid black; border-radius: 15px">
+            Email:&nbsp;&nbsp;{{ User.email }}
+          </div>
+          <router-link :to="`/users/${User._id}`" class="remove_linkStyle">
+            <button class="full-width">
+              <strong>Edit User</strong>
+            </button>
+          </router-link>
+          <button @click="DeleteUser(User._id)">Delete</button>
+          <br />
         </div>
-      </form>
+      </div>
     </div>
-    <br />
-    <br />
-    
   </div>
 </template>
 
