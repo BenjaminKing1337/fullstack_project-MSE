@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav
-      style="display: flex; justify-content: space-between; align-items: center"
+      style="display: flex; flex-direction: column; justify-content: space-between; align-items: center"
     >
       <div>
         <router-link to="/"
@@ -93,7 +93,7 @@
         }}</b>
       </div> -->
     </nav>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
