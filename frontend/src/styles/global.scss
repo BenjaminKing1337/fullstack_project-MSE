@@ -115,7 +115,9 @@ $cs: (
   &:hover .dropbtn {
     background-color: map-get($cs, highlight);
   }
-  &.router-link-exact-active .dropbtn {
+  &:active .dropbtn {
+    animation-name: anim;
+    animation-duration: 100s;
     color: map-get($cs, highlight-active);
   }
   .dropbtn {
@@ -126,13 +128,13 @@ $cs: (
     font-weight: bold;
     border: none;
     cursor: pointer;
-    border-radius: 15px 15px 0 0;
+    border-radius: 5px 5px 0 0;
   }
   .dropdown-content {
     display: none;
     position: absolute;
     background-color: map-get($cs, bg);
-    border-radius: 0 0 15px 15px;
+    border-radius: 0 0 5px 5px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     min-width: 100%;
@@ -141,7 +143,7 @@ $cs: (
       padding: 10px;
       text-decoration: none;
       display: block;
-      border-radius: 15px;
+      border-radius: 5px;
       &.router-link-exact-active {
         color: map-get($cs, highlight-active);
       }
@@ -151,4 +153,12 @@ $cs: (
     }
   }
   
+}
+
+@keyframes anim {
+  0% {color: map-get($cs, text)};
+  25% {color: map-get($cs, highlight-active)};
+  50% {color: green};
+  75% {background: green};
+  100% {background: green};
 }

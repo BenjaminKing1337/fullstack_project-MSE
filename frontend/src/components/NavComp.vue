@@ -8,16 +8,15 @@
           ><img src="@/assets/logo.png" style="width: 60px; height: 40px"
         /></router-link>
       </div>
+
+      <!-- NEW NAV  -->
       <div v-if="superadminAuth()" class="dropdown">
         <button id="rlb" class="dropbtn">Customers</button>
         <div class="dropdown-content">
-          <a> <router-link id="rl" to="/newcustomer">Add New</router-link></a>
+          <a> <router-link @click="toggle_favourite" id="rl" to="/newcustomer">Add New</router-link></a>
           <a> <router-link id="rl" to="/customers">View All</router-link></a>
         </div>
       </div>
-      <!-- <div v-if="superadminAuth()">
-        <router-link to="/customers">Customers</router-link>
-      </div> -->
       <div v-if="adminAuth()" class="dropdown">
         <button id="rlb" class="dropbtn">Buildings</button>
         <div class="dropdown-content">
@@ -25,9 +24,6 @@
           <a> <router-link id="rl" to="/buildings">View All</router-link></a>
         </div>
       </div>
-      <!-- <div v-if="adminAuth()">
-        <router-link to="/buildings">Buildings</router-link>
-      </div> -->
       <div v-if="adminAuth()" class="dropdown">
         <button id="rlb" class="dropbtn">Properties</button>
         <div class="dropdown-content">
@@ -35,9 +31,6 @@
           <a> <router-link id="rl" to="/properties">View All</router-link></a>
         </div>
       </div>
-      <!-- <div v-if="adminAuth()">
-        <router-link to="/properties">Properties</router-link>
-      </div> -->
       <div v-if="adminAuth()" class="dropdown">
         <button id="rlb" class="dropbtn">Tenants</button>
         <div class="dropdown-content">
@@ -45,9 +38,6 @@
           <a> <router-link id="rl" to="/tenants">View All</router-link></a>
         </div>
       </div>
-      <!-- <div v-if="adminAuth()">
-        <router-link to="/tenants">Tenants</router-link>
-      </div> -->
       <div v-if="userAuth() && !userlevelAuth()" class="dropdown">
         <button id="rlb" class="dropbtn">Register</button>
         <div class="dropdown-content">
@@ -55,24 +45,9 @@
           <a> <router-link id="rl" to="/users">View All</router-link></a>
         </div>
       </div>
-      <!-- <div v-if="userAuth() && !userlevelAuth()">
-        <router-link to="/register">Register</router-link>
-      </div> -->
-      <!-- <div v-if="userAuth()">
-        <router-link to="/logout">Logout</router-link>
-      </div> -->
-      <!-- <div v-else>
-        <router-link to="/login">Login</router-link>
-      </div> -->
       <div v-if="!userAuth()">
         <router-link to="/login">Login</router-link>
       </div>
-      <!-- <div v-if="userAuth()">
-        Hello, <br />
-        <b class="login-name">{{
-          email.charAt(0).toUpperCase() + email.slice(1).split("@")[0]
-        }}</b>
-      </div> -->
       <div v-if="userAuth()" class="dropdown">
         <button id="rlb" class="dropbtn">
           Hello, <br />
@@ -88,6 +63,35 @@
           >
         </div>
       </div>
+
+      <!-- OLD NAV  -->
+      <!-- <div v-if="superadminAuth()">
+        <router-link to="/customers">Customers</router-link>
+      </div>
+      <div v-if="adminAuth()">
+        <router-link to="/buildings">Buildings</router-link>
+      </div>
+      <div v-if="adminAuth()">
+        <router-link to="/properties">Properties</router-link>
+      </div>
+      <div v-if="adminAuth()">
+        <router-link to="/tenants">Tenants</router-link>
+      </div>
+      <div v-if="userAuth() && !userlevelAuth()">
+        <router-link to="/register">Register</router-link>
+      </div>
+      <div v-if="userAuth()">
+        <router-link to="/logout">Logout</router-link>
+      </div>
+      <div v-else>
+        <router-link to="/login">Login</router-link>
+      </div>
+      <div v-if="userAuth()">
+        Hello, <br />
+        <b class="login-name">{{
+          email.charAt(0).toUpperCase() + email.slice(1).split("@")[0]
+        }}</b>
+      </div> -->
     </nav>
     <router-view></router-view>
   </div>
@@ -114,8 +118,11 @@ export default {
     //   }
     // };
 
+  
+
 
     return {
+      // isActive,
       userAuth() {
         email.value = localStorage.getItem("email");
         return (

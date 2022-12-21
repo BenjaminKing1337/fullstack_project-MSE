@@ -91,13 +91,13 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import('../components/RegisterComp.vue'),
-    // beforeEnter: LoggedInGuard,
+    beforeEnter: AuthGuard,
   },
   {
     path: '/users',
     name: 'users',
     component: () => import('../components/UsersComp.vue'),
-    // beforeEnter: LoggedInGuard,
+    beforeEnter: AuthGuard,
   },
   {
     path: '/users/:id',
