@@ -102,6 +102,8 @@ $cs: (
     margin-top: 10px;
     margin-bottom: -10px;
     float: right;
+    display: flex;
+    flex-direction: row;
   }
 }
 
