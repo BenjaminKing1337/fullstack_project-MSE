@@ -1,8 +1,10 @@
 export default (to, from, next) => {
-    if (localStorage.getItem("level") == "admin") {
-        next()
-    }
-    else {
-        next('/login')
-    }
-}
+  if (
+    localStorage.getItem('level') == 'admin' ||
+    localStorage.getItem('level') === 'superadmin'
+  ) {
+    next();
+  } else {
+    next('/login');
+  }
+};

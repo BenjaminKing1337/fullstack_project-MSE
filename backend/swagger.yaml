@@ -178,8 +178,8 @@ paths:
       summary: Get all users
       tags:
         - User
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       responses:
         200:
           description: Users successfully retrieved
@@ -196,15 +196,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -220,8 +229,8 @@ paths:
       summary: Get user by ID
       tags:
         - User
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -243,15 +252,25 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -267,6 +286,8 @@ paths:
       summary: Register new user
       tags:
         - User
+      security:
+        - ApiKeyAuth: []
       requestBody:
         required: true
         content:
@@ -288,6 +309,24 @@ paths:
                     description: user ID
         400:
           description: Client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
           content:
             application/json:
               schema:
@@ -368,8 +407,8 @@ paths:
       summary: Update user by ID
       tags:
         - User
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -397,15 +436,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -421,8 +469,8 @@ paths:
       summary: Delete user by ID
       tags:
         - User
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -444,15 +492,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:

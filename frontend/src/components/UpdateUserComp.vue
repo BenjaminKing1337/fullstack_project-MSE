@@ -15,24 +15,23 @@
       </div>
       <button type="submit">Update Email</button>
     </form>
-    <router-link :to="`/pwd/${User._id}`" class="remove_linkStyle">
-      <button class="full-width">
-        <strong>Edit Password</strong>
-      </button>
-    </router-link>
+    <!-- <router-link :to="`/pwd/${User._id}`" class="remove_linkStyle"> -->
+    <button class="full-width" @click="editPswd">
+      <strong>Edit Password</strong>
+    </button>
+    <!-- </router-link> -->
     <br />
     <br />
-
-    
 
     <button type="button" @click="goBack()">Back</button>
   </body>
 </template>
 
 <script>
-import UserCRUD from "../modules/userCRUD";
-import { useRouter } from "vue-router";
-import { onMounted } from "vue";
+import UserCRUD from '../modules/userCRUD';
+import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
+import Notify from '../modules/utils.js';
 
 export default {
   setup() {
@@ -44,15 +43,28 @@ export default {
       GetSpecificUser,
       EditUser,
     } = UserCRUD();
-    
+    const Router = useRouter();
+    const { NotifyError } = Notify();
+    const editPswd = () => {
+      // Gets id from url
+      var url = window.location.pathname.split('/');
+      var url_id = url[2];
 
+      if (localStorage.getItem('userid') === url_id) {
+        // The user is the one logged in, so we send them to pswd change
+        Router.push('/pwd/' + User.value._id + '');
+      } else {
+        NotifyError(
+          'The password can only be changed when the specific user is logged in'
+        );
+      }
+    };
     onMounted(() => {
       GetSpecificUser();
     });
 
-    const Router = useRouter();
-
     return {
+      editPswd,
       uState,
       User,
       UserId,
@@ -61,15 +73,14 @@ export default {
       EditUser,
       goBack() {
         // return Router.go(-1);
-        Router.push("/register");
+        Router.push('/users');
       },
       adminAuth() {
-        return localStorage.getItem("level") === "admin";
+        return localStorage.getItem('level') === 'admin';
       },
     };
   },
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

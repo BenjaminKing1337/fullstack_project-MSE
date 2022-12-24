@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <nav
-      style="display: flex; flex-direction: column; justify-content: space-between; align-items: center"
+      style="
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      "
     >
       <div>
         <router-link to="/"
@@ -11,14 +16,22 @@
 
       <!-- NEW NAV  -->
       <div v-if="superadminAuth()" class="dropdown">
-        <button id="rlb" class="dropbtn">Customers</button>
+        <button id="rlb" class="dropbtn">
+          <router-link id="rl" to="/customers">Customers</router-link>
+        </button>
         <div class="dropdown-content">
-          <a> <router-link @click="toggle_favourite" id="rl" to="/newcustomer">Add New</router-link></a>
+          <a>
+            <router-link @click="toggle_favourite" id="rl" to="/newcustomer"
+              >Add New</router-link
+            ></a
+          >
           <a> <router-link id="rl" to="/customers">View All</router-link></a>
         </div>
       </div>
       <div v-if="adminAuth()" class="dropdown">
-        <button id="rlb" class="dropbtn">Buildings</button>
+        <button id="rlb" class="dropbtn">
+          <router-link id="rl" to="/buildings">Buildings</router-link>
+        </button>
         <div class="dropdown-content">
           <a> <router-link id="rl" to="/newbuilding">Add New</router-link></a>
           <a> <router-link id="rl" to="/buildings">View All</router-link></a>
@@ -32,16 +45,20 @@
         </div>
       </div>
       <div v-if="adminAuth()" class="dropdown">
-        <button id="rlb" class="dropbtn">Tenants</button>
+        <button id="rlb" class="dropbtn">
+          <router-link id="rl" to="/tenants">Tenants</router-link>
+        </button>
         <div class="dropdown-content">
           <a> <router-link id="rl" to="/newtenant">Add New</router-link></a>
           <a> <router-link id="rl" to="/tenants">View All</router-link></a>
         </div>
       </div>
       <div v-if="userAuth() && !userlevelAuth()" class="dropdown">
-        <button id="rlb" class="dropbtn">Register</button>
+        <button id="rlb" class="dropbtn">
+          <router-link id="rl" to="/users">Users</router-link>
+        </button>
         <div class="dropdown-content">
-          <a> <router-link id="rl" to="/register">Add New</router-link></a>
+          <a> <router-link id="rl" to="/newuser">Add New</router-link></a>
           <a> <router-link id="rl" to="/users">View All</router-link></a>
         </div>
       </div>
@@ -52,7 +69,7 @@
         <button id="rlb" class="dropbtn">
           Hello, <br />
           <b class="login-name">{{
-            email.charAt(0).toUpperCase() + email.slice(1).split("@")[0]
+            email.charAt(0).toUpperCase() + email.slice(1).split('@')[0]
           }}</b>
         </button>
         <div class="dropdown-content">
@@ -98,10 +115,10 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref } from 'vue';
 export default {
   setup() {
-    const email = ref("");
+    const email = ref('');
 
     // const isActive = async () => {
     //   var rlb = document.getElementById("rlb");
@@ -118,26 +135,23 @@ export default {
     //   }
     // };
 
-  
-
-
     return {
       // isActive,
       userAuth() {
-        email.value = localStorage.getItem("email");
+        email.value = localStorage.getItem('email');
         return (
-          localStorage.getItem("Token") !== null &&
-          localStorage.getItem("Token") !== undefined
+          localStorage.getItem('Token') !== null &&
+          localStorage.getItem('Token') !== undefined
         );
       },
       userlevelAuth() {
-        return localStorage.getItem("level") === "user";
+        return localStorage.getItem('level') === 'user';
       },
       adminAuth() {
-        return localStorage.getItem("level") === "admin";
+        return localStorage.getItem('level') === 'admin';
       },
       superadminAuth() {
-        return localStorage.getItem("level") === "superadmin";
+        return localStorage.getItem('level') === 'superadmin';
       },
       email,
     };
@@ -145,5 +159,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

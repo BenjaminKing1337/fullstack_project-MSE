@@ -1,37 +1,35 @@
-const router = require("express").Router();
-const User = require("../models/user");
-const Bcrypt = require("bcrypt");
-const Jwt = require("jsonwebtoken");
+const router = require('express').Router();
+const User = require('../models/user');
+const Bcrypt = require('bcrypt');
+const Jwt = require('jsonwebtoken');
 const {
   RegisterValidation,
   LoginValidation,
-  // VerifyToken,
-} = require("../validation");
+  VerifyToken,
+} = require('../validation');
 
 // Read all users - GET
-router.get("/", (req, res) => {
-  User.find()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
-    });
+router.get('/', VerifyToken, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 });
 
 //Get user by ID - GET
-router.get("/get/:id", /* VerifyToken, */ (req, res) => {
-  User.findById({_id: req.params.id})
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
-    });
+router.get('/get/:id', VerifyToken, async (req, res) => {
+  try {
+    const user = await User.findById({ _id: req.params.id });
+    res.json(user);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 });
 
 // ROUTE - /registration
-router.post("/register", async (req, res) => {
+router.post('/register', VerifyToken, async (req, res) => {
   // input validation
   const { error } = RegisterValidation(req.body);
   if (error) {
@@ -40,7 +38,7 @@ router.post("/register", async (req, res) => {
   // Does email exist?
   const EmailExist = await User.findOne({ email: req.body.email });
   if (EmailExist) {
-    return res.status(400).json({ error: "Email already exists" });
+    return res.status(400).json({ error: 'Email already exists' });
   }
   // password hashing
   const Salt = await Bcrypt.genSalt(10);
@@ -59,7 +57,7 @@ router.post("/register", async (req, res) => {
 });
 
 // ROUTE - /login
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   // login info validation
   const { error } = LoginValidation(req.body);
   if (error) {
@@ -69,12 +67,12 @@ router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   // if not found
   if (!user) {
-    return res.status(400).json({ error: "Email is wrong" });
+    return res.status(400).json({ error: 'Email is wrong' });
   }
   // if found - check password
   const ValidPass = await Bcrypt.compare(req.body.password, user.password);
   if (!ValidPass) {
-    return res.status(400).json({ error: "Password is wrong" });
+    return res.status(400).json({ error: 'Password is wrong' });
   }
   // token creation
   const Token = Jwt.sign(
@@ -87,7 +85,7 @@ router.post("/login", async (req, res) => {
     { expiresIn: process.env.JWT_EXPIRES_IN }
   );
   // attach auth token to header
-  res.header("auth-token", Token).json({
+  res.header('auth-token', Token).json({
     error: null,
     data: { Token },
     email: user.email,
@@ -97,7 +95,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Delete by id route
-router.delete("/delete/:id", async (req, res) => {
+router.delete('/delete/:id', VerifyToken, async (req, res) => {
   try {
     const DelUser = await User.findByIdAndDelete({ _id: req.params.id });
     res.json(DelUser);
@@ -107,7 +105,7 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 // Update by id route
-router.put("/update/:id", async (req, res) => {
+router.put('/update/:id', VerifyToken, async (req, res) => {
   try {
     if (req.body.password) {
       // password hashing
@@ -117,7 +115,7 @@ router.put("/update/:id", async (req, res) => {
     }
     const UpdUser = await User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      req.body
       // { Pwd: req.body.password }
     );
     console.log(req.body);

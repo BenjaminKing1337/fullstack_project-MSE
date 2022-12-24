@@ -56,6 +56,11 @@ const PropertySchema = new Mongoose.Schema({
     required: true,
     default: 'None',
   },
+  can_be_rented: {
+    // FIXME
+    type: Boolean,
+    required: true,
+  },
   renter_id: {
     // FK
     type: String,

@@ -88,9 +88,9 @@ const routes = [
     beforeEnter: AuthGuard,
   },
   {
-    path: '/register',
-    name: 'register',
-    component: () => import('../components/RegisterComp.vue'),
+    path: '/newuser',
+    name: 'newuser',
+    component: () => import('../components/UsersCreateComp.vue'),
     beforeEnter: AuthGuard,
   },
   {
