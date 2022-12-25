@@ -5,7 +5,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
       "
     >
       <div>
@@ -21,7 +21,7 @@
         </button>
         <div class="dropdown-content">
           <a>
-            <router-link @click="toggle_favourite" id="rl" to="/newcustomer"
+            <router-link id="rl" to="/newcustomer"
               >Add New</router-link
             ></a
           >

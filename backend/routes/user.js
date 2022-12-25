@@ -28,6 +28,16 @@ router.get('/get/:id', VerifyToken, async (req, res) => {
   }
 });
 
+// Get Users by user id route
+router.get('/get/byUser/:id', async (req, res) => {
+  try {
+    const IdUser = await User.find({ created_by: req.params.id });
+    res.json(IdUser);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+});
+
 // ROUTE - /registration
 router.post('/register', VerifyToken, async (req, res) => {
   // input validation
@@ -46,6 +56,7 @@ router.post('/register', VerifyToken, async (req, res) => {
   // save data as user in db
   const UserObject = new User({
     email: req.body.email,
+    created_by: req.body.created_by,
     password: Pwd,
   });
   try {

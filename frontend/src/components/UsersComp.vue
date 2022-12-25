@@ -1,19 +1,36 @@
 <template>
-  <q-page id="RegisterPage">
+  <q-page id="RegisterPage" style="padding: 0 100px;">
     <h2>Currently Registered User Profiles</h2>
     <br />
     <div v-if="adminAuth()">
       <div class="grid3x3">
         <div v-for="User in uState.Users" :key="User._id">
-          <div style="border: 1px solid black; border-radius: 15px">
+          <div class="show-card">
+            <div class="title">
+              <div class="cardheader">
+                <b>{{ User.email }}</b>
+              </div>
+            </div>
+            <br />
+
+            <div class="spaced">
+              <div>userlevel:</div>
+              <div>{{ User.userlevel }}</div>
+            </div>
+
+            <!-- <div style="border: 1px solid black; border-radius: 15px">
             Email:&nbsp;&nbsp;{{ User.email }}
+          </div> -->
+            <div class="show-btns">
+              <router-link :to="`/users/${User._id}`" class="remove_linkStyle">
+                <button class="full-width">
+                  <strong>Edit User</strong>
+                </button>
+              </router-link>
+              <button @click="DeleteUser(User._id)">Delete</button>
+            </div>
           </div>
-          <router-link :to="`/users/${User._id}`" class="remove_linkStyle">
-            <button class="full-width">
-              <strong>Edit User</strong>
-            </button>
-          </router-link>
-          <button @click="DeleteUser(User._id)">Delete</button>
+          <br />
           <br />
         </div>
       </div>
@@ -22,12 +39,12 @@
 </template>
 
 <script>
-import UserCRUD from '../modules/userCRUD';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
+import UserCRUD from "../modules/userCRUD";
+import { ref } from "vue";
+import { onMounted } from "vue";
 
 export default {
-  name: 'UsersComp',
+  name: "UsersComp",
 
   setup() {
     const email = ref(null);
@@ -35,19 +52,22 @@ export default {
     const {
       uState,
       GetAllUsers,
+      GetUsersUsers,
       DeleteUser,
       EditUser,
       RegisterUser,
       RegisterUserByAdmin,
     } = UserCRUD();
     onMounted(() => {
-      GetAllUsers();
+      // GetAllUsers();
+      GetUsersUsers();
     });
     return {
       email,
       password,
       uState,
       GetAllUsers,
+      GetUsersUsers,
       DeleteUser,
       EditUser,
       RegisterUser,
@@ -60,7 +80,7 @@ export default {
       },
 
       async onSubmit() {
-        if (localStorage.getItem('level') === 'admin') {
+        if (localStorage.getItem("level") === "admin") {
           RegisterUserByAdmin();
         } else {
           RegisterUser();
@@ -73,14 +93,14 @@ export default {
       },
       userAuth() {
         return (
-          localStorage.getItem('Token') !== null &&
-          localStorage.getItem('Token') !== undefined
+          localStorage.getItem("Token") !== null &&
+          localStorage.getItem("Token") !== undefined
         );
       },
       adminAuth() {
         return (
-          localStorage.getItem('level') === 'admin' ||
-          localStorage.getItem('level') === 'superadmin'
+          localStorage.getItem("level") === "admin" ||
+          localStorage.getItem("level") === "superadmin"
         );
       },
     };

@@ -1,7 +1,7 @@
-import { ref, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import baseURL from './baseURL';
-import Notify from '../modules/utils.js';
+import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import baseURL from "./baseURL";
+import Notify from "../modules/utils.js";
 
 const GetUsers = () => {
   const Route = useRoute();
@@ -9,22 +9,23 @@ const GetUsers = () => {
   const UserId = computed(() => Route.params.id);
   const { NotifyError } = Notify();
   const uState = ref({
-    email: '',
-    password: '',
-    userlevel: '',
+    email: "",
+    password: "",
+    userlevel: "",
     Users: {},
-    response: '',
+    response: "",
+    created_by: localStorage.getItem("userid"),
   });
 
   // GET ALL Users
   const GetAllUsers = async () => {
     const RequestOptions = {
       headers: {
-        'auth-token': localStorage.getItem('Token'),
+        "auth-token": localStorage.getItem("Token"),
       },
     };
     try {
-      await fetch(baseURL + '/users', RequestOptions)
+      await fetch(baseURL + "/users", RequestOptions)
         .then((Res) => Res.json())
         .then((Data) => {
           uState.value.Users = Data;
@@ -33,13 +34,26 @@ const GetUsers = () => {
       console.log(Error);
     }
   };
+  // GET User's users
+  const GetUsersUsers = async () => {
+    try {
+      await fetch(baseURL + "/users/get/byUser/" + localStorage.getItem("userid"))
+        .then((Res) => Res.json())
+        .then((Data) => {
+          uState.value.Users = Data;
+        });
+    } catch (Error) {
+      console.log(Error);
+    }
+  };
+
   // POST Register User
   const RegisterUser = () => {
     const RequestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('Token'),
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("Token"),
       },
       body: JSON.stringify({
         // id:Route.params.id,
@@ -47,34 +61,37 @@ const GetUsers = () => {
         password: uState.value.password,
       }),
     };
-    fetch(baseURL + '/users/register', RequestOptions).then((res) => res.body);
-    Router.push('/login');
+    fetch(baseURL + "/users/register", RequestOptions).then((res) => res.body);
+    Router.push("/login");
   };
   const RegisterUserByAdmin = () => {
     const RequestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("Token"),
       },
       body: JSON.stringify({
         // id:Route.params.id,
         email: uState.value.email,
         password: uState.value.password,
+        created_by: uState.value.created_by,
       }),
     };
-    fetch(baseURL + '/users/register', RequestOptions)
+    fetch(baseURL + "/users/register", RequestOptions)
       .then((res) => res.body)
       .then(() => {
-        GetAllUsers(); // Updates page
+        Router.push("/users");
+        GetUsersUsers(); // Updates page
       });
   };
   //  POST Login User
   const LoginUser = async () => {
     try {
       const RequestOptions = {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           // id:Route.params.id,
@@ -82,7 +99,7 @@ const GetUsers = () => {
           password: uState.value.password,
         }),
       };
-      await fetch(baseURL + '/users/login', RequestOptions)
+      await fetch(baseURL + "/users/login", RequestOptions)
         .then((res) => res.json())
         .then((data) => {
           return data;
@@ -92,12 +109,12 @@ const GetUsers = () => {
             uState.value.response = data.error;
             NotifyError(uState.value.response);
           } else {
-            localStorage.setItem('Token', data.data.Token);
-            localStorage.setItem('level', data.level);
-            localStorage.setItem('userid', data.id);
-            localStorage.setItem('email', data.email);
+            localStorage.setItem("Token", data.data.Token);
+            localStorage.setItem("level", data.level);
+            localStorage.setItem("userid", data.id);
+            localStorage.setItem("email", data.email);
             // localStorage.setItem("name", response.data.name);
-            Router.push('/');
+            Router.push("/");
             window.location.reload(true);
           }
         });
@@ -107,10 +124,10 @@ const GetUsers = () => {
   };
   // DELETE User BY ID
   const DeleteUser = (UserId) => {
-    fetch(baseURL + '/users/delete/' + UserId, {
-      method: 'DELETE',
+    fetch(baseURL + "/users/delete/" + UserId, {
+      method: "DELETE",
       headers: {
-        'auth-token': localStorage.getItem('Token'),
+        "auth-token": localStorage.getItem("Token"),
       },
     }).then(() => {
       GetAllUsers(); // Updates page
@@ -119,10 +136,10 @@ const GetUsers = () => {
   // UPDATE User BY ID
   const EditUser = async () => {
     const RequestOptions = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('Token'),
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("Token"),
       },
       body: JSON.stringify({
         // id:Route.params.id,
@@ -132,20 +149,20 @@ const GetUsers = () => {
       }),
     };
     // await GetSpecificUser();
-    await fetch(baseURL + '/users/update/' + UserId.value, RequestOptions)
+    await fetch(baseURL + "/users/update/" + UserId.value, RequestOptions)
       .then((res) => res.body)
       .then(() => {
         GetAllUsers();
       });
-    Router.push('/users');
+    Router.push("/users");
   };
   // UPDATE User BY ID
-  const confirmPwd = ref('');
+  const confirmPwd = ref("");
   const EditPwd = async () => {
     const RequestOptions = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         // id:Route.params.id,
@@ -153,14 +170,14 @@ const GetUsers = () => {
       }),
     };
     if (uState.value.password === confirmPwd.value) {
-      await fetch(baseURL + '/users/update/' + UserId.value, RequestOptions)
+      await fetch(baseURL + "/users/update/" + UserId.value, RequestOptions)
         .then((res) => res.body)
         .then(() => {
           GetAllUsers();
         });
-      Router.push('/users/' + UserId.value);
+      Router.push("/users/" + UserId.value);
     } else {
-      console.log('wrong password');
+      console.log("wrong password");
     }
   };
 
@@ -169,11 +186,11 @@ const GetUsers = () => {
   const GetSpecificUser = async () => {
     const RequestOptions = {
       headers: {
-        'auth-token': localStorage.getItem('Token'),
+        "auth-token": localStorage.getItem("Token"),
       },
     };
     try {
-      await fetch(baseURL + '/users/get/' + UserId.value, RequestOptions)
+      await fetch(baseURL + "/users/get/" + UserId.value, RequestOptions)
         .then((Res) => Res.json())
         .then((Data) => {
           User.value = Data;
@@ -190,6 +207,7 @@ const GetUsers = () => {
     GetSpecificUser,
     uState,
     GetAllUsers,
+    GetUsersUsers,
     DeleteUser,
     EditUser,
     confirmPwd,

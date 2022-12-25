@@ -19,6 +19,11 @@ let UserSchema = new Schema({
     enum: ['superadmin', 'admin', 'user'], // Only accepts these 3 types
     default: 'user',
   },
+  created_by: {
+    // FK
+    type: String,
+    required: true,
+  },
   created_at: {
     type: Date,
     default: Date.now,

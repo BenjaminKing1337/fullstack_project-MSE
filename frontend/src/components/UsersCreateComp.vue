@@ -56,7 +56,7 @@ export default {
       RegisterUserByAdmin,
     } = UserCRUD();
     onMounted(() => {
-      GetAllUsers();
+      // GetAllUsers();
     });
     return {
       uState,
@@ -71,7 +71,7 @@ export default {
       },
 
       async onSubmit() {
-        if (localStorage.getItem('level') === 'admin') {
+        if (localStorage.getItem('level') === 'admin' || localStorage.getItem('level') === 'superadmin') {
           RegisterUserByAdmin();
         } else {
           RegisterUser();

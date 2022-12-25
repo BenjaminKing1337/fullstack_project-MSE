@@ -70,7 +70,9 @@
     </q-drawer>
 
     <q-page-container>
+      <q-page>
       <router-view></router-view>
+      </q-page>
       <!-- <HelloWorld /> -->
     </q-page-container>
   </q-layout>

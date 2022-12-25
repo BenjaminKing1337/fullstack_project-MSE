@@ -1,37 +1,45 @@
 <template>
   <body>
     <h6>My Profile</h6>
-    <form @submit.prevent="EditUser">
-      <div style="border: 1px solid black; border-radius: 15px">
-        ID: {{ User._id }} <br />
-        Email:
-        <input type="text" placeholder="Email" required v-model="User.email" />
-        <br />
-        <div v-if="adminAuth()">
-          Level:
-          <input type="text" placeholder="Level" v-model="User.userlevel" />
-          <br />
-        </div>
+    <div class="show-card">
+      <div class="title">
+        <div class="cardheader">Update User</div>
       </div>
-      <button type="submit">Update Email</button>
-    </form>
-    <!-- <router-link :to="`/pwd/${User._id}`" class="remove_linkStyle"> -->
-    <button class="full-width" @click="editPswd">
-      <strong>Edit Password</strong>
-    </button>
-    <!-- </router-link> -->
-    <br />
-    <br />
-
-    <button type="button" @click="goBack()">Back</button>
+      <form @submit.prevent="EditUser">
+        <br />
+        <div class="spaced">
+          <div>Email:</div>
+          <input
+            type="text"
+            placeholder="Email"
+            required
+            v-model="User.email"
+          />
+        </div>
+        <div class="spaced" v-if="adminAuth() || superadminAuth()">
+          <div>Level:</div>
+          <input type="text" placeholder="Level" v-model="User.userlevel" />
+        </div>
+        <div class="spaced">
+          <div></div>
+          <button @click="editPswd">
+            <strong>Edit Password</strong>
+          </button>
+        </div>
+        <div class="show-btns">
+          <button type="submit">Confirm</button>
+          <button type="button" @click="goBack()">Back</button>
+        </div>
+      </form>
+    </div>
   </body>
 </template>
 
 <script>
-import UserCRUD from '../modules/userCRUD';
-import { useRouter } from 'vue-router';
-import { onMounted } from 'vue';
-import Notify from '../modules/utils.js';
+import UserCRUD from "../modules/userCRUD";
+import { useRouter } from "vue-router";
+import { onMounted } from "vue";
+import Notify from "../modules/utils.js";
 
 export default {
   setup() {
@@ -47,15 +55,15 @@ export default {
     const { NotifyError } = Notify();
     const editPswd = () => {
       // Gets id from url
-      var url = window.location.pathname.split('/');
+      var url = window.location.pathname.split("/");
       var url_id = url[2];
 
-      if (localStorage.getItem('userid') === url_id) {
+      if (localStorage.getItem("userid") === url_id) {
         // The user is the one logged in, so we send them to pswd change
-        Router.push('/pwd/' + User.value._id + '');
+        Router.push("/pwd/" + User.value._id + "");
       } else {
         NotifyError(
-          'The password can only be changed when the specific user is logged in'
+          "The password can only be changed when the specific user is logged in"
         );
       }
     };
@@ -73,10 +81,13 @@ export default {
       EditUser,
       goBack() {
         // return Router.go(-1);
-        Router.push('/users');
+        Router.push("/users");
       },
       adminAuth() {
-        return localStorage.getItem('level') === 'admin';
+        return localStorage.getItem("level") === "admin";
+      },
+      superadminAuth() {
+        return localStorage.getItem("level") === "superadmin";
       },
     };
   },
