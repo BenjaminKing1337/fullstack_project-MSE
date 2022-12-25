@@ -70,6 +70,12 @@ const routes = [
     beforeEnter: AuthGuard,
   },
   {
+    path: '/property/:id',
+    name: 'userproperty',
+    component: () => import('../views/PropertyUserView.vue'),
+    beforeEnter: AuthGuard,
+  },
+  {
     path: '/tenants',
     name: 'tenants',
     component: () => import('../views/TenantsView.vue'),
@@ -85,6 +91,12 @@ const routes = [
     path: '/tenants/:id',
     name: 'tenant',
     component: () => import('../views/TenantView.vue'),
+    beforeEnter: AuthGuard,
+  },
+  {
+    path: '/tenant/:id',
+    name: 'usertenant',
+    component: () => import('../views/TenantUserView.vue'),
     beforeEnter: AuthGuard,
   },
   {

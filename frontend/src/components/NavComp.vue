@@ -12,7 +12,7 @@
         <q-item v-if="superadminAuth()" clickable tag="a" class="navitem"
           ><router-link class="navheader remove_linkStyle" to="/customers">
             <q-item-section avatar>
-              <q-icon name="person" />
+              <q-icon name="currency_exchange" />
             </q-item-section>
             <q-item-section>
               <q-item-label>Customers</q-item-label>
@@ -37,10 +37,10 @@
         <q-item v-if="adminAuth()" clickable tag="a" class="navitem"
           ><router-link class="navheader remove_linkStyle" to="/buildings">
             <q-item-section avatar>
-              <q-icon name="person" />
+              <q-icon name="apartment" />
             </q-item-section>
             <q-item-section>
-              <q-item-label>apartment</q-item-label>
+              <q-item-label>Buildings</q-item-label>
               <q-item-label caption
                 ><router-link
                   class="navelement remove_linkStyle"
@@ -83,6 +83,24 @@
             </q-item-section>
           </router-link></q-item
         >
+        <!-- Property userlevel  -->
+        <q-item v-if="userlevelAuth()" clickable tag="a" class="navitem"
+          ><router-link class="navheader remove_linkStyle" :to="`/property/${userID()}`">
+            <q-item-section avatar>
+              <q-icon name="house" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Property</q-item-label>
+              <q-item-label caption
+                ><router-link
+                  class="navelement remove_linkStyle"
+                  :to="`/property/${userID()}`"
+                  >- View Details</router-link
+                ></q-item-label
+              >
+            </q-item-section>
+          </router-link></q-item
+        >
         <!-- Tenants  -->
         <q-item v-if="adminAuth()" clickable tag="a" class="navitem"
           ><router-link class="navheader remove_linkStyle" to="/tenants">
@@ -101,6 +119,24 @@
               <q-item-label caption
                 ><router-link class="navelement remove_linkStyle" to="/tenants"
                   >- View All</router-link
+                ></q-item-label
+              >
+            </q-item-section>
+          </router-link></q-item
+        >
+        <!-- Tenant userlevel  -->
+        <q-item v-if="userlevelAuth()" clickable tag="a" class="navitem"
+          ><router-link class="navheader remove_linkStyle" :to="`/tenant/${userID()}`">
+            <q-item-section avatar>
+              <q-icon name="person" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Tenant</q-item-label>
+              <q-item-label caption
+                ><router-link
+                  class="navelement remove_linkStyle"
+                  :to="`/tenant/${userID()}`"
+                  >- View Details</router-link
                 ></q-item-label
               >
             </q-item-section>
@@ -178,7 +214,12 @@ import { ref } from "vue";
 export default {
   setup() {
     const email = ref("");
+    const userid = ref("");
     return {
+      userID() {
+        userid.value = localStorage.getItem("userid");
+        return userid.value;
+      },
       userAuth() {
         email.value = localStorage.getItem("email");
         return (

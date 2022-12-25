@@ -1,0 +1,187 @@
+<template>
+  <q-page class="page">
+    <h4>Single Property's page</h4>
+    <p>Here you can view your Property info</p>
+
+    <div class="show-card">
+      <div class="title">
+        <div class="cardheader">My Property</div>
+      </div>
+      <br />
+      <br />
+      <div
+        v-for="Property in filterProps(pState.Properties, TenantId)"
+        :key="Property._id"
+      >
+        <div>
+          ID: {{ Property._id }} <br />
+          Name: {{ Property.name }} <br />
+          Address: {{ Property.address }}
+        </div>
+        <br />
+      </div>
+      <!-- <form @submit.prevent="EditProperty">
+        <div>
+          <div class="spaced">
+            <div>Name:</div>
+            <input type="text" placeholder="Name" v-model="Property.name" />
+          </div>
+          <div class="spaced">
+            <div>Floor:</div>
+            <input type="text" placeholder="Floor" v-model="Property.floor" />
+          </div>
+          <div class="spaced">
+            <div>No.:</div>
+            <input
+              type="text"
+              placeholder="Number"
+              required
+              v-model="Property.number"
+            />
+          </div>
+          <div class="spaced">
+            <div>Address:</div>
+            <input
+              type="text"
+              placeholder="Address"
+              v-model="Property.address"
+            />
+          </div>
+          <div class="spaced">
+            <div>Postal Code:</div>
+            <input
+              type="text"
+              placeholder="Postal Code"
+              v-model="Property.postal_code"
+            />
+          </div>
+          <div class="spaced">
+            <div>Value:</div>
+            <input type="text" placeholder="Value" v-model="Property.value" />
+          </div>
+          <div class="spaced">
+            <div>Bank Note:</div>
+            <input
+              type="text"
+              placeholder="Bank Note"
+              v-model="Property.bank_note"
+            />
+          </div>
+          <div class="spaced">
+            <div>Building:</div>
+            <select v-model="Property.building_id">
+              <option>Assign Building</option>
+              <option
+                v-for="Building in bState.Buildings"
+                :key="Building._id"
+                :value="Building._id"
+              >
+                {{ Building.name }} {{ Building.number }}
+              </option>
+            </select>
+          </div>
+          <div class="spaced">
+            <div>Owner:</div>
+            <select v-model="Property.owner_id">
+              <option>Assign Owner</option>
+              <option
+                v-for="Tenant in tState.Tenants"
+                :key="Tenant._id"
+                :value="Tenant._id"
+              >
+                {{ Tenant.forename }} {{ Tenant.surname }}
+              </option>
+            </select>
+          </div>
+          <div class="spaced">
+            <div>Renter:</div>
+            <select v-model="Property.renter_id">
+              <option>Assign Renter</option>
+              <option
+                v-for="Tenant in tState.Tenants"
+                :key="Tenant._id"
+                :value="Tenant._id"
+              >
+                {{ Tenant.forename }} {{ Tenant.surname }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="show-btns">
+          <button type="submit">Update</button>
+          <button type="button" @click="goBack()">Back</button>
+        </div>
+      </form> -->
+    </div>
+  </q-page>
+</template>
+
+<script>
+import PropertyCRUD from "../modules/propertyCRUD";
+import TenantCRUD from "../modules/tenantCRUD";
+import BuildingCRUD from "../modules/buildingCRUD";
+import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
+
+export default {
+  setup() {
+    const {
+      pState,
+      Property,
+      PropertyId,
+      GetAllProperties,
+      GetSpecificProperty,
+      EditProperty,
+    } = PropertyCRUD();
+    const { tState, LoggedInTenant, /* TenantId, */ GetLoggedInTenant } =
+      TenantCRUD();
+    const { bState, Building, GetAllBuildings } = BuildingCRUD();
+
+    let filterProps = (Properties, tenantId) => {
+      let propsFiltered = [];
+      for (var i = 0; i < Properties.length; i++) {
+        if (
+          Properties[i].owner_id == tenantId ||
+          Properties[i].renter_id == tenantId
+        ) {
+          propsFiltered.push(Properties[i]);
+        }
+      }
+      return propsFiltered;
+    };
+    const TenantId = localStorage.getItem("tenantid");
+
+    onMounted(() => {
+      GetLoggedInTenant();
+      GetSpecificProperty();
+      GetAllProperties();
+    });
+
+    const Router = useRouter();
+
+    return {
+      bState,
+      Building,
+      GetAllBuildings,
+      tState,
+      LoggedInTenant,
+      TenantId,
+      pState,
+      Property,
+      PropertyId,
+      GetLoggedInTenant,
+      GetAllProperties,
+      GetSpecificProperty,
+      EditProperty,
+      filterProps,
+      goBack() {
+        // return Router.go(-1);
+        Router.push("/properties");
+      },
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

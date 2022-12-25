@@ -130,6 +130,19 @@ const GetProperties = () => {
       console.log(Error);
     }
   };
+  // GET PROPERTY BY LOGGED IN USER'S TENANT ID
+  // const LoggedInTenantsProperty = ref({});
+  // const GetLoggedInTenantsProperty = async () => {
+  //   try {
+  //     fetch(baseURL + '/properties')
+  //       .then((Res) => Res.json())
+  //       .then((Data) => {
+  //         LoggedInTenantsProperty.value = Data.filter((P) => P._id === PropertyId.value);
+  //       });
+  //   } catch (Error) {
+  //     console.log(Error);
+  //   }
+  // };
 
   return {
     Property,
