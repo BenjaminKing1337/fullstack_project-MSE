@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <q-page class="page">
     <h4>Welcome to Customers page</h4>
     <p>Here you can create and manage your Customers</p>
     <!-- Create New -->
@@ -55,7 +55,7 @@
       </form>
     </div>
     
-  </body>
+  </q-page>
 </template>
 
 <script>

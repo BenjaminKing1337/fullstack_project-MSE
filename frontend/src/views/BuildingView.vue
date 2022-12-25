@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <q-page class="page">
     <h4>Single Building's page</h4>
     <p>Here you can edit and manage your individual Building</p>
 
@@ -40,7 +40,7 @@
         </div>
       </form>
     </div>
-  </body>
+  </q-page>
 </template>
 
 <script>

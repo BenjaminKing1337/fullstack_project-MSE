@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <q-page class="page">
     <h4>Single Property's page</h4>
     <p>Here you can edit and manage your individual Property</p>
 
@@ -57,6 +57,19 @@
             />
           </div>
           <div class="spaced">
+            <div>Building:</div>
+            <select v-model="Property.building_id">
+              <option>Assign Building</option>
+              <option
+                v-for="Building in bState.Buildings"
+                :key="Building._id"
+                :value="Building._id"
+              >
+                {{ Building.name }} {{ Building.number }}
+              </option>
+            </select>
+          </div>
+          <div class="spaced">
             <div>Owner:</div>
             <select v-model="Property.owner_id">
               <option>Assign Owner</option>
@@ -69,7 +82,6 @@
               </option>
             </select>
           </div>
-
           <div class="spaced">
             <div>Renter:</div>
             <select v-model="Property.renter_id">
@@ -85,17 +97,18 @@
           </div>
         </div>
         <div class="show-btns">
-        <button type="submit">Update</button>
-      <button type="button" @click="goBack()">Back</button>
+          <button type="submit">Update</button>
+          <button type="button" @click="goBack()">Back</button>
         </div>
       </form>
     </div>
-  </body>
+  </q-page>
 </template>
 
 <script>
 import PropertyCRUD from "../modules/propertyCRUD";
 import TenantCRUD from "../modules/tenantCRUD";
+import BuildingCRUD from "../modules/buildingCRUD";
 import { useRouter } from "vue-router";
 
 export default {
@@ -109,6 +122,7 @@ export default {
       EditProperty,
     } = PropertyCRUD();
     const { tState, Tenant, TenantId, GetAllTenants } = TenantCRUD();
+    const { bState, Building, GetAllBuildings } = BuildingCRUD();
 
     GetSpecificProperty();
     GetAllTenants();
@@ -116,6 +130,9 @@ export default {
     const Router = useRouter();
 
     return {
+      bState,
+      Building,
+      GetAllBuildings,
       tState,
       Tenant,
       TenantId,

@@ -17,7 +17,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered class="bg-grey-2">
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered >
       <Nav />
       <!-- <q-list>
         <q-item-label header>Essential Links</q-item-label>
@@ -70,24 +70,19 @@
     </q-drawer>
 
     <q-page-container>
-      <q-page>
       <router-view></router-view>
-      </q-page>
-      <!-- <HelloWorld /> -->
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
 import { ref } from 'vue';
-// import HelloWorld from './components/HelloWorld.vue';
 import Nav from './components/NavComp.vue';
 
 export default {
   name: 'LayoutDefault',
 
   components: {
-    // HelloWorld,
     Nav,
   },
 
