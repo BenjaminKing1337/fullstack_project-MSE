@@ -1,4 +1,6 @@
 $cs: (
+  // bg: linear-gradient(#e66465, #9198e5),
+  linear-bg: linear-gradient(#ffffff, #e1e1e1, #ffffff),
   bg: white,
   bg2: lightgrey,
   header: black,
@@ -7,24 +9,13 @@ $cs: (
   user: green,
   highlight: lightgrey,
   highlight2: grey,
-  highlight-active: Magenta,
+  highlight-active: Magenta
 );
-
-#app {
-  
-
-
-  .formContainer {
-    margin: 0 auto;
-    width: 300px;
-  }
-}
 
 // Global classes
 :root {
-  background-color: map-get($cs, bg);
+  background: map-get($cs, linear-bg);
   #app {
-    
   }
   .page {
     padding: 0 25px;
@@ -32,21 +23,21 @@ $cs: (
   .toolbar {
     background-color: map-get($cs, header);
   }
-}
-.bg {
-  background-color: map-get($cs, bg );
-}
-.login-name {
-  color: map-get($cs, user);
-}
-.remove_linkStyle {
-  text-decoration: none;
-  color: map-get($cs, text);
-}
-.grid3x3 {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  .bg {
+    background-color: map-get($cs, bg);
+  }
+  .login-name {
+    color: map-get($cs, user);
+  }
+  .remove_linkStyle {
+    text-decoration: none;
+    color: map-get($cs, text);
+  }
+  .grid3x3 {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
 }
 // ADD NEW cards
 .create-card {
@@ -67,10 +58,13 @@ $cs: (
     }
   }
   select {
-    width: 158px;
+    width: 200px;
   }
   input {
-    width: 150px;
+    width: 200px;
+  }
+  .q-btn {
+    background-color: map-get($cs, bg2) !important;
   }
   .create-btn {
     float: right;
@@ -100,15 +94,19 @@ $cs: (
     display: flex;
     justify-content: space-between;
     select {
-      width: 158px;
+      width: 200px;
     }
     input {
-      width: 150px;
+      width: 200px;
     }
+  }
+  .q-btn {
+    background-color: map-get($cs, bg2) !important;
   }
   .show-btns {
     margin-top: 10px;
     margin-bottom: -10px;
+    padding: -5px;
     float: right;
     display: flex;
     flex-direction: row;
@@ -119,7 +117,7 @@ $cs: (
 .dropdown {
   position: relative;
   display: inline-block;
-  
+
   &:hover .dropdown-content {
     display: flex;
     left: 100%;
@@ -165,4 +163,3 @@ $cs: (
     }
   }
 }
-

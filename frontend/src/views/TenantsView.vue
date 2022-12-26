@@ -90,11 +90,11 @@
                 :to="`/tenants/${Tenant._id}`"
                 class="remove_linkStyle"
               >
-                <button class="full-width">
+                <q-btn class="q-btn full-width">
                   <strong>Update</strong>
-                </button>
+                </q-btn>
               </router-link>
-              <button @click="DeleteTenant(Tenant._id)">Delete</button>
+              <q-btn class="q-btn" @click="DeleteTenant(Tenant._id)">Delete</q-btn>
             </div>
           </div>
         </div>

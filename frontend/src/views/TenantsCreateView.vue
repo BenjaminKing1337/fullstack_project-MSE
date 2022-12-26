@@ -7,7 +7,7 @@
       <form @submit.prevent="NewTenant()">
         <div class="create-card">
           <div class="title">
-            <div class="cardheader">Create New Tenant</div>
+            <div class="cardheader"><b>Create New Tenant</b></div>
           </div>
           <br />
           Type: <br />
@@ -82,7 +82,7 @@
           <br />
           
           <br />
-          <button class="create-btn" type="submit">Add Tenant</button>
+          <q-btn class="q-btn create-btn" type="submit">Add Tenant</q-btn>
         </div>
       </form>
     </div>

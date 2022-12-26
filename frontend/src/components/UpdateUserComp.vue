@@ -3,7 +3,7 @@
     <h6>My Profile</h6>
     <div class="show-card">
       <div class="title">
-        <div class="cardheader">Update User</div>
+        <div class="cardheader"><b>Update User</b></div>
       </div>
       <form @submit.prevent="EditUser">
         <br />
@@ -22,13 +22,13 @@
         </div>
         <div class="spaced">
           <div></div>
-          <button @click="editPswd">
+          <q-btn class="q-btn" @click="editPswd">
             <strong>Edit Password</strong>
-          </button>
+          </q-btn>
         </div>
         <div class="show-btns">
-          <button type="submit">Confirm</button>
-          <button type="button" @click="goBack()">Back</button>
+          <q-btn class="q-btn" type="submit">Confirm</q-btn>
+          <q-btn class="q-btn" type="button" @click="goBack()">Back</q-btn>
         </div>
       </form>
     </div>

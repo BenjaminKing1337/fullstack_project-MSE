@@ -3,7 +3,7 @@
     <br />
     <br />
     <br />
-    <div class="formContainer">
+    <div>
       <q-form
         ref="LoginForm"
         @submit="onSubmit"
@@ -34,8 +34,8 @@
               val.length > 5 || 'Password must be at least 6 characters long',
           ]"
         />
-        <q-btn label="Login" type="submit" />
-        <q-btn label="Reset" type="reset">
+        <q-btn class="q-btn" label="Login" type="submit" />
+        <q-btn class="q-btn" label="Reset" type="reset">
           <q-tooltip>This button will reset the form values</q-tooltip>
         </q-btn>
       </q-form>

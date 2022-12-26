@@ -20,17 +20,13 @@
               <div>userlevel:</div>
               <div>{{ User.userlevel }}</div>
             </div>
-
-            <!-- <div style="border: 1px solid black; border-radius: 15px">
-            Email:&nbsp;&nbsp;{{ User.email }}
-          </div> -->
             <div class="show-btns">
               <router-link :to="`/users/${User._id}`" class="remove_linkStyle">
-                <button class="full-width">
+                <q-btn class="q-btn full-width">
                   <strong>Edit User</strong>
-                </button>
+                </q-btn>
               </router-link>
-              <button @click="DeleteUser(User._id)">Delete</button>
+              <q-btn class="q-btn" @click="DeleteUser(User._id)">Delete</q-btn>
             </div>
           </div>
           <br />

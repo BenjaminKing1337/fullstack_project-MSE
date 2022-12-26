@@ -1,9 +1,10 @@
 <template>
-  <q-page class="page" id="RegisterPage">
-    Register New User
-    <div class="formContainer">
+  <q-page class="page">
+<br>
+<br>
+<br>
+    <div>
       <q-form
-        id="RegisterForm"
         @submit="onSubmit"
         @reset="onReset"
         class="q-gutter-md"
@@ -27,8 +28,8 @@
           ]"
         />
         <div>
-          <q-btn label="Register" type="submit" />
-          <q-btn label="Reset" type="reset">
+          <q-btn class="q-btn" label="Register" type="submit" />
+          <q-btn class="q-btn" label="Reset" type="reset">
             <q-tooltip>This button will reset the form values</q-tooltip>
           </q-btn>
         </div>

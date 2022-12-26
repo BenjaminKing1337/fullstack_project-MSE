@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated class="toolbar glossy">
       <q-toolbar>
-        <q-btn
+        <q-btn class="q-btn"
           flat
           dense
           round
@@ -13,7 +13,7 @@
 
         <q-toolbar-title> Main Solution Estates </q-toolbar-title>
 
-        <div>
+        <div v-if="userAuth()">
           Hello,
           <b class="login-name">{{
             email.charAt(0).toUpperCase() + email.slice(1).split("@")[0]
@@ -49,6 +49,12 @@ export default {
     return {
       email,
       leftDrawerOpen: ref(false),
+      userAuth() {
+        return (
+          localStorage.getItem("Token") !== null &&
+          localStorage.getItem("Token") !== undefined
+        );
+      },
     };
   },
 };

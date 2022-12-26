@@ -23,9 +23,9 @@
             v-model="confirmPwd"
           />
           <br />
-          <button type="submit">Update</button>
+          <q-btn class="q-btn" type="submit">Update</q-btn>
         </form>
-        <button type="button" @click="goBack()">Back</button>
+        <q-btn class="q-btn" type="button" @click="goBack()">Back</q-btn>
       </div>
     </div>
   </q-page>
