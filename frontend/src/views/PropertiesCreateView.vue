@@ -15,10 +15,25 @@
       <input placeholder="Postal Code" v-model="pState.postal_code" /> <br />
       <input placeholder="Value" v-model="pState.value" /> <br />
       <input placeholder="Bank Note" v-model="pState.bank_note" /> <br />
-      <!-- Building ID: <input
-            v-model="pState.building_id"
-          /> -->
-
+      <div>
+        <br />
+        Add Building:
+        <br />
+        <div>
+          <select v-model="pState.building_id">
+            <option>Assign Building</option>
+            <option
+              v-for="Building in bState.Buildings"
+              :key="Building._id"
+              :value="Building._id"
+            >
+              <div>{{ Building.name }} {{ Building.number }}</div>
+              <br />
+            </option>
+          </select>
+        </div>
+      </div>
+      <br />
       <div>
         <br />
         Add Tenants:
@@ -57,7 +72,6 @@
         </button>
       </div>
     </div>
-    
   </body>
 </template>
 
@@ -65,6 +79,7 @@
 import PropertyCRUD from "../modules/propertyCRUD";
 import UserCRUD from "../modules/userCRUD";
 import TenantCRUD from "../modules/tenantCRUD";
+import BuildingCRUD from "../modules/buildingCRUD";
 import { onMounted } from "vue";
 export default {
   setup() {
@@ -78,15 +93,20 @@ export default {
     } = PropertyCRUD();
     const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
     const { tState, Tenant, GetAllTenants } = TenantCRUD();
+    const { bState, Building, GetAllBuildings } = BuildingCRUD();
 
     onMounted(() => {
       GetUsersProperties();
       // GetSpecificUser();
       GetAllUsers();
       GetAllTenants();
+      GetAllBuildings();
     });
 
     return {
+      bState,
+      Building,
+      GetAllBuildings,
       tState,
       Tenant,
       GetAllTenants,

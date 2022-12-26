@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <q-page class="page">
     <!-- Show All -->
     <div>
       <h5>My Buildings</h5>
@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-  </body>
+  </q-page>
 </template>
 
 <script>

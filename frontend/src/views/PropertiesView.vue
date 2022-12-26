@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <q-page class="page">
     <h4>Welcome to Properties page</h4>
     
     <!-- Show All -->
@@ -119,7 +119,7 @@
         </div>
       </div>
     </div>
-  </body>
+  </q-page>
 </template>
 
 <script>

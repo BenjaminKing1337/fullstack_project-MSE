@@ -1,13 +1,13 @@
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import baseURL from "./baseURL";
-import UserCRUD from "./userCRUD";
+// import UserCRUD from "./userCRUD";
 
 const GetTenants = () => {
   const Route = useRoute();
   const Router = useRouter();
   const TenantId = computed(() => Route.params.id);
-  const { User } = UserCRUD();
+  // const { User } = UserCRUD();
 
   const tState = ref({
     type: "",
@@ -154,12 +154,31 @@ const GetTenants = () => {
       console.log(Error);
     }
   };
+  // GET BY ID OF LOGGEDI IN USER
+  const LoggedInTenant = ref({});
+  const GetLoggedInTenant = async () => {
+    try {
+      await fetch(baseURL + "/tenants")
+        .then((Res) => Res.json())
+        .then((Data) => {
+          LoggedInTenant.value = Data.filter(
+            (T) => T.user_id === localStorage.getItem("userid")
+          )[0];
+          localStorage.setItem("tenantid", LoggedInTenant.value._id);
+          console.log(LoggedInTenant.value);
+        });
+    } catch (Error) {
+      console.log(Error);
+    }
+  };
 
   return {
-    User,
+    // User,
     Tenant,
+    LoggedInTenant,
     TenantId,
     GetSpecificTenant,
+    GetLoggedInTenant,
     tState,
     GetAllTenants,
     GetUsersTenants,

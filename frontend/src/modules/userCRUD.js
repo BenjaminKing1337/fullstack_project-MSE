@@ -2,12 +2,15 @@ import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import baseURL from "./baseURL";
 import Notify from "../modules/utils.js";
+import TenantCRUD from "./tenantCRUD";
 
 const GetUsers = () => {
   const Route = useRoute();
   const Router = useRouter();
   const UserId = computed(() => Route.params.id);
   const { NotifyError } = Notify();
+  const { LoggedInTenant, GetLoggedInTenant } = TenantCRUD();
+
   const uState = ref({
     email: "",
     password: "",
@@ -120,6 +123,9 @@ const GetUsers = () => {
             localStorage.setItem("level", data.level);
             localStorage.setItem("userid", data.id);
             localStorage.setItem("email", data.email);
+            GetLoggedInTenant().then(
+              localStorage.setItem("tenantid", LoggedInTenant.value._id)
+            );
             // localStorage.setItem("name", response.data.name);
             Router.push("/");
             window.location.reload(true);
@@ -209,6 +215,7 @@ const GetUsers = () => {
   };
 
   return {
+    LoggedInTenant,
     User,
     UserId,
     GetSpecificUser,

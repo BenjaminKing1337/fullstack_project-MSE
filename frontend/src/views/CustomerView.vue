@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <q-page class="page">
     <h4>Single Customer's page</h4>
     <p>Here you can edit and manage your individual Customer</p>
 
@@ -66,7 +66,7 @@
         </div>
       </form>
     </div>
-  </body>
+  </q-page>
 </template>
 
 <script>

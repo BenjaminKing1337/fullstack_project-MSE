@@ -18,6 +18,8 @@ $cs: (
   }
 
   #RegisterPage {
+    
+
     #RegisterForm {
       display: flex;
       flex-direction: column;
@@ -34,9 +36,10 @@ $cs: (
 :root {
   background-color: map-get($cs, bg);
   #app {
-    q-page {
-      padding: 0 100px;
-    }
+    
+  }
+  .page {
+    padding: 0 25px;
   }
 }
 .login-name {
@@ -113,7 +116,7 @@ $cs: (
   }
 }
 
-//Nav bar dropdowns
+//dropdowns
 .dropdown {
   position: relative;
   display: inline-block;
