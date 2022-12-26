@@ -5,32 +5,44 @@
       <div class="title">
         <div class="cardheader">Update User</div>
       </div>
-      <form @submit.prevent="EditUser">
+      <q-form @submit.prevent="EditUser" class="q-gutter-xs">
         <br />
         <div class="spaced">
-          <div>Email:</div>
-          <input
-            type="text"
-            placeholder="Email"
+          <!-- <div>Email:</div> -->
+          <q-input
+            outlined
+            type="email"
+            label="Email"
             required
             v-model="User.email"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Email cannot be empty',
+              (val) =>
+                val.length > 5 || 'Email must be at least 6 characters long',
+            ]"
           />
         </div>
-        <div class="spaced" v-if="adminAuth() || superadminAuth()">
-          <div>Level:</div>
-          <input type="text" placeholder="Level" v-model="User.userlevel" />
+        <div v-if="adminAuth() || superadminAuth()">
+          <!-- <div>Level:</div> -->
+          <q-select
+            v-model="User.userlevel"
+            outlined
+            :options="editOptions"
+            label="User type"
+          />
         </div>
         <div class="spaced">
           <div></div>
-          <button @click="editPswd">
+          <q-btn @click="editPswd">
             <strong>Edit Password</strong>
-          </button>
+          </q-btn>
         </div>
         <div class="show-btns">
-          <button type="submit">Confirm</button>
-          <button type="button" @click="goBack()">Back</button>
+          <q-btn type="submit">Confirm</q-btn>
+          <q-btn type="button" @click="goBack()">Back</q-btn>
         </div>
-      </form>
+      </q-form>
     </div>
   </q-page>
 </template>
@@ -52,6 +64,7 @@ export default {
       EditUser,
     } = UserCRUD();
     const Router = useRouter();
+    const editOptions = ["user", "admin", "superadmin"];
     const { NotifyError } = Notify();
     const editPswd = () => {
       // Gets id from url
@@ -79,6 +92,7 @@ export default {
       // GetAllUsers,
       GetSpecificUser,
       EditUser,
+      editOptions,
       goBack() {
         // return Router.go(-1);
         Router.push("/users");

@@ -7,7 +7,7 @@
         ref="LoginForm"
         @submit="onSubmit"
         @reset="onReset"
-        class="q-gutter-md"
+        class="q-gutter-xs"
       >
         <q-input
           outlined
@@ -15,11 +15,7 @@
           type="email"
           label="Email"
           lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || 'Email cannot be empty',
-            (val) =>
-              val.length > 5 || 'Email must be at least 6 characters long',
-          ]"
+          :rules="[(val) => (val && val.length > 0) || 'Email cannot be empty']"
         />
         <q-input
           outlined
@@ -29,8 +25,6 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || 'Password cannot be empty',
-            (val) =>
-              val.length > 5 || 'Password must be at least 6 characters long',
           ]"
         />
         <q-btn label="Login" type="submit" />
@@ -43,11 +37,11 @@
 </template>
 
 <script>
-import UserCRUD from '../modules/userCRUD';
-import { ref } from 'vue';
+import UserCRUD from "../modules/userCRUD";
+import { ref } from "vue";
 
 export default {
-  name: 'LoginComp',
+  name: "LoginComp",
 
   setup() {
     const { uState, LoginUser } = UserCRUD();
@@ -60,8 +54,8 @@ export default {
       });
     };
     const onReset = () => {
-      uState.value.email = '';
-      uState.value.password = '';
+      uState.value.email = "";
+      uState.value.password = "";
     };
 
     return {

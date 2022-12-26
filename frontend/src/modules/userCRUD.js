@@ -59,41 +59,68 @@ const GetUsers = () => {
 
   // POST Register User
   const RegisterUser = () => {
-    const RequestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("Token"),
-      },
-      body: JSON.stringify({
-        // id:Route.params.id,
-        email: uState.value.email,
-        password: uState.value.password,
-      }),
-    };
-    fetch(baseURL + "/users/register", RequestOptions).then((res) => res.body);
-    Router.push("/login");
+    try {
+      const RequestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("Token"),
+        },
+        body: JSON.stringify({
+          // id:Route.params.id,
+          email: uState.value.email,
+          password: uState.value.password,
+        }),
+      };
+      fetch(baseURL + "/users/register", RequestOptions)
+        .then((res) => res.json())
+        .then((data) => {
+          return data;
+        })
+        .then((data) => {
+          if (data.error) {
+            NotifyError(data.error);
+          } else {
+            // data.body;
+            Router.push("/login");
+          }
+        });
+    } catch (e) {
+      NotifyError("Ooops. Something went wrong.");
+    }
   };
-  const RegisterUserByAdmin = () => {
-    const RequestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("Token"),
-      },
-      body: JSON.stringify({
-        // id:Route.params.id,
-        email: uState.value.email,
-        password: uState.value.password,
-        created_by: uState.value.created_by,
-      }),
-    };
-    fetch(baseURL + "/users/register", RequestOptions)
-      .then((res) => res.body)
-      .then(() => {
-        Router.push("/users");
-        GetUsersUsers(); // Updates page
-      });
+  const RegisterUserByAdmin = async () => {
+    try {
+      const RequestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("Token"),
+        },
+        body: JSON.stringify({
+          // id:Route.params.id,
+          email: uState.value.email,
+          password: uState.value.password,
+          created_by: uState.value.created_by,
+        }),
+      };
+      await fetch(baseURL + "/users/register", RequestOptions)
+        .then((res) => res.json())
+        .then((data) => {
+          return data;
+        })
+        .then((data) => {
+          // data.body;
+          if (data.error) {
+            NotifyError(data.error);
+          } else {
+            Router.push("/users");
+            GetUsersUsers(); // Updates page
+          }
+        });
+    } catch (e) {
+      NotifyError("Ooops. Something went wrong.");
+    }
   };
   //  POST Login User
   const LoginUser = async () => {
@@ -132,7 +159,7 @@ const GetUsers = () => {
           }
         });
     } catch (error) {
-      NotifyError(error);
+      NotifyError("Ooops. Something went wrong.");
     }
   };
   // DELETE User BY ID
@@ -148,49 +175,69 @@ const GetUsers = () => {
   };
   // UPDATE User BY ID
   const EditUser = async () => {
-    const RequestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("Token"),
-      },
-      body: JSON.stringify({
-        // id:Route.params.id,
-        email: User.value.email,
-        // password: User.value.password,
-        userlevel: User.value.userlevel,
-      }),
-    };
-    // await GetSpecificUser();
-    await fetch(baseURL + "/users/update/" + UserId.value, RequestOptions)
-      .then((res) => res.body)
-      .then(() => {
-        GetAllUsers();
-      });
-    Router.push("/users");
+    try {
+      const RequestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("Token"),
+        },
+        body: JSON.stringify({
+          // id:Route.params.id,
+          email: User.value.email,
+          // password: User.value.password,
+          userlevel: User.value.userlevel,
+        }),
+      };
+      // await GetSpecificUser();
+      await fetch(baseURL + "/users/update/" + UserId.value, RequestOptions)
+        .then((res) => res.json())
+        .then((data) => {
+          return data;
+        })
+        .then((data) => {
+          if (data.error) {
+            NotifyError(data.error);
+          } else {
+            // data.body;
+            GetAllUsers();
+            Router.push("/users");
+          }
+        });
+    } catch (e) {
+      NotifyError("Ooops. Something went wrong.");
+    }
   };
   // UPDATE User BY ID
   const confirmPwd = ref("");
   const EditPwd = async () => {
-    const RequestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // id:Route.params.id,
-        password: uState.value.password,
-      }),
-    };
-    if (uState.value.password === confirmPwd.value) {
+    try {
+      const RequestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("Token"),
+        },
+        body: JSON.stringify({
+          // id:Route.params.id,
+          password: uState.value.password,
+        }),
+      };
       await fetch(baseURL + "/users/update/" + UserId.value, RequestOptions)
-        .then((res) => res.body)
-        .then(() => {
-          GetAllUsers();
+        .then((res) => res.json())
+        .then((data) => {
+          return data;
+        })
+        .then((data) => {
+          if (data.error) {
+            NotifyError(data.error);
+          } else {
+            GetAllUsers();
+            Router.push("/users/" + UserId.value);
+          }
         });
-      Router.push("/users/" + UserId.value);
-    } else {
-      console.log("wrong password");
+    } catch (e) {
+      NotifyError("Ooops. Something went wrong.");
     }
   };
 

@@ -4,9 +4,10 @@
     <div class="formContainer">
       <q-form
         id="RegisterForm"
+        ref="RegisterForm"
         @submit="onSubmit"
         @reset="onReset"
-        class="q-gutter-md"
+        class="q-gutter-xs"
       >
         <q-input
           outlined
@@ -14,7 +15,11 @@
           type="email"
           label="Email"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Email cannot be empty']"
+          :rules="[
+            (val) => (val && val.length > 0) || 'Email cannot be empty',
+            (val) =>
+              val.length > 5 || 'Email must be at least 6 characters long',
+          ]"
         />
         <q-input
           outlined
@@ -24,6 +29,8 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || 'Password cannot be empty',
+            (val) =>
+              val.length > 5 || 'Password must be at least 6 characters long',
           ]"
         />
         <div>
@@ -40,11 +47,12 @@
 </template>
 
 <script>
-import UserCRUD from '../modules/userCRUD';
-import { onMounted } from 'vue';
+import UserCRUD from "../modules/userCRUD";
+import { onMounted } from "vue";
+import { ref } from "vue";
 
 export default {
-  name: 'UsersCreateComp',
+  name: "UsersCreateComp",
 
   setup() {
     const {
@@ -55,9 +63,25 @@ export default {
       RegisterUser,
       RegisterUserByAdmin,
     } = UserCRUD();
+    const RegisterForm = ref(null);
+
     onMounted(() => {
       // GetAllUsers();
     });
+    const onSubmit = async () => {
+      RegisterForm.value.validate().then((success) => {
+        if (success) {
+          if (
+            localStorage.getItem("level") === "admin" ||
+            localStorage.getItem("level") === "superadmin"
+          ) {
+            RegisterUserByAdmin();
+          } else {
+            RegisterUser();
+          }
+        }
+      });
+    };
     return {
       uState,
       GetAllUsers,
@@ -65,17 +89,11 @@ export default {
       EditUser,
       RegisterUser,
       RegisterUserByAdmin,
+      onSubmit,
+      RegisterForm,
 
       async created() {
         GetAllUsers();
-      },
-
-      async onSubmit() {
-        if (localStorage.getItem('level') === 'admin' || localStorage.getItem('level') === 'superadmin') {
-          RegisterUserByAdmin();
-        } else {
-          RegisterUser();
-        }
       },
 
       onReset() {
@@ -84,12 +102,12 @@ export default {
       },
       userAuth() {
         return (
-          localStorage.getItem('Token') !== null &&
-          localStorage.getItem('Token') !== undefined
+          localStorage.getItem("Token") !== null &&
+          localStorage.getItem("Token") !== undefined
         );
       },
       adminAuth() {
-        return localStorage.getItem('level') === 'admin';
+        return localStorage.getItem("level") === "admin";
       },
     };
   },

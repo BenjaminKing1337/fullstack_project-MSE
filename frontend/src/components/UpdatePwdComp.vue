@@ -7,25 +7,43 @@
 
     <div>
       <div style="border: 1px solid black; border-radius: 15px">
-        <form @submit.prevent="EditPwd">
-          <input
+        <q-form @submit.prevent="EditPwd" class="q-gutter-xs">
+          <q-input
+            outlined
             type="password"
-            placeholder="Password"
-            required
+            label="Password"
             v-model="uState.password"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Password cannot be empty',
+              (val) =>
+                val.length > 5 || 'Password must be at least 6 characters long',
+            ]"
           />
           <br />
           <!-- <p> {{ confirmPwd.value }}</p> -->
-          <input
+          <q-input
+            outlined
             type="password"
-            placeholder="Confirm Password"
+            label="Confirm Password"
             required
             v-model="confirmPwd"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) ||
+                'Password confirmation cannot be empty',
+              (val) =>
+                val.length > 5 || 'Password must be at least 6 characters long',
+              (val) =>
+                uState.password == val ||
+                'Password confirmation must match Password',
+            ]"
           />
           <br />
-          <button type="submit">Update</button>
-        </form>
-        <button type="button" @click="goBack()">Back</button>
+          <q-btn type="submit">Update</q-btn>
+        </q-form>
+        <q-btn type="button" @click="goBack()">Back</q-btn>
       </div>
     </div>
   </q-page>
@@ -68,5 +86,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
