@@ -98,16 +98,19 @@ const GetProperties = () => {
 
   // DELETE PROPERTY BY ID
   const DeleteProperty = (_id) => {
-    return confirm("Are you sure you want to delete this Property?").then(
-      fetch(baseURL + "/properties/delete/" + _id, {
-        method: "DELETE",
-        headers: {
-          "auth-token": localStorage.getItem("Token"),
-        },
-      }).then(() => {
-        GetUsersProperties(); // Updates page
-      })
-    );
+    var choice = confirm("Are you sure you want to delete this Property?")
+      if (choice) {
+        fetch(baseURL + "/properties/delete/" + _id, {
+          method: "DELETE",
+          headers: {
+            "auth-token": localStorage.getItem("Token"),
+          },
+        }).then(() => {
+          GetUsersProperties(); // Updates page
+        })
+      } else {
+        Router.push("/properties")
+      }
   };
 
   // UPDATE PROPERTY BY ID

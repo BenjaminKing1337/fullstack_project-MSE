@@ -79,7 +79,8 @@ const GetCustomers = () => {
 
   // DELETE CUSTOMER BY ID
   const DeleteCustomer = (_id) => {
-    return confirm("Are you sure you want to delete this Customer?").then(
+    var choice = confirm("Are you sure you want to delete this Customer?");
+    if (choice) {
       fetch(baseURL + "/customers/delete/" + _id, {
         method: "DELETE",
         headers: {
@@ -87,8 +88,10 @@ const GetCustomers = () => {
         },
       }).then(() => {
         GetUsersCustomers(); // Updates page
-      })
-    );
+      });
+    } else {
+      Router.push("/customers");
+    }
   };
 
   // UPDATE CUSTOMER BY ID

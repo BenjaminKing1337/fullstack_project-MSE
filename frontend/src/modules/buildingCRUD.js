@@ -73,7 +73,8 @@ const GetBuildings = () => {
 
   // DELETE BUILDING BY ID
   const DeleteBuilding = (_id) => {
-    return confirm("Are you sure you want to delete this Building?").then(
+    var choice = confirm("Are you sure you want to delete this Building?");
+    if (choice) {
       fetch(baseURL + "/buildings/delete/" + _id, {
         method: "DELETE",
         headers: {
@@ -81,8 +82,10 @@ const GetBuildings = () => {
         },
       }).then(() => {
         GetUsersBuildings(); // Updates page
-      })
-    );
+      });
+    } else {
+      Router.push("/buildings");
+    }
   };
 
   // UPDATE BUILDING BY ID
