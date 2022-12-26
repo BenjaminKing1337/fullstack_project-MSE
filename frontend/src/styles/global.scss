@@ -19,6 +19,15 @@ $cs: (
   }
   .page {
     padding: 0 25px;
+    .pageheader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .q-btn {
+        font-weight: 900;
+        font-size: 16px;
+      }
+    }
   }
   .toolbar {
     background-color: map-get($cs, header);
@@ -37,6 +46,13 @@ $cs: (
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .q-btn,
+  .create-card.router-link,
+  .show-card.router-link {
+    height: 30px;
+    font-size: 12px;
+    background-color: map-get($cs, bg2) !important;
   }
 }
 // ADD NEW cards
@@ -62,9 +78,6 @@ $cs: (
   }
   input {
     width: 200px;
-  }
-  .q-btn {
-    background-color: map-get($cs, bg2) !important;
   }
   .create-btn {
     float: right;
@@ -99,9 +112,6 @@ $cs: (
     input {
       width: 200px;
     }
-  }
-  .q-btn {
-    background-color: map-get($cs, bg2) !important;
   }
   .show-btns {
     margin-top: 10px;

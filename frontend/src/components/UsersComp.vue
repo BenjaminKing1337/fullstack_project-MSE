@@ -1,11 +1,14 @@
 <template>
   <q-page class="page">
-    <br />
-    <br />
-    <br />
-    <h2>Currently Registered User Profiles</h2>
-    <br />
+    <div class="pageheader">
+      <h4>Welcome to Users menu</h4>
+      <router-link to="/newbuilding" class="remove_linkStyle">
+        <q-btn class="q-btn"> Create New </q-btn>
+      </router-link>
+    </div>
+    <!-- Show All  -->
     <div v-if="adminAuth()">
+      <h5>My Users</h5>
       <div class="grid3x3">
         <div v-for="User in uState.Users" :key="User._id">
           <div class="show-card">

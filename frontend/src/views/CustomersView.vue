@@ -1,8 +1,12 @@
 
 <template>
   <q-page class="page">
-    <h4>Welcome to Customers page</h4>
-   
+   <div class="pageheader">
+    <h4>Welcome to Customers menu</h4>
+      <router-link to="/newbuilding" class="remove_linkStyle">
+        <q-btn class="q-btn"> Create New </q-btn>
+      </router-link>
+    </div>
     <!-- Show All  -->
     <div>
       <h5>My Customers</h5>

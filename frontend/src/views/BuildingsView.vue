@@ -1,5 +1,11 @@
 <template>
   <q-page class="page">
+    <div class="pageheader">
+      <h4>Welcome to Buildings menu</h4>
+      <router-link to="/newbuilding" class="remove_linkStyle">
+        <q-btn class="q-btn"> Create New </q-btn>
+      </router-link>
+    </div>
     <!-- Show All -->
     <div>
       <h5>My Buildings</h5>
@@ -33,7 +39,7 @@
             >
               <div v-if="Building.created_by === User._id">Created by:</div>
               <div v-if="Building.created_by === User._id">
-                {{ User.email.split('@')[0] }}
+                {{ User.email.split("@")[0] }}
               </div>
             </div>
             <br />
@@ -46,7 +52,9 @@
                   <strong>Update</strong>
                 </q-btn>
               </router-link>
-              <q-btn class="q-btn" @click="DeleteBuilding(Building._id)">Delete</q-btn>
+              <q-btn class="q-btn" @click="DeleteBuilding(Building._id)"
+                >Delete</q-btn
+              >
             </div>
           </div>
         </div>
@@ -56,9 +64,9 @@
 </template>
 
 <script>
-import UserCRUD from '../modules/userCRUD';
-import BuildingCRUD from '../modules/buildingCRUD';
-import { onMounted } from 'vue';
+import UserCRUD from "../modules/userCRUD";
+import BuildingCRUD from "../modules/buildingCRUD";
+import { onMounted } from "vue";
 export default {
   setup() {
     const { uState, User, GetAllUsers } = UserCRUD();
