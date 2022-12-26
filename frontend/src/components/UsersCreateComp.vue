@@ -1,5 +1,5 @@
 <template>
-  <div id="RegisterPage">
+  <q-page class="page" id="RegisterPage">
     Register New User
     <div class="formContainer">
       <q-form
@@ -36,7 +36,7 @@
     </div>
     <br />
     <br />
-  </div>
+  </q-page>
 </template>
 
 <script>

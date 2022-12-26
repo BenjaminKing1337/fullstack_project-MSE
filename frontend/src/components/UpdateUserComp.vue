@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <q-page class="page">
     <h6>My Profile</h6>
     <div class="show-card">
       <div class="title">
@@ -32,7 +32,7 @@
         </div>
       </form>
     </div>
-  </body>
+  </q-page>
 </template>
 
 <script>

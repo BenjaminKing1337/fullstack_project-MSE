@@ -18,7 +18,7 @@ $cs: (
   }
 
   #RegisterPage {
-    padding: 0 25px;
+    
 
     #RegisterForm {
       display: flex;
@@ -37,6 +37,9 @@ $cs: (
   background-color: map-get($cs, bg);
   #app {
     
+  }
+  .page {
+    padding: 0 25px;
   }
 }
 .login-name {
