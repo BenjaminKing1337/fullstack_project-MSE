@@ -137,6 +137,7 @@ const GetUsers = () => {
   };
   // DELETE User BY ID
   const DeleteUser = (UserId) => {
+    return confirm("Are you sure you want to delete this User?").then(
     fetch(baseURL + "/users/delete/" + UserId, {
       method: "DELETE",
       headers: {
@@ -144,7 +145,7 @@ const GetUsers = () => {
       },
     }).then(() => {
       GetAllUsers(); // Updates page
-    });
+    }));
   };
   // UPDATE User BY ID
   const EditUser = async () => {
