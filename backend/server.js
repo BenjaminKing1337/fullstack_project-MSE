@@ -3,6 +3,18 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
+
+// ** Swagger · http://localhost:3000/api/docs/
+const swaggerUi = require('swagger-ui-express');
+const yaml = require('yamljs');
+// Swagger Setup
+const swaggerDefinition = yaml.load('./swagger.yaml');
+app.use(
+  '/api/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDefinition, { customSiteTitle: 'API · MSE' })
+);
+
 // const router = express.Router();
 require('dotenv-flow').config();
 

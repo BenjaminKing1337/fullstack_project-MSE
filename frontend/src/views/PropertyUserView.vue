@@ -1,15 +1,26 @@
 <template>
   <q-page class="page">
     <h4>Single Property's page</h4>
-    <p>Here you can edit and manage your individual Property</p>
+    <p>Here you can view your Property info</p>
 
     <div class="show-card">
       <div class="title">
-        <div class="cardheader">Update Property</div>
+        <div class="cardheader">My Property</div>
       </div>
       <br />
       <br />
-      <form @submit.prevent="EditProperty">
+      <div
+        v-for="Property in filterProps(pState.Properties, TenantId)"
+        :key="Property._id"
+      >
+        <div>
+          ID: {{ Property._id }} <br />
+          Name: {{ Property.name }} <br />
+          Address: {{ Property.address }}
+        </div>
+        <br />
+      </div>
+      <!-- <form @submit.prevent="EditProperty">
         <div>
           <div class="spaced">
             <div>Name:</div>
@@ -100,7 +111,7 @@
           <button type="submit">Update</button>
           <button type="button" @click="goBack()">Back</button>
         </div>
-      </form>
+      </form> -->
     </div>
   </q-page>
 </template>
@@ -110,6 +121,7 @@ import PropertyCRUD from "../modules/propertyCRUD";
 import TenantCRUD from "../modules/tenantCRUD";
 import BuildingCRUD from "../modules/buildingCRUD";
 import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
 
 export default {
   setup() {
@@ -117,15 +129,33 @@ export default {
       pState,
       Property,
       PropertyId,
-      // GetAllProperties,
+      GetAllProperties,
       GetSpecificProperty,
       EditProperty,
     } = PropertyCRUD();
-    const { tState, Tenant, TenantId, GetAllTenants } = TenantCRUD();
+    const { tState, LoggedInTenant, /* TenantId, */ GetLoggedInTenant } =
+      TenantCRUD();
     const { bState, Building, GetAllBuildings } = BuildingCRUD();
 
-    GetSpecificProperty();
-    GetAllTenants();
+    let filterProps = (Properties, tenantId) => {
+      let propsFiltered = [];
+      for (var i = 0; i < Properties.length; i++) {
+        if (
+          Properties[i].owner_id == tenantId ||
+          Properties[i].renter_id == tenantId
+        ) {
+          propsFiltered.push(Properties[i]);
+        }
+      }
+      return propsFiltered;
+    };
+    const TenantId = localStorage.getItem("tenantid");
+
+    onMounted(() => {
+      GetLoggedInTenant();
+      GetSpecificProperty();
+      GetAllProperties();
+    });
 
     const Router = useRouter();
 
@@ -134,14 +164,16 @@ export default {
       Building,
       GetAllBuildings,
       tState,
-      Tenant,
+      LoggedInTenant,
       TenantId,
       pState,
       Property,
       PropertyId,
-      GetAllTenants,
+      GetLoggedInTenant,
+      GetAllProperties,
       GetSpecificProperty,
       EditProperty,
+      filterProps,
       goBack() {
         // return Router.go(-1);
         Router.push("/properties");

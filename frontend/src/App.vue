@@ -1,46 +1,47 @@
 <template>
-  <div id="app">
-    <Nav />
-  </div>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated class="glossy">
+      <q-toolbar>
+        <q-btn
+          flat
+          dense
+          round
+          @click="leftDrawerOpen = !leftDrawerOpen"
+          aria-label="Menu"
+          icon="menu"
+        />
+
+        <q-toolbar-title> Quasar App </q-toolbar-title>
+
+        <div>Quasar v{{ $q.version }}</div>
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+      <Nav />
+    </q-drawer>
+
+    <q-page-container>
+      <router-view></router-view>
+    </q-page-container>
+  </q-layout>
 </template>
 
-<style lang="scss">
-</style>
-
 <script>
+import { ref } from "vue";
 import Nav from "./components/NavComp.vue";
 
 export default {
+  name: "LayoutDefault",
+
   components: {
     Nav,
   },
 
   setup() {
-    return {};
+    return {
+      leftDrawerOpen: ref(false),
+    };
   },
 };
 </script>
-
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: map-get($cs, highlight);
-    }
-  }
-}
-</style>

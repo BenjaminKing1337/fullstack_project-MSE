@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <q-page class="page">
     <h5>
       {{ User.email }}
     </h5>
@@ -28,7 +28,7 @@
         <button type="button" @click="goBack()">Back</button>
       </div>
     </div>
-  </body>
+  </q-page>
 </template>
 
 <script>

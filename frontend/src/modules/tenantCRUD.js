@@ -1,35 +1,39 @@
-import { ref, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import baseURL from './baseURL';
-import UserCRUD from './userCRUD';
+import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import baseURL from "./baseURL";
+// import UserCRUD from "./userCRUD";
 
 const GetTenants = () => {
   const Route = useRoute();
   const Router = useRouter();
   const TenantId = computed(() => Route.params.id);
-  const { User } = UserCRUD();
+  // const { User } = UserCRUD();
 
   const tState = ref({
-    type: '',
-    forename: '',
-    surname: '',
-    email: '',
-    phone_number: '',
-    keys_number: '',
-    closest_neighbour: '',
-    account_number: '',
-    move_in: '',
-    move_out: '',
-    lease: '',
-    user_id: 'None',
-    created_by: localStorage.getItem('userid'),
+    type: "",
+    forename: "",
+    surname: "",
+    email: "",
+    phone_number: "",
+    keys_number: "",
+    closest_neighbour: "",
+    account_number: "",
+    move_in: "",
+    move_out: "",
+    lease: "",
+    user_id: "None",
+    created_by: localStorage.getItem("userid"),
     Tenants: {},
   });
 
   // GET ALL
   const GetAllTenants = async () => {
     try {
-      await fetch(baseURL + '/tenants')
+      await fetch(baseURL + "/tenants", {
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      })
         .then((Res) => Res.json())
         .then((Data) => {
           tState.value.Tenants = Data;
@@ -42,7 +46,12 @@ const GetTenants = () => {
   const GetUsersTenants = async () => {
     try {
       await fetch(
-        baseURL + '/tenants/get/byUser/' + localStorage.getItem('userid')
+        baseURL + "/tenants/get/byUser/" + localStorage.getItem("userid"),
+        {
+          headers: {
+            "auth-token": localStorage.getItem("Token"),
+          },
+        }
       )
         .then((Res) => Res.json())
         .then((Data) => {
@@ -56,9 +65,10 @@ const GetTenants = () => {
   // CREATE NEW
   const NewTenant = () => {
     const RequestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("Token"),
       },
       body: JSON.stringify({
         type: tState.value.type,
@@ -76,7 +86,7 @@ const GetTenants = () => {
         created_by: tState.value.created_by,
       }),
     };
-    fetch(baseURL + '/tenants/new', RequestOptions)
+    fetch(baseURL + "/tenants/new", RequestOptions)
       // GetAllTenants()
       .then(() => {
         GetUsersTenants(); // Updates page
@@ -85,8 +95,11 @@ const GetTenants = () => {
 
   // DELETE BY ID
   const DeleteTenant = (_id) => {
-    fetch(baseURL + '/tenants/delete/' + _id, {
-      method: 'DELETE',
+    fetch(baseURL + "/tenants/delete/" + _id, {
+      method: "DELETE",
+      headers: {
+        "auth-token": localStorage.getItem("Token"),
+      },
     }).then(() => {
       GetUsersTenants(); // Updates page
     });
@@ -95,9 +108,10 @@ const GetTenants = () => {
   // UPDATE BY ID
   const EditTenant = () => {
     const RequestOptions = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("Token"),
       },
       body: JSON.stringify({
         type: Tenant.value.type,
@@ -115,10 +129,10 @@ const GetTenants = () => {
         // created_by: tState.value.created_by,
       }),
     };
-    fetch(baseURL + '/tenants/update/' + TenantId.value, RequestOptions).then(
+    fetch(baseURL + "/tenants/update/" + TenantId.value, RequestOptions).then(
       (res) => res.body
     );
-    Router.push('/tenants');
+    Router.push("/tenants");
     // GetAllTenants();
   };
 
@@ -126,7 +140,11 @@ const GetTenants = () => {
   const Tenant = ref({});
   const GetSpecificTenant = async () => {
     try {
-      fetch(baseURL + '/tenants/get/' + TenantId.value)
+      fetch(baseURL + "/tenants/get/" + TenantId.value, {
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      })
         .then((Res) => Res.json())
         .then((Data) => {
           Tenant.value = Data;
@@ -136,12 +154,31 @@ const GetTenants = () => {
       console.log(Error);
     }
   };
+  // GET BY ID OF LOGGEDI IN USER
+  const LoggedInTenant = ref({});
+  const GetLoggedInTenant = async () => {
+    try {
+      await fetch(baseURL + "/tenants")
+        .then((Res) => Res.json())
+        .then((Data) => {
+          LoggedInTenant.value = Data.filter(
+            (T) => T.user_id === localStorage.getItem("userid")
+          )[0];
+          localStorage.setItem("tenantid", LoggedInTenant.value._id);
+          console.log(LoggedInTenant.value);
+        });
+    } catch (Error) {
+      console.log(Error);
+    }
+  };
 
   return {
-    User,
+    // User,
     Tenant,
+    LoggedInTenant,
     TenantId,
     GetSpecificTenant,
+    GetLoggedInTenant,
     tState,
     GetAllTenants,
     GetUsersTenants,

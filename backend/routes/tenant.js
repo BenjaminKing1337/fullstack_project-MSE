@@ -1,15 +1,16 @@
-const Express = require('express');
+const Express = require("express");
 const router = Express.Router();
-const Tenant = require('../models/tenant');
+const Tenant = require("../models/tenant");
+const { VerifyToken } = require("../validation");
 
 // Get all Tenant routes
-router.get('/', async (req, res) => {
+router.get("/", VerifyToken, async (req, res) => {
   const Tenants = await Tenant.find();
   res.json(Tenants);
 });
 
 // Create new Tenant route
-router.post('/new', async (req, res) => {
+router.post("/new", VerifyToken, async (req, res) => {
   try {
     const NewTenant = new Tenant(
       req.body // What the Vue App is sending
@@ -22,7 +23,7 @@ router.post('/new', async (req, res) => {
 });
 
 // Get Tenants by id route
-router.get('/get/:id', async (req, res) => {
+router.get("/get/:id", VerifyToken, async (req, res) => {
   try {
     const IdTenant = await Tenant.findById({ _id: req.params.id });
     res.json(IdTenant);
@@ -31,7 +32,7 @@ router.get('/get/:id', async (req, res) => {
   }
 });
 // Get Tenants by user id route
-router.get('/get/byUser/:id', async (req, res) => {
+router.get("/get/byUser/:id", VerifyToken, async (req, res) => {
   try {
     const IdTenant = await Tenant.find({ created_by: req.params.id });
     res.json(IdTenant);
@@ -41,7 +42,7 @@ router.get('/get/byUser/:id', async (req, res) => {
 });
 
 // Delete Tenant by id route
-router.delete('/delete/:id', async (req, res) => {
+router.delete("/delete/:id", VerifyToken, async (req, res) => {
   try {
     const DelTenant = await Tenant.findByIdAndDelete({ _id: req.params.id });
     res.json(DelTenant);
@@ -51,9 +52,9 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // Update Tenant by id route
-router.put('/update/:id', async (req, res) => {
+router.put("/update/:id", VerifyToken, async (req, res) => {
   try {
-    const UpdTenant = await Tenant.updateOne(
+    const UpdTenant = await Tenant.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: req.body }
     );

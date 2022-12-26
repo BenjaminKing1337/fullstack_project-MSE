@@ -1,15 +1,16 @@
-const Express = require('express');
+const Express = require("express");
 const router = Express.Router();
-const Document = require('../models/document');
+const Document = require("../models/document");
+const { VerifyToken } = require("../validation");
 
 // Get all Documents
-router.get('/', async (req, res) => {
+router.get("/", VerifyToken, async (req, res) => {
   const Documents = await Document.find();
   res.json(Documents);
 });
 
 // Create new Document
-router.post('/new', async (req, res) => {
+router.post("/new", VerifyToken, async (req, res) => {
   try {
     const NewDocument = new Document(
       req.body // What the Vue App is sending
@@ -22,7 +23,7 @@ router.post('/new', async (req, res) => {
 });
 
 // Get Document by id
-router.get('/get/:id', async (req, res) => {
+router.get("/get/:id", VerifyToken, async (req, res) => {
   try {
     const IdDocument = await Document.findById({ _id: req.params.id });
     res.json(IdDocument);
@@ -31,7 +32,7 @@ router.get('/get/:id', async (req, res) => {
   }
 });
 // Get Documents by user id
-router.get('/get/byUser/:id', async (req, res) => {
+router.get("/get/byUser/:id", VerifyToken, async (req, res) => {
   try {
     const IdDocument = await Document.find({ created_by: req.params.id });
     res.json(IdDocument);
@@ -41,7 +42,7 @@ router.get('/get/byUser/:id', async (req, res) => {
 });
 
 // Delete Document by id
-router.delete('/delete/:id', async (req, res) => {
+router.delete("/delete/:id", VerifyToken, async (req, res) => {
   try {
     const DelDocument = await Document.findByIdAndDelete({
       _id: req.params.id,
@@ -53,9 +54,9 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // Update Document by id
-router.put('/update/:id', async (req, res) => {
+router.put("/update/:id", VerifyToken, async (req, res) => {
   try {
-    const UpdDocument = await Document.updateOne(
+    const UpdDocument = await Document.findByIdAndUpdate(
       { _id: req.params.id },
       { $set: req.body }
     );

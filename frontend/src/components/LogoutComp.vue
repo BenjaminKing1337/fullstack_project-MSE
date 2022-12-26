@@ -1,12 +1,14 @@
 <template>
-  <div class="flex column flex-center">
-    <img src="../assets/logo.png" style="width: 200px; height: 200px" />
-    <h2 class="text-center">Are you sure you wanna leave?</h2>
-    <div class="flex">
-      <button @click="onLogout()">Yeah, see ya!</button>
-      <button @click="onRegret()">No, lemme stay!</button>
+  <q-page class="page">
+    <div class="flex column flex-center">
+      <img src="../assets/logo.png" style="width: 200px; height: 200px" />
+      <h2 class="text-center">Are you sure you wanna leave?</h2>
+      <div class="flex">
+        <button @click="onLogout()">Yeah, see ya!</button>
+        <button @click="onRegret()">No, lemme stay!</button>
+      </div>
     </div>
-  </div>
+  </q-page>
 </template>
 
 <style lang="scss">
@@ -20,8 +22,9 @@ export default {
   methods: {
     onLogout() {
       localStorage.clear();
-      this.$router.push("/");
-      window.location.reload(true);
+      this.$router.push("/").then(() => {
+        location.reload(true);
+      });
     },
     onRegret() {
       this.$router.push("/");

@@ -5,33 +5,41 @@ const Jwt = require("jsonwebtoken");
 const {
   RegisterValidation,
   LoginValidation,
-  // VerifyToken,
+  VerifyToken,
 } = require("../validation");
 
 // Read all users - GET
-router.get("/", (req, res) => {
-  User.find()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
-    });
+router.get("/", VerifyToken, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 });
 
 //Get user by ID - GET
-router.get("/get/:id", /* VerifyToken, */ (req, res) => {
-  User.findById({_id: req.params.id})
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.status(500).send({ message: err.message });
-    });
+router.get("/get/:id", VerifyToken, async (req, res) => {
+  try {
+    const user = await User.findById({ _id: req.params.id });
+    res.json(user);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
+// Get Users by user id route
+router.get("/get/byUser/:id", VerifyToken, async (req, res) => {
+  try {
+    const IdUser = await User.find({ created_by: req.params.id });
+    res.json(IdUser);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
 });
 
 // ROUTE - /registration
-router.post("/register", async (req, res) => {
+router.post("/register", VerifyToken, async (req, res) => {
   // input validation
   const { error } = RegisterValidation(req.body);
   if (error) {
@@ -48,6 +56,7 @@ router.post("/register", async (req, res) => {
   // save data as user in db
   const UserObject = new User({
     email: req.body.email,
+    created_by: req.body.created_by,
     password: Pwd,
   });
   try {
@@ -97,7 +106,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Delete by id route
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", VerifyToken, async (req, res) => {
   try {
     const DelUser = await User.findByIdAndDelete({ _id: req.params.id });
     res.json(DelUser);
@@ -107,7 +116,7 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 // Update by id route
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id", VerifyToken, async (req, res) => {
   try {
     if (req.body.password) {
       // password hashing
@@ -117,7 +126,7 @@ router.put("/update/:id", async (req, res) => {
     }
     const UpdUser = await User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      req.body
       // { Pwd: req.body.password }
     );
     console.log(req.body);
