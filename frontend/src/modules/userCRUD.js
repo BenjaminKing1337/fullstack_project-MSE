@@ -37,7 +37,14 @@ const GetUsers = () => {
   // GET User's users
   const GetUsersUsers = async () => {
     try {
-      await fetch(baseURL + "/users/get/byUser/" + localStorage.getItem("userid"))
+      await fetch(
+        baseURL + "/users/get/byUser/" + localStorage.getItem("userid"),
+        {
+          headers: {
+            "auth-token": localStorage.getItem("Token"),
+          },
+        }
+      )
         .then((Res) => Res.json())
         .then((Data) => {
           uState.value.Users = Data;

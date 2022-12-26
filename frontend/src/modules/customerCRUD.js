@@ -1,6 +1,6 @@
-import { ref, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import baseURL from './baseURL';
+import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import baseURL from "./baseURL";
 
 const GetCustomers = () => {
   const Route = useRoute();
@@ -8,20 +8,24 @@ const GetCustomers = () => {
   const CustomerId = computed(() => Route.params.id);
 
   const cState = ref({
-    forename: '',
-    surname: '',
-    email: '',
-    company_name: '',
-    contact_number: '',
-    user_id: 'None',
-    created_by: localStorage.getItem('userid'),
+    forename: "",
+    surname: "",
+    email: "",
+    company_name: "",
+    contact_number: "",
+    user_id: "None",
+    created_by: localStorage.getItem("userid"),
     Customers: {},
   });
 
   // GET ALL CUSTOMERS
   const GetAllCustomers = async () => {
     try {
-      await fetch(baseURL + '/customers')
+      await fetch(baseURL + "/customers", {
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      })
         .then((Res) => Res.json())
         .then((Data) => {
           cState.value.Customers = Data;
@@ -35,7 +39,12 @@ const GetCustomers = () => {
   const GetUsersCustomers = async () => {
     try {
       await fetch(
-        baseURL + '/customers/get/byUser/' + localStorage.getItem('userid')
+        baseURL + "/customers/get/byUser/" + localStorage.getItem("userid"),
+        {
+          headers: {
+            "auth-token": localStorage.getItem("Token"),
+          },
+        }
       )
         .then((Res) => Res.json())
         .then((Data) => {
@@ -48,9 +57,10 @@ const GetCustomers = () => {
   // CREATE NEW CUSTOMER
   const NewCustomer = () => {
     const RequestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("Token"),
       },
       body: JSON.stringify({
         forename: cState.value.forename,
@@ -58,19 +68,22 @@ const GetCustomers = () => {
         email: cState.value.email,
         company_name: cState.value.company_name,
         contact_number: cState.value.contact_number,
-        user_id: 'None',
+        user_id: "None",
         created_by: cState.value.created_by,
       }),
     };
-    fetch(baseURL + '/customers/new', RequestOptions).then(() => {
+    fetch(baseURL + "/customers/new", RequestOptions).then(() => {
       GetUsersCustomers(); // Updates page
     });
   };
 
   // DELETE CUSTOMER BY ID
   const DeleteCustomer = (_id) => {
-    fetch(baseURL + '/customers/delete/' + _id, {
-      method: 'DELETE',
+    fetch(baseURL + "/customers/delete/" + _id, {
+      method: "DELETE",
+      headers: {
+        "auth-token": localStorage.getItem("Token"),
+      },
     }).then(() => {
       GetUsersCustomers(); // Updates page
     });
@@ -79,9 +92,10 @@ const GetCustomers = () => {
   // UPDATE CUSTOMER BY ID
   const EditCustomer = () => {
     const RequestOptions = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("Token"),
       },
       body: JSON.stringify({
         // id:Route.params.id,
@@ -95,17 +109,21 @@ const GetCustomers = () => {
       }),
     };
     fetch(
-      baseURL + '/customers/update/' + CustomerId.value,
+      baseURL + "/customers/update/" + CustomerId.value,
       RequestOptions
     ).then((res) => res.body);
-    Router.push('/customers');
+    Router.push("/customers");
   };
 
   // GET CUSTOMER BY ID
   const Customer = ref({});
   const GetSpecificCustomer = async () => {
     try {
-      fetch(baseURL + '/customers/get/' + CustomerId.value)
+      fetch(baseURL + "/customers/get/" + CustomerId.value, {
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      })
         .then((Res) => Res.json())
         .then((Data) => {
           Customer.value = Data;

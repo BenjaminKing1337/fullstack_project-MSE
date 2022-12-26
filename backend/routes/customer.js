@@ -1,15 +1,16 @@
-const Express = require('express');
+const Express = require("express");
 const router = Express.Router();
-const Customer = require('../models/customer');
+const Customer = require("../models/customer");
+const { VerifyToken } = require("../validation");
 
 // Get all Customers
-router.get('/', async (req, res) => {
+router.get("/", VerifyToken, async (req, res) => {
   const Customers = await Customer.find();
   res.json(Customers);
 });
 
 // Create new Customer
-router.post('/new', async (req, res) => {
+router.post("/new", VerifyToken, async (req, res) => {
   try {
     const NewCustomer = new Customer(
       req.body // What the Vue App is sending
@@ -22,7 +23,7 @@ router.post('/new', async (req, res) => {
 });
 
 // Get Customer by id
-router.get('/get/:id', async (req, res) => {
+router.get("/get/:id", VerifyToken, async (req, res) => {
   try {
     const IdCustomer = await Customer.findById({ _id: req.params.id });
     res.json(IdCustomer);
@@ -31,7 +32,7 @@ router.get('/get/:id', async (req, res) => {
   }
 });
 // Get Customers by user id
-router.get('/get/byUser/:id', async (req, res) => {
+router.get("/get/byUser/:id", VerifyToken, async (req, res) => {
   try {
     const IdCustomer = await Customer.find({ created_by: req.params.id });
     res.json(IdCustomer);
@@ -41,7 +42,7 @@ router.get('/get/byUser/:id', async (req, res) => {
 });
 
 // Delete Customer by id
-router.delete('/delete/:id', async (req, res) => {
+router.delete("/delete/:id", VerifyToken, async (req, res) => {
   try {
     const DelCustomer = await Customer.findByIdAndDelete({
       _id: req.params.id,
@@ -53,7 +54,7 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // Update Customer by id
-router.put('/update/:id', async (req, res) => {
+router.put("/update/:id", VerifyToken, async (req, res) => {
   try {
     const UpdCustomer = await Customer.findByIdAndUpdate(
       { _id: req.params.id },

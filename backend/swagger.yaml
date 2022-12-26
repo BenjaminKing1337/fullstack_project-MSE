@@ -26,20 +26,23 @@ components:
         userlevel:
           type: string
           required: false
-          enum: ['superadmin', 'admin', 'user']
-          default: 'user'
+          enum: ["superadmin", "admin", "user"]
+          default: "user"
+        created_by:
+          type: string
+          description: "Id of the logged in user"
         created_at:
           type: string
           required: false
-          description: 'It takes the current date as default'
-          example: '2014-01-01T23:28:56.782Z'
+          description: "It takes the current date as default"
+          example: "2014-01-01T23:28:56.782Z"
 
     Tenant:
       type: object
       properties:
         type:
           type: string
-          enum: ['Owner', 'Renter']
+          enum: ["Owner", "Renter"]
         forename:
           type: string
         surname:
@@ -64,11 +67,11 @@ components:
           type: string
         created_by:
           type: string
-          description: 'Id of the logged in user'
+          description: "Id of the logged in user"
         created_at:
           type: string
-          description: 'It takes the current date as default'
-          example: '2014-01-01T23:28:56.782Z'
+          description: "It takes the current date as default"
+          example: "2014-01-01T23:28:56.782Z"
 
     Property:
       type: object
@@ -89,20 +92,22 @@ components:
           type: string
         created_by:
           type: string
-          description: 'Id of the logged in user'
+          description: "Id of the logged in user"
         building_id:
           type: string
-          default: 'None'
+          default: "None"
+        can_be_rented:
+          type: boolean
         renter_id:
           type: string
-          default: 'None'
+          default: "None"
         owner_id:
           type: string
-          default: 'None'
+          default: "None"
         created_at:
           type: string
-          description: 'It takes the current date as default'
-          example: '2014-01-01T23:28:56.782Z'
+          description: "It takes the current date as default"
+          example: "2014-01-01T23:28:56.782Z"
 
     Customer:
       type: object
@@ -121,11 +126,11 @@ components:
           type: string
         created_by:
           type: string
-          description: 'Id of the logged in user'
+          description: "Id of the logged in user"
         created_at:
           type: string
-          description: 'It takes the current date as default'
-          example: '2014-01-01T23:28:56.782Z'
+          description: "It takes the current date as default"
+          example: "2014-01-01T23:28:56.782Z"
 
     Building:
       type: object
@@ -138,11 +143,11 @@ components:
           type: string
         created_by:
           type: string
-          description: 'Id of the logged in user'
+          description: "Id of the logged in user"
         created_at:
           type: string
-          description: 'It takes the current date as default'
-          example: '2014-01-01T23:28:56.782Z'
+          description: "It takes the current date as default"
+          example: "2014-01-01T23:28:56.782Z"
 
     Document:
       type: object
@@ -166,11 +171,11 @@ components:
           type: string
         created_by:
           type: string
-          description: 'Id of the logged in user'
+          description: "Id of the logged in user"
         created_at:
           type: string
-          description: 'It takes the current date as default'
-          example: '2014-01-01T23:28:56.782Z'
+          description: "It takes the current date as default"
+          example: "2014-01-01T23:28:56.782Z"
 
 paths:
   /users:
@@ -186,7 +191,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         400:
           description: Client error
           content:
@@ -242,7 +247,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         400:
           description: Client error
           content:
@@ -253,6 +258,62 @@ paths:
                   error:
                     type: string
 
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /users/get/byUser/{id}:
+    get:
+      summary: Get users by logged in user ID
+      tags:
+        - User
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Users successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          description: Client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         401:
           description: Access Denied
           content:
@@ -293,7 +354,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
         200:
           description: User successfully registered
@@ -419,14 +480,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
         200:
           description: User successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         400:
           description: Client error
           content:
@@ -482,7 +543,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
         400:
           description: Client error
           content:
@@ -525,15 +586,15 @@ paths:
       summary: Get all tenants
       tags:
         - Tenant
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       responses:
         200:
           description: Tenants successfully retrieved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tenant'
+                $ref: "#/components/schemas/Tenant"
         400:
           description: Client error
           content:
@@ -543,15 +604,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -567,8 +637,8 @@ paths:
       summary: Get tenants by logged in user ID
       tags:
         - Tenant
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -580,7 +650,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tenant'
+                $ref: "#/components/schemas/Tenant"
         400:
           description: Client error
           content:
@@ -590,15 +660,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -614,8 +693,8 @@ paths:
       summary: Get tenant by ID
       tags:
         - Tenant
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -627,7 +706,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tenant'
+                $ref: "#/components/schemas/Tenant"
         400:
           description: Client error
           content:
@@ -637,15 +716,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -661,21 +749,41 @@ paths:
       summary: New tenant
       tags:
         - Tenant
+      security:
+        - ApiKeyAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Tenant'
+              $ref: "#/components/schemas/Tenant"
       responses:
         200:
           description: Tenant successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tenant'
+                $ref: "#/components/schemas/Tenant"
         400:
           description: Client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
           content:
             application/json:
               schema:
@@ -698,8 +806,8 @@ paths:
       summary: Update tenant by ID
       tags:
         - Tenant
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -710,14 +818,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Tenant'
+              $ref: "#/components/schemas/Tenant"
       responses:
         200:
           description: Tenant successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tenant'
+                $ref: "#/components/schemas/Tenant"
         400:
           description: Client error
           content:
@@ -727,15 +835,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -751,8 +868,8 @@ paths:
       summary: Delete tenant by ID
       tags:
         - Tenant
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -764,7 +881,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tenant'
+                $ref: "#/components/schemas/Tenant"
         400:
           description: Client error
           content:
@@ -774,15 +891,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -798,15 +924,15 @@ paths:
       summary: Get all properties
       tags:
         - Property
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       responses:
         200:
           description: Properties successfully retrieved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Property'
+                $ref: "#/components/schemas/Property"
         400:
           description: Client error
           content:
@@ -816,15 +942,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -840,8 +975,8 @@ paths:
       summary: Get properties by logged in user ID
       tags:
         - Property
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -853,7 +988,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Property'
+                $ref: "#/components/schemas/Property"
         400:
           description: Client error
           content:
@@ -863,15 +998,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -887,8 +1031,8 @@ paths:
       summary: Get property by ID
       tags:
         - Property
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -900,7 +1044,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Property'
+                $ref: "#/components/schemas/Property"
         400:
           description: Client error
           content:
@@ -910,15 +1054,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -934,21 +1087,41 @@ paths:
       summary: New property
       tags:
         - Property
+      security:
+        - ApiKeyAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Property'
+              $ref: "#/components/schemas/Property"
       responses:
         200:
           description: Property successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Property'
+                $ref: "#/components/schemas/Property"
         400:
           description: Client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
           content:
             application/json:
               schema:
@@ -971,8 +1144,8 @@ paths:
       summary: Update property by ID
       tags:
         - Property
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -983,14 +1156,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Property'
+              $ref: "#/components/schemas/Property"
       responses:
         200:
           description: Property successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Property'
+                $ref: "#/components/schemas/Property"
         400:
           description: Client error
           content:
@@ -1000,15 +1173,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1024,8 +1206,8 @@ paths:
       summary: Delete property by ID
       tags:
         - Property
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1037,7 +1219,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Property'
+                $ref: "#/components/schemas/Property"
         400:
           description: Client error
           content:
@@ -1047,15 +1229,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1071,15 +1262,15 @@ paths:
       summary: Get all customers
       tags:
         - Customer
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       responses:
         200:
           description: Customers successfully retrieved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: "#/components/schemas/Customer"
         400:
           description: Client error
           content:
@@ -1089,15 +1280,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1113,8 +1313,8 @@ paths:
       summary: Get customers by logged in user ID
       tags:
         - Customer
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1126,7 +1326,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: "#/components/schemas/Customer"
         400:
           description: Client error
           content:
@@ -1136,15 +1336,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1160,8 +1369,8 @@ paths:
       summary: Get customer by ID
       tags:
         - Customer
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1173,7 +1382,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: "#/components/schemas/Customer"
         400:
           description: Client error
           content:
@@ -1183,15 +1392,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1207,19 +1425,21 @@ paths:
       summary: New customer
       tags:
         - Customer
+      security:
+        - ApiKeyAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Customer'
+              $ref: "#/components/schemas/Customer"
       responses:
         200:
           description: Customer successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: "#/components/schemas/Customer"
         400:
           description: Client error
           content:
@@ -1244,8 +1464,8 @@ paths:
       summary: Update customer by ID
       tags:
         - Customer
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1256,14 +1476,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Customer'
+              $ref: "#/components/schemas/Customer"
       responses:
         200:
           description: Customer successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: "#/components/schemas/Customer"
         400:
           description: Client error
           content:
@@ -1273,15 +1493,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1297,8 +1526,8 @@ paths:
       summary: Delete customer by ID
       tags:
         - Customer
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1310,7 +1539,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Customer'
+                $ref: "#/components/schemas/Customer"
         400:
           description: Client error
           content:
@@ -1320,15 +1549,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1344,15 +1582,15 @@ paths:
       summary: Get all buildings
       tags:
         - Building
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       responses:
         200:
           description: Buildings successfully retrieved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Building'
+                $ref: "#/components/schemas/Building"
         400:
           description: Client error
           content:
@@ -1362,15 +1600,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1386,8 +1633,8 @@ paths:
       summary: Get buildings by logged in user ID
       tags:
         - Building
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1399,7 +1646,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Building'
+                $ref: "#/components/schemas/Building"
         400:
           description: Client error
           content:
@@ -1409,15 +1656,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1433,8 +1689,8 @@ paths:
       summary: Get building by ID
       tags:
         - Building
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1446,7 +1702,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Building'
+                $ref: "#/components/schemas/Building"
         400:
           description: Client error
           content:
@@ -1456,15 +1712,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1480,21 +1745,41 @@ paths:
       summary: New building
       tags:
         - Building
+      security:
+        - ApiKeyAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Building'
+              $ref: "#/components/schemas/Building"
       responses:
         200:
           description: Building successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Building'
+                $ref: "#/components/schemas/Building"
         400:
           description: Client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
           content:
             application/json:
               schema:
@@ -1517,8 +1802,8 @@ paths:
       summary: Update building by ID
       tags:
         - Building
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1529,14 +1814,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Building'
+              $ref: "#/components/schemas/Building"
       responses:
         200:
           description: Building successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Building'
+                $ref: "#/components/schemas/Building"
         400:
           description: Client error
           content:
@@ -1546,15 +1831,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1570,8 +1864,8 @@ paths:
       summary: Delete building by ID
       tags:
         - Building
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1583,7 +1877,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Building'
+                $ref: "#/components/schemas/Building"
         400:
           description: Client error
           content:
@@ -1593,15 +1887,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1617,15 +1920,15 @@ paths:
       summary: Get all documents
       tags:
         - Document
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       responses:
         200:
           description: Documents successfully retrieved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Document'
+                $ref: "#/components/schemas/Document"
         400:
           description: Client error
           content:
@@ -1635,15 +1938,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1659,8 +1971,8 @@ paths:
       summary: Get documents by logged in user ID
       tags:
         - Document
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1672,7 +1984,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Document'
+                $ref: "#/components/schemas/Document"
         400:
           description: Client error
           content:
@@ -1682,15 +1994,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1706,8 +2027,8 @@ paths:
       summary: Get document by ID
       tags:
         - Document
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1719,7 +2040,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Document'
+                $ref: "#/components/schemas/Document"
         400:
           description: Client error
           content:
@@ -1729,15 +2050,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1753,21 +2083,41 @@ paths:
       summary: New document
       tags:
         - Document
+      security:
+        - ApiKeyAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Document'
+              $ref: "#/components/schemas/Document"
       responses:
         200:
           description: Document successfully created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Document'
+                $ref: "#/components/schemas/Document"
         400:
           description: Client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
           content:
             application/json:
               schema:
@@ -1790,8 +2140,8 @@ paths:
       summary: Update document by ID
       tags:
         - Document
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1802,14 +2152,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Document'
+              $ref: "#/components/schemas/Document"
       responses:
         200:
           description: Document successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Document'
+                $ref: "#/components/schemas/Document"
         400:
           description: Client error
           content:
@@ -1819,15 +2169,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
@@ -1843,8 +2202,8 @@ paths:
       summary: Delete document by ID
       tags:
         - Document
-      # security:
-      #   - ApiKeyAuth: []
+      security:
+        - ApiKeyAuth: []
       parameters:
         - in: path
           name: id
@@ -1856,7 +2215,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Document'
+                $ref: "#/components/schemas/Document"
         400:
           description: Client error
           content:
@@ -1866,15 +2225,24 @@ paths:
                 properties:
                   error:
                     type: string
-        # 498:
-        #   description: Token is not valid
-        #   content:
-        #     application/json:
-        #       schema:
-        #         type: object
-        #         properties:
-        #           error:
-        #             type: string
+        401:
+          description: Access Denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        498:
+          description: Token is not valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         500:
           description: Server error
           content:
