@@ -79,14 +79,19 @@ const GetCustomers = () => {
 
   // DELETE CUSTOMER BY ID
   const DeleteCustomer = (_id) => {
-    fetch(baseURL + "/customers/delete/" + _id, {
-      method: "DELETE",
-      headers: {
-        "auth-token": localStorage.getItem("Token"),
-      },
-    }).then(() => {
-      GetUsersCustomers(); // Updates page
-    });
+    var choice = confirm("Are you sure you want to delete this Customer?");
+    if (choice) {
+      fetch(baseURL + "/customers/delete/" + _id, {
+        method: "DELETE",
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      }).then(() => {
+        GetUsersCustomers(); // Updates page
+      });
+    } else {
+      Router.push("/customers");
+    }
   };
 
   // UPDATE CUSTOMER BY ID

@@ -5,7 +5,7 @@
 
     <div class="show-card">
       <div class="title">
-        <div class="cardheader">Update Building</div>
+        <div class="cardheader"><b>Update Building</b></div>
       </div>
       <br />
       <br />
@@ -35,8 +35,8 @@
           </div>
         </div>
         <div class="show-btns">
-          <button type="submit">Update</button>
-          <button type="button" @click="goBack()">Back</button>
+          <q-btn class="q-btn" type="submit">Update</q-btn>
+          <q-btn class="q-btn" type="button" @click="goBack()">Back</q-btn>
         </div>
       </form>
     </div>

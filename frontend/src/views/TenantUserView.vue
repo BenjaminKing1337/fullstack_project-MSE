@@ -5,18 +5,44 @@
 
     <div class="show-card">
       <div class="title">
-        <div class="cardheader">My Info</div>
+        <div class="cardheader">
+          <b>{{ LoggedInTenant.email }}</b>
+        </div>
       </div>
       <br />
       <br />
-      Logged In Tenant: <br />
-      Name: {{ LoggedInTenant.forename }} {{ LoggedInTenant.surname }} <br />
-      LoginID: {{ LoggedInTenant.user_id }}
+      <div class="spaced">
+        <div>Name:</div>
+        <div>{{ LoggedInTenant.forename }} {{ LoggedInTenant.surname }}</div>
+      </div>
+      <div class="spaced">
+        <div>Phone:</div>
+        {{ LoggedInTenant.phone_number }}
+      </div>
+      <div class="spaced">
+        <div>Account:</div>
+        {{ LoggedInTenant.account_number }}
+      </div>
+      <div class="spaced">
+        <div>Number of Keys:</div>
+        {{ LoggedInTenant.keys_number }}
+      </div>
+      <div class="spaced">
+        <div>Closest Neighbour:</div>
+        {{ LoggedInTenant.closest_neighbour }}
+      </div>
+      <div class="spaced">
+        <div>Move In Date:</div>
+        {{ LoggedInTenant.move_in ? LoggedInTenant.move_in.slice(0, 10) : [] }}
+      </div>
+      <div class="spaced">
+        <div>Move out Date:</div>
+        {{
+          LoggedInTenant.move_out ? LoggedInTenant.move_out.slice(0, 10) : []
+        }}
+      </div>
+      <div class="show-btns bg">{{ LoggedInTenant.type }} <br /></div>
       <br />
-      <!-- {{ LoggedInTenant._id }} 
-      <br />
-      {{ TenantId }}
-      <br /> -->
     </div>
   </q-page>
 </template>

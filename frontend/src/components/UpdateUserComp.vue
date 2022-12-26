@@ -3,7 +3,7 @@
     <h6>My Profile</h6>
     <div class="show-card">
       <div class="title">
-        <div class="cardheader">Update User</div>
+        <div class="cardheader"><b>Update User</b></div>
       </div>
       <q-form @submit.prevent="EditUser" class="q-gutter-xs">
         <br />
@@ -34,13 +34,13 @@
         </div>
         <div class="spaced">
           <div></div>
-          <q-btn @click="editPswd">
+          <q-btn class="q-btn" @click="editPswd">
             <strong>Edit Password</strong>
           </q-btn>
         </div>
         <div class="show-btns">
-          <q-btn type="submit">Confirm</q-btn>
-          <q-btn type="button" @click="goBack()">Back</q-btn>
+          <q-btn class="q-btn" type="submit">Confirm</q-btn>
+          <q-btn class="q-btn" type="button" @click="goBack()">Back</q-btn>
         </div>
       </q-form>
     </div>

@@ -73,14 +73,19 @@ const GetBuildings = () => {
 
   // DELETE BUILDING BY ID
   const DeleteBuilding = (_id) => {
-    fetch(baseURL + "/buildings/delete/" + _id, {
-      method: "DELETE",
-      headers: {
-        "auth-token": localStorage.getItem("Token"),
-      },
-    }).then(() => {
-      GetUsersBuildings(); // Updates page
-    });
+    var choice = confirm("Are you sure you want to delete this Building?");
+    if (choice) {
+      fetch(baseURL + "/buildings/delete/" + _id, {
+        method: "DELETE",
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      }).then(() => {
+        GetUsersBuildings(); // Updates page
+      });
+    } else {
+      Router.push("/buildings");
+    }
   };
 
   // UPDATE BUILDING BY ID

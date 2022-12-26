@@ -5,12 +5,17 @@
         <!-- Home  -->
         <q-item-label header
           ><router-link to="/"
-            ><img src="@/assets/logo.png" style="width: 60px; height: 40px"
-          /></router-link></q-item-label
-        >
+            ><img
+              src="@/assets/logo.png"
+              style="width: 60px; height: 40px" /></router-link
+        ></q-item-label>
         <!-- Customers  -->
-        <q-item v-if="superadminAuth()" clickable tag="a" class="navitem"
-          ><router-link class="navheader remove_linkStyle" to="/customers">
+        <router-link
+          v-if="superadminAuth()"
+          class="navheader remove_linkStyle"
+          to="/customers"
+        >
+          <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
               <q-icon name="currency_exchange" />
             </q-item-section>
@@ -31,11 +36,15 @@
                 ></q-item-label
               >
             </q-item-section>
-          </router-link></q-item
-        >
+          </q-item>
+        </router-link>
         <!-- Buildings  -->
-        <q-item v-if="adminAuth()" clickable tag="a" class="navitem"
-          ><router-link class="navheader remove_linkStyle" to="/buildings">
+        <router-link
+          v-if="adminAuth()"
+          class="navheader remove_linkStyle"
+          to="/buildings"
+        >
+          <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
               <q-icon name="apartment" />
             </q-item-section>
@@ -56,11 +65,15 @@
                 ></q-item-label
               >
             </q-item-section>
-          </router-link></q-item
-        >
+          </q-item>
+        </router-link>
         <!-- Properties  -->
-        <q-item v-if="adminAuth()" clickable tag="a" class="navitem"
-          ><router-link class="navheader remove_linkStyle" to="/properties">
+        <router-link
+          v-if="adminAuth()"
+          class="navheader remove_linkStyle"
+          to="/properties"
+        >
+          <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
               <q-icon name="house" />
             </q-item-section>
@@ -81,11 +94,15 @@
                 ></q-item-label
               >
             </q-item-section>
-          </router-link></q-item
-        >
+          </q-item>
+        </router-link>
         <!-- Property userlevel  -->
-        <q-item v-if="userlevelAuth()" clickable tag="a" class="navitem"
-          ><router-link class="navheader remove_linkStyle" :to="`/property/${userID()}`">
+        <router-link
+          v-if="userlevelAuth()"
+          class="navheader remove_linkStyle"
+          :to="`/property/${userID()}`"
+        >
+          <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
               <q-icon name="house" />
             </q-item-section>
@@ -99,11 +116,15 @@
                 ></q-item-label
               >
             </q-item-section>
-          </router-link></q-item
-        >
+          </q-item>
+        </router-link>
         <!-- Tenants  -->
-        <q-item v-if="adminAuth()" clickable tag="a" class="navitem"
-          ><router-link class="navheader remove_linkStyle" to="/tenants">
+        <router-link
+          v-if="adminAuth()"
+          class="navheader remove_linkStyle"
+          to="/tenants"
+        >
+          <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
               <q-icon name="people" />
             </q-item-section>
@@ -122,11 +143,15 @@
                 ></q-item-label
               >
             </q-item-section>
-          </router-link></q-item
-        >
+          </q-item>
+        </router-link>
         <!-- Tenant userlevel  -->
-        <q-item v-if="userlevelAuth()" clickable tag="a" class="navitem"
-          ><router-link class="navheader remove_linkStyle" :to="`/tenant/${userID()}`">
+        <router-link
+          v-if="userlevelAuth()"
+          class="navheader remove_linkStyle"
+          :to="`/tenant/${userID()}`"
+        >
+          <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
               <q-icon name="person" />
             </q-item-section>
@@ -140,15 +165,15 @@
                 ></q-item-label
               >
             </q-item-section>
-          </router-link></q-item
-        >
+          </q-item>
+        </router-link>
         <!-- Users  -->
-        <q-item
+        <router-link
           v-if="userAuth() && !userlevelAuth()"
-          clickable
-          tag="a"
-          class="navitem"
-          ><router-link class="navheader remove_linkStyle" to="/users">
+          class="navheader remove_linkStyle"
+          to="/users"
+        >
+          <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
               <q-icon name="supervised_user_circle" />
             </q-item-section>
@@ -165,22 +190,30 @@
                 ></q-item-label
               >
             </q-item-section>
-          </router-link></q-item
-        >
+          </q-item>
+        </router-link>
         <!-- Login  -->
-        <q-item v-if="!userAuth()" clickable tag="a" class="navitem"
-          ><router-link class="navheader remove_linkStyle" to="/login">
+        <router-link
+          v-if="!userAuth()"
+          class="navheader remove_linkStyle"
+          to="/login"
+        >
+          <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
               <q-icon name="person" />
             </q-item-section>
             <q-item-section>
               <q-item-label>Login</q-item-label>
             </q-item-section>
-          </router-link></q-item
-        >
+          </q-item>
+        </router-link>
         <!-- Logout  -->
-        <q-item v-if="userAuth()" clickable tag="a" class="navitem"
-          ><router-link class="navheader remove_linkStyle" to="/">
+        <router-link
+          v-if="userAuth()"
+          class="navheader remove_linkStyle"
+          to="/"
+        >
+          <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
               <q-icon name="account_circle" />
             </q-item-section>
@@ -202,8 +235,8 @@
                 ></q-item-label
               >
             </q-item-section>
-          </router-link></q-item
-        >
+          </q-item>
+        </router-link>
       </q-list>
     </nav>
   </div>
@@ -251,7 +284,17 @@ nav {
   .list {
     min-width: 100%;
   }
+  a {
+    font-weight: bold;
+    color: map-get($cs, text);
+    &.router-link-exact-active {
+      color: map-get($cs, highlight-active);
+    }
+  }
   .navitem {
+    margin:  10px;
+    padding:  10px;
+    border-radius: 5px;
     &:hover {
       background-color: map-get($cs, highlight);
     }

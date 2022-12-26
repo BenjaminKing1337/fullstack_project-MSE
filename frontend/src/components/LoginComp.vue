@@ -1,9 +1,10 @@
 <template>
-  <q-page class="page" id="LoginPage">
-    Login
-    <div class="formContainer">
+  <q-page class="page">
+    <br />
+    <br />
+    <br />
+    <div>
       <q-form
-        id="LoginForm"
         ref="LoginForm"
         @submit="onSubmit"
         @reset="onReset"
@@ -27,8 +28,8 @@
             (val) => (val && val.length > 0) || 'Password cannot be empty',
           ]"
         />
-        <q-btn label="Login" type="submit" />
-        <q-btn label="Reset" type="reset">
+        <q-btn class="q-btn" label="Login" type="submit" />
+        <q-btn class="q-btn" label="Reset" type="reset">
           <q-tooltip>This button will reset the form values</q-tooltip>
         </q-btn>
       </q-form>

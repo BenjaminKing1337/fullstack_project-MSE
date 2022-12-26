@@ -1,8 +1,14 @@
 <template>
-  <q-page class="page" id="RegisterPage">
-    <h2>Currently Registered User Profiles</h2>
-    <br />
+  <q-page class="page">
+    <div class="pageheader">
+      <h4>Welcome to Users menu</h4>
+      <router-link to="/newbuilding" class="remove_linkStyle">
+        <q-btn class="q-btn"> Create New </q-btn>
+      </router-link>
+    </div>
+    <!-- Show All  -->
     <div v-if="adminAuth()">
+      <h5>My Users</h5>
       <div class="grid3x3">
         <div v-for="User in uState.Users" :key="User._id">
           <div class="show-card">
@@ -17,17 +23,13 @@
               <div>userlevel:</div>
               <div>{{ User.userlevel }}</div>
             </div>
-
-            <!-- <div style="border: 1px solid black; border-radius: 15px">
-            Email:&nbsp;&nbsp;{{ User.email }}
-          </div> -->
             <div class="show-btns">
               <router-link :to="`/users/${User._id}`" class="remove_linkStyle">
-                <button class="full-width">
+                <q-btn class="q-btn full-width">
                   <strong>Edit User</strong>
-                </button>
+                </q-btn>
               </router-link>
-              <button @click="DeleteUser(User._id)">Delete</button>
+              <q-btn class="q-btn" @click="DeleteUser(User._id)">Delete</q-btn>
             </div>
           </div>
           <br />

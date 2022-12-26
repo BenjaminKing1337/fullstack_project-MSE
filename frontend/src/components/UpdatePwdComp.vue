@@ -41,9 +41,9 @@
             ]"
           />
           <br />
-          <q-btn type="submit">Update</q-btn>
+          <q-btn class="q-btn" type="submit">Update</q-btn>
         </q-form>
-        <q-btn type="button" @click="goBack()">Back</q-btn>
+        <q-btn class="q-btn" type="button" @click="goBack()">Back</q-btn>
       </div>
     </div>
   </q-page>

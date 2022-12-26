@@ -1,11 +1,11 @@
 <template>
-  <body>
+  <q-page class="page">
     <h4>Welcome to Properties page</h4>
     <p>Here you can create and manage your Properties</p>
     <!-- Create New -->
     <div class="create-card">
       <div class="title">
-        <div class="cardheader">Create new Property</div>
+        <div class="cardheader"><b>Create New Property</b></div>
       </div>
       <br />
       <input placeholder="Name" v-model="pState.name" /> <br />
@@ -67,12 +67,12 @@
       </div>
       <br />
       <div>
-        <button class="create-btn" @click="NewProperty()">
+        <q-btn class="q-btn create-btn" @click="NewProperty()">
           Create New Property
-        </button>
+        </q-btn>
       </div>
     </div>
-  </body>
+  </q-page>
 </template>
 
 <script>

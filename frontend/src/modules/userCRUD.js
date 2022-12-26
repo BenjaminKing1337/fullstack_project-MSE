@@ -164,14 +164,19 @@ const GetUsers = () => {
   };
   // DELETE User BY ID
   const DeleteUser = (UserId) => {
-    fetch(baseURL + "/users/delete/" + UserId, {
-      method: "DELETE",
-      headers: {
-        "auth-token": localStorage.getItem("Token"),
-      },
-    }).then(() => {
-      GetAllUsers(); // Updates page
-    });
+    var choice = confirm("Are you sure you want to delete this User?")
+    if (choice) {
+      fetch(baseURL + "/users/delete/" + UserId, {
+        method: "DELETE",
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      }).then(() => {
+        GetAllUsers(); // Updates page
+      })
+    } else {
+      Router.push("/users")
+    }
   };
   // UPDATE User BY ID
   const EditUser = async () => {
