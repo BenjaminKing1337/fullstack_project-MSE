@@ -118,19 +118,25 @@ router.delete("/delete/:id", VerifyToken, async (req, res) => {
 // Update by id route
 router.put("/update/:id", VerifyToken, async (req, res) => {
   try {
-    if (req.body.password) {
-      // password hashing
-      const Salt = await Bcrypt.genSalt(10);
-      const Pwd = await Bcrypt.hash(req.body.password, Salt);
-      req.body.password = Pwd;
+    // Does email exist?
+    const EmailExist = await User.findOne({ email: req.body.email });
+    if (EmailExist) {
+      return res.status(400).json({ error: "This email already exists" });
+    } else {
+      if (req.body.password) {
+        // password hashing
+        const Salt = await Bcrypt.genSalt(10);
+        const Pwd = await Bcrypt.hash(req.body.password, Salt);
+        req.body.password = Pwd;
+      }
+      const UpdUser = await User.findByIdAndUpdate(
+        req.params.id,
+        req.body
+        // { Pwd: req.body.password }
+      );
+      console.log(req.body);
+      res.json(UpdUser);
     }
-    const UpdUser = await User.findByIdAndUpdate(
-      req.params.id,
-      req.body
-      // { Pwd: req.body.password }
-    );
-    console.log(req.body);
-    res.json(UpdUser);
   } catch (error) {
     res.status(400).json({ error });
   }

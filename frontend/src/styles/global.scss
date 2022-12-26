@@ -1,63 +1,64 @@
 $cs: (
+  // bg: linear-gradient(#e66465, #9198e5),
+  linear-bg: linear-gradient(#ffffff, #e1e1e1, #ffffff),
+  bg: white,
+  bg2: lightgrey,
+  header: black,
   text: black,
-  2: red,
+  border: black,
   user: green,
   highlight: lightgrey,
   highlight2: grey,
-  highlight-active: Magenta,
-  5: blue,
-  bg: white,
+  highlight-active: Magenta
 );
-
-#app {
-  #LoginPage {
-    #LoginForm {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  #RegisterPage {
-    
-
-    #RegisterForm {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  .formContainer {
-    margin: 0 auto;
-    width: 300px;
-  }
-}
 
 // Global classes
 :root {
-  background-color: map-get($cs, bg);
+  background: map-get($cs, linear-bg);
   #app {
-    
   }
   .page {
     padding: 0 25px;
+    .pageheader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .q-btn {
+        font-weight: 900;
+        font-size: 16px;
+      }
+    }
+  }
+  .toolbar {
+    background-color: map-get($cs, header);
+  }
+  .bg {
+    background-color: map-get($cs, bg);
+  }
+  .login-name {
+    color: map-get($cs, user);
+  }
+  .remove_linkStyle {
+    text-decoration: none;
+    color: map-get($cs, text);
+  }
+  .grid3x3 {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .q-btn,
+  .create-card.router-link,
+  .show-card.router-link {
+    height: 30px;
+    font-size: 12px;
+    background-color: map-get($cs, bg2) !important;
   }
 }
-.login-name {
-  color: map-get($cs, user);
-}
-.remove_linkStyle {
-  text-decoration: none;
-  color: map-get($cs, text);
-}
-.grid3x3 {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-}
-
+// ADD NEW cards
 .create-card {
-  border: 1px solid black;
-  border-radius: 15px;
+  border: 1px solid map-get($cs, border);
+  border-radius: 5px;
   display: inline-block;
   padding: 0 2%;
   min-width: 180px;
@@ -65,16 +66,18 @@ $cs: (
     margin-top: -10px;
     margin-bottom: 10px;
     .cardheader {
-      // display: inline-block;
-      background-color: map-get($cs, bg);
+      background-color: map-get($cs, bg2);
+      color: map-get($cs, header);
       float: left;
+      padding: 0 5px;
+      border-radius: 5px;
     }
   }
   select {
-    width: 158px;
+    width: 200px;
   }
   input {
-    width: 150px;
+    width: 200px;
   }
   .create-btn {
     float: right;
@@ -82,9 +85,10 @@ $cs: (
     margin-bottom: -10px;
   }
 }
+// SHOW ALL cards
 .show-card {
-  border: 1px solid black;
-  border-radius: 15px;
+  border: 1px solid map-get($cs, border);
+  border-radius: 5px;
   display: inline-block;
   padding: 0 2%;
   min-width: 200px;
@@ -92,35 +96,38 @@ $cs: (
     margin-top: -10px;
     margin-bottom: 10px;
     .cardheader {
-      // display: inline-block;
-      background-color: map-get($cs, bg);
+      background-color: map-get($cs, bg2);
+      color: map-get($cs, header);
       float: left;
+      padding: 0 5px;
+      border-radius: 5px;
     }
   }
   .spaced {
     display: flex;
     justify-content: space-between;
     select {
-      width: 158px;
+      width: 200px;
     }
     input {
-      width: 150px;
+      width: 200px;
     }
   }
   .show-btns {
     margin-top: 10px;
     margin-bottom: -10px;
+    padding: -5px;
     float: right;
     display: flex;
     flex-direction: row;
   }
 }
 
-//dropdowns
+//dropdown
 .dropdown {
   position: relative;
   display: inline-block;
-  
+
   &:hover .dropdown-content {
     display: flex;
     left: 100%;
@@ -166,4 +173,3 @@ $cs: (
     }
   }
 }
-

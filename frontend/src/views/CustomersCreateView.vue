@@ -7,7 +7,7 @@
       <form @submit.prevent="NewCustomer()">
         <div class="create-card">
           <div class="title">
-            <div class="cardheader">Create New Customer</div>
+            <div class="cardheader"><b>Create New Customer</b></div>
           </div>
 
           <br />
@@ -50,7 +50,7 @@
           </div>
           <br />
           <br />
-          <button class="create-btn" type="submit">Add Customer</button>
+          <q-btn class="q-btn create-btn" type="submit">Add Customer</q-btn>
         </div>
       </form>
     </div>

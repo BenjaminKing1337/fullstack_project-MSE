@@ -95,14 +95,19 @@ const GetTenants = () => {
 
   // DELETE BY ID
   const DeleteTenant = (_id) => {
-    fetch(baseURL + "/tenants/delete/" + _id, {
-      method: "DELETE",
-      headers: {
-        "auth-token": localStorage.getItem("Token"),
-      },
-    }).then(() => {
-      GetUsersTenants(); // Updates page
-    });
+    var choice = confirm("Are you sure you want to delete this Tenant?")
+      if (choice) {
+        fetch(baseURL + "/tenants/delete/" + _id, {
+          method: "DELETE",
+          headers: {
+            "auth-token": localStorage.getItem("Token"),
+          },
+        }).then(() => {
+          GetUsersTenants(); // Updates page
+        })
+      } else {
+        Router.push("/tenants")
+      }
   };
 
   // UPDATE BY ID
@@ -158,7 +163,11 @@ const GetTenants = () => {
   const LoggedInTenant = ref({});
   const GetLoggedInTenant = async () => {
     try {
-      await fetch(baseURL + "/tenants")
+      await fetch(baseURL + "/tenants", {
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      })
         .then((Res) => Res.json())
         .then((Data) => {
           LoggedInTenant.value = Data.filter(

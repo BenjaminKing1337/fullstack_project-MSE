@@ -1,6 +1,11 @@
 <template>
   <q-page class="page">
-    <h4>Welcome to Properties page</h4>
+    <div class="pageheader">
+    <h4>Welcome to Properties menu</h4>
+      <router-link to="/newbuilding" class="remove_linkStyle">
+        <q-btn class="q-btn"> Create New </q-btn>
+      </router-link>
+    </div>
     
     <!-- Show All -->
     <div>
@@ -109,11 +114,11 @@
                 :to="`/properties/${Property._id}`"
                 class="remove_linkStyle"
               >
-                <button class="full-width">
+                <q-btn class="q-btn full-width">
                   <strong>Update</strong>
-                </button>
+                </q-btn>
               </router-link>
-              <button @click="DeleteProperty(Property._id)">Delete</button>
+              <q-btn class="q-btn" @click="DeleteProperty(Property._id)">Delete</q-btn>
             </div>
           </div>
         </div>

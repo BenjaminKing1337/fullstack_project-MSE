@@ -5,7 +5,7 @@
     <!-- Create New -->
     <div class="create-card">
       <div class="title">
-        <div class="cardheader">Create new Building</div>
+        <div class="cardheader"><b>Create New Building</b></div>
       </div>
       <br />
       <input placeholder="Name" v-model="bState.name" /> <br />
@@ -13,9 +13,9 @@
       <input placeholder="Postal Code" v-model="bState.postal_code" /> <br />
       <br />
       <div>
-        <button class="create-btn" @click="NewBuilding()">
+        <q-btn class="q-btn create-btn" @click="NewBuilding()">
           Create New Building
-        </button>
+        </q-btn>
       </div>
     </div>
   </q-page>
