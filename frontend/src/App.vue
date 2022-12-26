@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated class="glossy">
+    <q-header elevated class="toolbar glossy">
       <q-toolbar>
         <q-btn
           flat
@@ -11,9 +11,14 @@
           icon="menu"
         />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <q-toolbar-title> Main Solution Estates </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          Hello,
+          <b class="login-name">{{
+            email.charAt(0).toUpperCase() + email.slice(1).split("@")[0]
+          }}</b>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -39,7 +44,10 @@ export default {
   },
 
   setup() {
+    const email = ref("");
+    email.value = localStorage.getItem("email");
     return {
+      email,
       leftDrawerOpen: ref(false),
     };
   },

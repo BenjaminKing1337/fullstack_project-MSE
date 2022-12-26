@@ -158,7 +158,11 @@ const GetTenants = () => {
   const LoggedInTenant = ref({});
   const GetLoggedInTenant = async () => {
     try {
-      await fetch(baseURL + "/tenants")
+      await fetch(baseURL + "/tenants", {
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      })
         .then((Res) => Res.json())
         .then((Data) => {
           LoggedInTenant.value = Data.filter(

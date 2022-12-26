@@ -1,9 +1,10 @@
 <template>
-  <q-page class="page" id="LoginPage">
-    Login
+  <q-page class="page">
+    <br />
+    <br />
+    <br />
     <div class="formContainer">
       <q-form
-        id="LoginForm"
         ref="LoginForm"
         @submit="onSubmit"
         @reset="onReset"
@@ -43,11 +44,11 @@
 </template>
 
 <script>
-import UserCRUD from '../modules/userCRUD';
-import { ref } from 'vue';
+import UserCRUD from "../modules/userCRUD";
+import { ref } from "vue";
 
 export default {
-  name: 'LoginComp',
+  name: "LoginComp",
 
   setup() {
     const { uState, LoginUser } = UserCRUD();
@@ -60,8 +61,8 @@ export default {
       });
     };
     const onReset = () => {
-      uState.value.email = '';
-      uState.value.password = '';
+      uState.value.email = "";
+      uState.value.password = "";
     };
 
     return {

@@ -1,30 +1,18 @@
 $cs: (
+  bg: white,
+  bg2: lightgrey,
+  header: black,
   text: black,
-  2: red,
+  border: black,
   user: green,
   highlight: lightgrey,
   highlight2: grey,
   highlight-active: Magenta,
-  5: blue,
-  bg: white,
 );
 
 #app {
-  #LoginPage {
-    #LoginForm {
-      display: flex;
-      flex-direction: column;
-    }
-  }
+  
 
-  #RegisterPage {
-    
-
-    #RegisterForm {
-      display: flex;
-      flex-direction: column;
-    }
-  }
 
   .formContainer {
     margin: 0 auto;
@@ -41,6 +29,12 @@ $cs: (
   .page {
     padding: 0 25px;
   }
+  .toolbar {
+    background-color: map-get($cs, header);
+  }
+}
+.bg {
+  background-color: map-get($cs, bg );
 }
 .login-name {
   color: map-get($cs, user);
@@ -54,10 +48,10 @@ $cs: (
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
-
+// ADD NEW cards
 .create-card {
-  border: 1px solid black;
-  border-radius: 15px;
+  border: 1px solid map-get($cs, border);
+  border-radius: 5px;
   display: inline-block;
   padding: 0 2%;
   min-width: 180px;
@@ -65,9 +59,11 @@ $cs: (
     margin-top: -10px;
     margin-bottom: 10px;
     .cardheader {
-      // display: inline-block;
-      background-color: map-get($cs, bg);
+      background-color: map-get($cs, bg2);
+      color: map-get($cs, header);
       float: left;
+      padding: 0 5px;
+      border-radius: 5px;
     }
   }
   select {
@@ -82,9 +78,10 @@ $cs: (
     margin-bottom: -10px;
   }
 }
+// SHOW ALL cards
 .show-card {
-  border: 1px solid black;
-  border-radius: 15px;
+  border: 1px solid map-get($cs, border);
+  border-radius: 5px;
   display: inline-block;
   padding: 0 2%;
   min-width: 200px;
@@ -92,9 +89,11 @@ $cs: (
     margin-top: -10px;
     margin-bottom: 10px;
     .cardheader {
-      // display: inline-block;
-      background-color: map-get($cs, bg);
+      background-color: map-get($cs, bg2);
+      color: map-get($cs, header);
       float: left;
+      padding: 0 5px;
+      border-radius: 5px;
     }
   }
   .spaced {
@@ -116,7 +115,7 @@ $cs: (
   }
 }
 
-//dropdowns
+//dropdown
 .dropdown {
   position: relative;
   display: inline-block;

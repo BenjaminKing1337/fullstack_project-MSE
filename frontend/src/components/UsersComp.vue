@@ -1,5 +1,8 @@
 <template>
-  <q-page class="page" id="RegisterPage">
+  <q-page class="page">
+    <br />
+    <br />
+    <br />
     <h2>Currently Registered User Profiles</h2>
     <br />
     <div v-if="adminAuth()">
