@@ -4,89 +4,176 @@
     <p>Here you can create and manage your Tenants</p>
     <!-- Create New -->
     <div>
-      <form @submit.prevent="NewTenant()">
+      <q-form @submit.prevent="NewTenant()" class="q-gutter-xs">
         <div class="create-card">
           <div class="title">
             <div class="cardheader"><b>Create New Tenant</b></div>
           </div>
           <br />
           Type: <br />
-          <select v-model="tState.type">
-            <option>Owner</option>
-            <option>Renter</option>
-          </select>
+          <q-select
+            v-model="tState.type"
+            outlined
+            :options="tenantTypeOptions"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Type cannot be empty',
+            ]"
+          />
           <br />
           <br />
           Personal Info: <br />
-          <input
+          <q-input
+            outlined
             type="text"
-            placeholder="First Name"
+            label="First Name"
             v-model="tState.forename"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'First Name cannot be empty',
+              (val) =>
+                val.length > 1 ||
+                'First Name must be at least 2 characters long',
+            ]"
           />
           <br />
-          <input type="text" placeholder="Last Name" v-model="tState.surname" />
-          <br />
-          <input type="text" placeholder="Email" v-model="tState.email" />
-          <br />
-          <input
+          <q-input
+            outlined
             type="text"
-            placeholder="Phone Number"
+            label="Last Name"
+            v-model="tState.surname"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Last Name cannot be empty',
+              (val) =>
+                val.length > 1 ||
+                'First Name must be at least 2 characters long',
+            ]"
+          />
+          <br />
+          <q-input
+            outlined
+            type="email"
+            label="Email"
+            v-model="tState.email"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Email cannot be empty',
+              (val) =>
+                val.length > 5 || 'Email must be at least 6 characters long',
+            ]"
+          />
+          <br />
+          <!-- FIXME  -->
+          <q-input
+            outlined
+            type="text"
+            label="Phone Number"
             v-model="tState.phone_number"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Phone Number cannot be empty',
+              (val) =>
+                val.length > 1 ||
+                'Phone Number must be at least 2 characters long',
+            ]"
           />
           <br />
-          <input
+          <!-- FIXME  -->
+          <q-input
+            outlined
             type="text"
-            placeholder="Account Number"
+            label="Account Number"
             v-model="tState.account_number"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Account Number cannot be empty',
+              (val) =>
+                val.length > 1 ||
+                'Account Number must be at least 2 characters long',
+            ]"
           /><br />
-          <input
-            type="text"
-            placeholder="Number of Keys"
-            v-model="tState.keys_number"
+          <q-input
+            outlined
+            type="number"
+            label="Number of Keys"
+            v-model.number="tState.keys_number"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val !== null && val !== '') ||
+                'Number of Keys cannot be empty',
+              (val) =>
+                (val > 0 && val < 11) ||
+                'Number of Keys must be between 1 and 10',
+            ]"
           />
           <br />
-          <input
+          <q-input
+            outlined
             type="text"
-            placeholder="Closest Neighbour"
+            label="Closest Neighbour"
             v-model="tState.closest_neighbour"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Closest Neighbour cannot be empty',
+              (val) =>
+                val.length > 1 ||
+                'Closest Neighbour must be at least 2 characters long',
+            ]"
           />
           <br />
-          <input type="text" placeholder="Lease" v-model="tState.lease" />
+          <!-- FIXME  -->
+          <q-input outlined type="text" label="Lease" v-model="tState.lease" />
           <br />
           <div>Assigned User Login:</div>
           <div>
-            <select v-model="tState.user_id">
-              <option>None</option>
-              <option
-                v-for="User in uState.Users"
-                :key="User._id"
-                :value="User._id"
-              >
-                {{ User.email }}
-              </option>
-            </select>
-          </div> <br>
+            <q-select
+              v-model="tState.user_id"
+              outlined
+              :options="uState.UsersFormattedQ"
+              map-options
+              emit-value
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Assigned User Id cannot be empty',
+              ]"
+            />
+          </div>
+          <br />
           Move In Date: <br />
-          <input
+          <q-input
+            outlined
             type="date"
-            placeholder="Move In Date"
             v-model="tState.move_in"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Move In Date cannot be empty',
+            ]"
           />
           <br />
           Move Out Date: <br />
-          <input
+          <q-input
+            outlined
             type="date"
-            placeholder="Move Out Date"
             v-model="tState.move_out"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || 'Move Out Date cannot be empty',
+            ]"
           />
           <br />
-          
           <br />
           <q-btn class="q-btn create-btn" type="submit">Add Tenant</q-btn>
         </div>
-      </form>
+      </q-form>
     </div>
-    
   </q-page>
 </template>
 
@@ -106,12 +193,16 @@ export default {
       DeleteTenant,
     } = TenantCRUD();
     const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
+    const tenantTypeOptions = ["Owner", "Renter"];
 
     onMounted(() => {
       GetUsersTenants();
       // GetSpecificUser();
       GetAllUsers();
       // GetAllTenants();
+      // Set default value of dropdowns
+      tState.value.type = "Owner";
+      tState.value.user_id = "None";
     });
 
     return {
@@ -127,6 +218,7 @@ export default {
       GetSpecificTenant,
       NewTenant,
       DeleteTenant,
+      tenantTypeOptions,
     };
   },
 };

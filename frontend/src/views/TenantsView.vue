@@ -2,7 +2,7 @@
   <q-page class="page">
     <div class="pageheader">
       <h4>Welcome to Tenants menu</h4>
-      <router-link to="/newbuilding" class="remove_linkStyle">
+      <router-link to="/newtenant" class="remove_linkStyle">
         <q-btn class="q-btn"> Create New </q-btn>
       </router-link>
     </div>

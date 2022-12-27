@@ -1,6 +1,8 @@
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import baseURL from "./baseURL";
+import Notify from "../modules/utils.js";
+
 // import UserCRUD from "./userCRUD";
 
 const GetTenants = () => {
@@ -8,6 +10,7 @@ const GetTenants = () => {
   const Router = useRouter();
   const TenantId = computed(() => Route.params.id);
   // const { User } = UserCRUD();
+  const { NotifyError } = Notify();
 
   const tState = ref({
     type: "",
@@ -61,53 +64,102 @@ const GetTenants = () => {
       console.log(Error);
     }
   };
+  const DatesAreOK = () => {
+    let moveInDate = tState.value.move_in;
+    moveInDate = new Date(moveInDate);
+    moveInDate = moveInDate.toISOString();
 
+    let moveOutDate = tState.value.move_out;
+    moveOutDate = new Date(moveOutDate);
+    moveOutDate = moveOutDate.toISOString();
+
+    let areDatesOk = false;
+    let nowDate = new Date();
+    nowDate = nowDate.toISOString();
+
+    if (moveInDate < nowDate) {
+      NotifyError("Move In date must be today or in the future");
+    } else if (moveOutDate < nowDate) {
+      NotifyError("Move Out date must be today or in the future");
+    } else if (moveInDate === moveOutDate) {
+      NotifyError("Move In Date must be different than Move Out Date");
+    } else if (moveInDate > moveOutDate) {
+      NotifyError("Move In Date cannot be greater than Move Out Date");
+    } else {
+      areDatesOk = true;
+    }
+    return areDatesOk;
+  };
   // CREATE NEW
   const NewTenant = () => {
-    const RequestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("Token"),
-      },
-      body: JSON.stringify({
-        type: tState.value.type,
-        forename: tState.value.forename,
-        surname: tState.value.surname,
-        email: tState.value.email,
-        phone_number: tState.value.phone_number,
-        keys_number: tState.value.keys_number,
-        closest_neighbour: tState.value.closest_neighbour,
-        account_number: tState.value.account_number,
-        move_in: tState.value.move_in,
-        move_out: tState.value.move_out,
-        lease: tState.value.lease,
-        user_id: tState.value.user_id,
-        created_by: tState.value.created_by,
-      }),
-    };
-    fetch(baseURL + "/tenants/new", RequestOptions)
-      // GetAllTenants()
-      .then(() => {
-        GetUsersTenants(); // Updates page
-      });
+    try {
+      // after formatting for quasar forms
+      // we need to format again some fields
+      // Conversion of dates to ISO 8601 before being stored in the database
+      tState.value.keys_number = tState.value.keys_number.toString();
+
+      if (DatesAreOK()) {
+        tState.value.move_in = new Date(tState.value.move_in);
+        tState.value.move_in = tState.value.move_in.toISOString();
+        tState.value.move_out = new Date(tState.value.move_out);
+        tState.value.move_out = tState.value.move_out.toISOString();
+        const RequestOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("Token"),
+          },
+          body: JSON.stringify({
+            type: tState.value.type,
+            forename: tState.value.forename,
+            surname: tState.value.surname,
+            email: tState.value.email,
+            phone_number: tState.value.phone_number,
+            keys_number: tState.value.keys_number,
+            closest_neighbour: tState.value.closest_neighbour,
+            account_number: tState.value.account_number,
+            move_in: tState.value.move_in,
+            move_out: tState.value.move_out,
+            lease: tState.value.lease,
+            user_id: tState.value.user_id,
+            created_by: tState.value.created_by,
+          }),
+        };
+        fetch(baseURL + "/tenants/new", RequestOptions)
+          // GetAllTenants()
+          .then((res) => res.json())
+          .then((data) => {
+            return data;
+          })
+          .then((data) => {
+            if (data.error) {
+              NotifyError(data.error);
+            } else {
+              GetUsersTenants(); // Updates page
+              Router.push("/tenants");
+            }
+          });
+      }
+    } catch (e) {
+      NotifyError("Ooops. Something went wrong.");
+    }
   };
 
   // DELETE BY ID
   const DeleteTenant = (_id) => {
-    var choice = confirm("Are you sure you want to delete this Tenant?")
-      if (choice) {
-        fetch(baseURL + "/tenants/delete/" + _id, {
-          method: "DELETE",
-          headers: {
-            "auth-token": localStorage.getItem("Token"),
-          },
-        }).then(() => {
-          GetUsersTenants(); // Updates page
-        })
-      } else {
-        Router.push("/tenants")
-      }
+    var choice = confirm("Are you sure you want to delete this Tenant?");
+    if (choice) {
+      fetch(baseURL + "/tenants/delete/" + _id, {
+        method: "DELETE",
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      }).then(() => {
+        GetUsersTenants(); // Updates page
+      });
+    } else {
+      Router.push("/tenants");
+    }
   };
 
   // UPDATE BY ID
@@ -194,6 +246,7 @@ const GetTenants = () => {
     NewTenant,
     DeleteTenant,
     EditTenant,
+    DatesAreOK,
   };
 };
 

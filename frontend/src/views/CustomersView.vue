@@ -1,9 +1,8 @@
-
 <template>
   <q-page class="page">
-   <div class="pageheader">
-    <h4>Welcome to Customers menu</h4>
-      <router-link to="/newbuilding" class="remove_linkStyle">
+    <div class="pageheader">
+      <h4>Welcome to Customers menu</h4>
+      <router-link to="/newcustomer" class="remove_linkStyle">
         <q-btn class="q-btn"> Create New </q-btn>
       </router-link>
     </div>
@@ -50,7 +49,7 @@
             >
               <div v-if="Customer.created_by === User._id">Created by:</div>
               <div v-if="Customer.created_by === User._id">
-                {{ User.email.split('@')[0] }}
+                {{ User.email.split("@")[0] }}
               </div>
             </div>
             <br />
@@ -63,7 +62,9 @@
                   <strong>Update</strong>
                 </q-btn>
               </router-link>
-              <q-btn class="q-btn" @click="DeleteCustomer(Customer._id)">Delete</q-btn>
+              <q-btn class="q-btn" @click="DeleteCustomer(Customer._id)"
+                >Delete</q-btn
+              >
             </div>
           </div>
         </div>
@@ -73,9 +74,9 @@
 </template>
 
 <script>
-import CustomerCRUD from '../modules/customerCRUD';
-import UserCRUD from '../modules/userCRUD';
-import { onMounted } from 'vue';
+import CustomerCRUD from "../modules/customerCRUD";
+import UserCRUD from "../modules/userCRUD";
+import { onMounted } from "vue";
 export default {
   setup() {
     const {

@@ -16,10 +16,20 @@ const GetUsers = () => {
     password: "",
     userlevel: "",
     Users: {},
+    UsersFormattedQ: [],
     response: "",
     created_by: localStorage.getItem("userid"),
   });
-
+  const formatUsers = (usersArr) => {
+    let usersArrFormatted = [{ label: "None", value: "None" }];
+    for (let i = 0; i < usersArr.length; i++) {
+      usersArrFormatted.push({
+        label: usersArr[i].email,
+        value: usersArr[i]._id,
+      });
+    }
+    return usersArrFormatted;
+  };
   // GET ALL Users
   const GetAllUsers = async () => {
     const RequestOptions = {
@@ -32,6 +42,7 @@ const GetUsers = () => {
         .then((Res) => Res.json())
         .then((Data) => {
           uState.value.Users = Data;
+          uState.value.UsersFormattedQ = formatUsers(Data);
         });
     } catch (Error) {
       console.log(Error);
@@ -51,6 +62,7 @@ const GetUsers = () => {
         .then((Res) => Res.json())
         .then((Data) => {
           uState.value.Users = Data;
+          uState.value.UsersFormattedQ = formatUsers(Data);
         });
     } catch (Error) {
       console.log(Error);
@@ -164,7 +176,7 @@ const GetUsers = () => {
   };
   // DELETE User BY ID
   const DeleteUser = (UserId) => {
-    var choice = confirm("Are you sure you want to delete this User?")
+    var choice = confirm("Are you sure you want to delete this User?");
     if (choice) {
       fetch(baseURL + "/users/delete/" + UserId, {
         method: "DELETE",
@@ -173,9 +185,9 @@ const GetUsers = () => {
         },
       }).then(() => {
         GetAllUsers(); // Updates page
-      })
+      });
     } else {
-      Router.push("/users")
+      Router.push("/users");
     }
   };
   // UPDATE User BY ID

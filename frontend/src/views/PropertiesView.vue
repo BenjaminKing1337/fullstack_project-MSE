@@ -1,12 +1,12 @@
 <template>
   <q-page class="page">
     <div class="pageheader">
-    <h4>Welcome to Properties menu</h4>
-      <router-link to="/newbuilding" class="remove_linkStyle">
+      <h4>Welcome to Properties menu</h4>
+      <router-link to="/newproperty" class="remove_linkStyle">
         <q-btn class="q-btn"> Create New </q-btn>
       </router-link>
     </div>
-    
+
     <!-- Show All -->
     <div>
       <h5>My Properties</h5>
@@ -118,7 +118,9 @@
                   <strong>Update</strong>
                 </q-btn>
               </router-link>
-              <q-btn class="q-btn" @click="DeleteProperty(Property._id)">Delete</q-btn>
+              <q-btn class="q-btn" @click="DeleteProperty(Property._id)"
+                >Delete</q-btn
+              >
             </div>
           </div>
         </div>
