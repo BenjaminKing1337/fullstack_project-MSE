@@ -176,16 +176,21 @@ const GetUsers = () => {
   };
   // DELETE User BY ID
   const DeleteUser = (UserId) => {
-    var choice = confirm("Are you sure you want to delete this User?");
+    var choice = confirm("Are you sure you want to delete this User and all of their created data?");
     if (choice) {
-      fetch(baseURL + "/users/delete/" + UserId, {
-        method: "DELETE",
-        headers: {
-          "auth-token": localStorage.getItem("Token"),
-        },
-      }).then(() => {
-        GetAllUsers(); // Updates page
-      });
+      var choice2 = confirm("Are you absolutely sure? All the data added by this user will be gone forever.");
+      if (choice2) {
+        fetch(baseURL + "/users/delete/" + UserId, {
+          method: "DELETE",
+          headers: {
+            "auth-token": localStorage.getItem("Token"),
+          },
+        }).then(() => {
+          GetUsersUsers(); // Updates page
+        });
+      } else {
+        Router.push("/users");
+      }
     } else {
       Router.push("/users");
     }

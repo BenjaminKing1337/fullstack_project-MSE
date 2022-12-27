@@ -74,7 +74,7 @@
             <select v-model="Property.owner_id">
               <option>Assign Owner</option>
               <option
-                v-for="Tenant in tState.Tenants"
+                v-for="Tenant in filterProps(tState.Tenants, created_by)"
                 :key="Tenant._id"
                 :value="Tenant._id"
               >
@@ -129,7 +129,23 @@ export default {
 
     const Router = useRouter();
 
+    let filterCreatedBy = (Properties, tenantId) => {
+      let propsFiltered = [];
+      for (var i = 0; i < Properties.length; i++) {
+        if (
+          Properties[i].owner_id == tenantId ||
+          Properties[i].renter_id == tenantId
+        ) {
+          propsFiltered.push(Properties[i]);
+        }
+      }
+      return propsFiltered;
+    };
+    const created_by = localStorage.getItem("userid");
+
     return {
+      filterCreatedBy,
+      created_by,
       bState,
       Building,
       GetAllBuildings,

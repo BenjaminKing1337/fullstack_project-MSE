@@ -1,9 +1,13 @@
 <template>
-  <q-page class="page">
+  <q-page class="page" align="center">
+    <h4>Welcome to Users menu</h4>
+    <p>Here you can create and manage your Users</p>
     <br />
-    <br />
-    <br />
-    <div>
+    <div class="create-card">
+      <div class="title">
+        <div class="cardheader"><b>Create New User</b></div>
+      </div>
+      <br />
       <q-form
         ref="RegisterForm"
         @submit="onSubmit"
@@ -34,7 +38,7 @@
               val.length > 5 || 'Password must be at least 6 characters long',
           ]"
         />
-        <div>
+        <div class="create-btn">
           <q-btn class="q-btn" label="Register" type="submit" />
           <q-btn class="q-btn" label="Reset" type="reset">
             <q-tooltip>This button will reset the form values</q-tooltip>
