@@ -118,6 +118,12 @@ const routes = [
     beforeEnter: AdminGuard,
   },
   {
+    path: '/profile/:id',
+    name: 'profile',
+    component: () => import('../components/UpdateUserComp.vue'),
+    beforeEnter: AuthGuard,
+  },
+  {
     path: '/pwd/:id',
     name: 'change pwd',
     component: () => import('../components/UpdatePwdComp.vue'),

@@ -225,7 +225,7 @@
                 }}</b></q-item-label
               >
               <q-item-label caption
-                ><router-link class="navelement remove_linkStyle" to="/"
+                ><router-link class="navelement remove_linkStyle" :to="`/profile/${userID()}`"
                   >- My Profile</router-link
                 ></q-item-label
               >

@@ -35,6 +35,9 @@ $cs: (
   .bg {
     background-color: map-get($cs, bg);
   }
+  .bg2 {
+    background-color: map-get($cs, bg2);
+  }
   .login-name {
     color: map-get($cs, user);
   }

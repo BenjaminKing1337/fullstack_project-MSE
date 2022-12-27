@@ -41,7 +41,12 @@
           LoggedInTenant.move_out ? LoggedInTenant.move_out.slice(0, 10) : []
         }}
       </div>
-      <div class="show-btns bg">{{ LoggedInTenant.type }} <br /></div>
+      <div class="show-btns bg2" style="padding: 0 5px; border-radius: 5px">
+        <b>
+          {{ LoggedInTenant.type }}
+        </b>
+        <br />
+      </div>
       <br />
     </div>
   </q-page>

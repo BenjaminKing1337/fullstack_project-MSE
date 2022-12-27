@@ -1,12 +1,19 @@
 <template>
   <q-page class="page">
-    <h5>
-      {{ User.email }}
-    </h5>
+    <h4>
+      Logged In User:
+      <i>
+        {{ User.email }}
+      </i>
+    </h4>
     <h6>New Password</h6>
 
     <div>
-      <div style="border: 1px solid black; border-radius: 15px">
+      <div class="show-card">
+        <div class="title">
+          <div class="cardheader"><b>Update Password</b></div>
+        </div>
+        <br />
         <q-form @submit.prevent="EditPwd" class="q-gutter-xs">
           <q-input
             outlined
@@ -41,9 +48,11 @@
             ]"
           />
           <br />
-          <q-btn class="q-btn" type="submit">Update</q-btn>
+          <div class="show-btns">
+            <q-btn class="q-btn" type="submit">Update</q-btn>
+            <q-btn class="q-btn" type="button" @click="goBack()">Back</q-btn>
+          </div>
         </q-form>
-        <q-btn class="q-btn" type="button" @click="goBack()">Back</q-btn>
       </div>
     </div>
   </q-page>

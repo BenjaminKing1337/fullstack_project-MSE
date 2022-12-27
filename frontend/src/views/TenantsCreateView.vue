@@ -21,7 +21,6 @@
             ]"
           />
           <br />
-          <br />
           Personal Info: <br />
           <q-input
             outlined
@@ -36,7 +35,6 @@
                 'First Name must be at least 2 characters long',
             ]"
           />
-          <br />
           <q-input
             outlined
             type="text"
@@ -50,7 +48,6 @@
                 'First Name must be at least 2 characters long',
             ]"
           />
-          <br />
           <q-input
             outlined
             type="email"
@@ -63,7 +60,6 @@
                 val.length > 5 || 'Email must be at least 6 characters long',
             ]"
           />
-          <br />
           <!-- FIXME  -->
           <q-input
             outlined
@@ -79,7 +75,6 @@
                 'Phone Number must be at least 2 characters long',
             ]"
           />
-          <br />
           <!-- FIXME  -->
           <q-input
             outlined
@@ -94,7 +89,7 @@
                 val.length > 1 ||
                 'Account Number must be at least 2 characters long',
             ]"
-          /><br />
+          />
           <q-input
             outlined
             type="number"
@@ -110,7 +105,6 @@
                 'Number of Keys must be between 1 and 10',
             ]"
           />
-          <br />
           <q-input
             outlined
             type="text"
@@ -125,7 +119,6 @@
                 'Closest Neighbour must be at least 2 characters long',
             ]"
           />
-          <br />
           <!-- FIXME  -->
           <q-input outlined type="text" label="Lease" v-model="tState.lease" />
           <br />
