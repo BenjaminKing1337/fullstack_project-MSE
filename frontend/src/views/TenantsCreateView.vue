@@ -10,7 +10,7 @@
             <div class="cardheader"><b>Create New Tenant</b></div>
           </div>
           <br />
-          Type: <br />
+          Type * <br />
           <q-select
             v-model="tState.type"
             outlined
@@ -20,12 +20,12 @@
               (val) => (val && val.length > 0) || 'Type cannot be empty',
             ]"
           />
-          <br />
-          Personal Info: <br />
+
+          Personal Info <br /><br />
           <q-input
             outlined
             type="text"
-            label="First Name"
+            label="First Name *"
             v-model="tState.forename"
             lazy-rules
             :rules="[
@@ -38,7 +38,7 @@
           <q-input
             outlined
             type="text"
-            label="Last Name"
+            label="Last Name *"
             v-model="tState.surname"
             lazy-rules
             :rules="[
@@ -55,12 +55,11 @@
             v-model="tState.email"
             lazy-rules
             :rules="[
-              (val) => (val && val.length > 0) || 'Email cannot be empty',
               (val) =>
-                val.length > 5 || 'Email must be at least 6 characters long',
+                validateNotRequiredField(val, 6) ||
+                'Email must be at least 6 characters long',
             ]"
           />
-          <!-- FIXME  -->
           <q-input
             outlined
             type="text"
@@ -69,31 +68,26 @@
             lazy-rules
             :rules="[
               (val) =>
-                (val && val.length > 0) || 'Phone Number cannot be empty',
-              (val) =>
-                val.length > 1 ||
+                validateNotRequiredField(val, 2) ||
                 'Phone Number must be at least 2 characters long',
             ]"
           />
-          <!-- FIXME  -->
           <q-input
             outlined
             type="text"
-            label="Account Number"
+            label="Account Number *"
             v-model="tState.account_number"
             lazy-rules
             :rules="[
               (val) =>
-                (val && val.length > 0) || 'Account Number cannot be empty',
-              (val) =>
-                val.length > 1 ||
+                validateNotRequiredField(val, 2) ||
                 'Account Number must be at least 2 characters long',
             ]"
           />
           <q-input
             outlined
             type="number"
-            label="Number of Keys"
+            label="Number of Keys *"
             v-model.number="tState.keys_number"
             lazy-rules
             :rules="[
@@ -113,16 +107,24 @@
             lazy-rules
             :rules="[
               (val) =>
-                (val && val.length > 0) || 'Closest Neighbour cannot be empty',
-              (val) =>
-                val.length > 1 ||
+                validateNotRequiredField(val, 2) ||
                 'Closest Neighbour must be at least 2 characters long',
             ]"
           />
-          <!-- FIXME  -->
-          <q-input outlined type="text" label="Lease" v-model="tState.lease" />
+          <q-input
+            outlined
+            type="text"
+            label="Lease"
+            v-model="tState.lease"
+            lazy-rules
+            :rules="[
+              (val) =>
+                validateNotRequiredField(val, 2) ||
+                'Lease must be at least 2 characters long',
+            ]"
+          />
           <br />
-          <div>Assigned User Login:</div>
+          <div>Assigned User Login</div>
           <div>
             <q-select
               v-model="tState.user_id"
@@ -138,7 +140,7 @@
             />
           </div>
           <br />
-          Move In Date: <br />
+          Move In Date * <br />
           <q-input
             outlined
             type="date"
@@ -150,7 +152,7 @@
             ]"
           />
           <br />
-          Move Out Date: <br />
+          Move Out Date * <br />
           <q-input
             outlined
             type="date"
@@ -187,7 +189,12 @@ export default {
     } = TenantCRUD();
     const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
     const tenantTypeOptions = ["Owner", "Renter"];
-
+    const validateNotRequiredField = (value, rule) => {
+      let isFieldOk = true;
+      if (value != "" && value != undefined && value.length < rule)
+        isFieldOk = false;
+      return isFieldOk;
+    };
     onMounted(() => {
       GetUsersTenants();
       // GetSpecificUser();
@@ -212,6 +219,7 @@ export default {
       NewTenant,
       DeleteTenant,
       tenantTypeOptions,
+      validateNotRequiredField,
     };
   },
 };

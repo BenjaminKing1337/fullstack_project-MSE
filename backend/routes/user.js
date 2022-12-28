@@ -120,8 +120,15 @@ router.put("/update/:id", VerifyToken, async (req, res) => {
   try {
     // Does email exist?
     const EmailExist = await User.findOne({ email: req.body.email });
-    if (EmailExist) {
-      return res.status(400).json({ error: "This email already exists" });
+    const isEmailFromCurrentUser = await User.findOne({
+      email: req.body.email,
+      _id: req.params.id,
+    });
+
+    if (EmailExist && !isEmailFromCurrentUser) {
+      return res
+        .status(400)
+        .json({ error: "This email is already being used by another user" });
     } else {
       if (req.body.password) {
         // password hashing

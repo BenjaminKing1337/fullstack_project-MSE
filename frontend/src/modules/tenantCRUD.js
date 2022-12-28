@@ -78,9 +78,9 @@ const GetTenants = () => {
     nowDate = nowDate.toISOString();
 
     if (moveInDate < nowDate) {
-      NotifyError("Move In date must be today or in the future");
+      NotifyError("Move In date must start from tomorrow");
     } else if (moveOutDate < nowDate) {
-      NotifyError("Move Out date must be today or in the future");
+      NotifyError("Move Out date must start from tomorrow");
     } else if (moveInDate === moveOutDate) {
       NotifyError("Move In Date must be different than Move Out Date");
     } else if (moveInDate > moveOutDate) {
