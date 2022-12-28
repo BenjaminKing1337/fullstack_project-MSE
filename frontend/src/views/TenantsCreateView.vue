@@ -88,7 +88,9 @@
             lazy-rules
             :rules="[
               (val) =>
-                validateNotRequiredField(val, 2) ||
+                (val && val.length > 0) || 'Account Number cannot be empty',
+              (val) =>
+                val.length > 2 ||
                 'Account Number must be at least 2 characters long',
             ]"
           />
