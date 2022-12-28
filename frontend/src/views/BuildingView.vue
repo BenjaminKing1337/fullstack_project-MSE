@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page">
+  <q-page class="page" align="center">
     <h4>Single Building's page</h4>
     <p>Here you can edit and manage your individual Building</p>
 

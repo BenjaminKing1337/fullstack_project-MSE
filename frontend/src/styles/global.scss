@@ -28,6 +28,11 @@ $cs: (
         font-size: 16px;
       }
     }
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
   .toolbar {
     background-color: map-get($cs, header);

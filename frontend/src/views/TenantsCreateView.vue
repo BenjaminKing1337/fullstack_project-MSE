@@ -1,7 +1,15 @@
 <template>
-  <q-page class="page">
-    <h4>Welcome to Tenants page</h4>
-    <p>Here you can create and manage your Tenants</p>
+  <q-page class="page" align="center">
+    <div class="pageheader">
+      <div>
+        <h4>Welcome to Tenants page</h4>
+        <p align="left">Here you can create and manage your Tenants</p>
+      </div>
+      <router-link to="/tenants" class="remove_linkStyle">
+        <q-btn class="q-btn"> View All </q-btn>
+      </router-link>
+    </div>
+    <br />
     <!-- Create New -->
     <div>
       <q-form @submit.prevent="NewTenant()" class="q-gutter-xs">
@@ -187,7 +195,7 @@ export default {
       NewTenant,
       DeleteTenant,
     } = TenantCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
+    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
     const tenantTypeOptions = ["Owner", "Renter"];
     const validateNotRequiredField = (value, rule) => {
       let isFieldOk = true;
@@ -198,20 +206,33 @@ export default {
     onMounted(() => {
       GetUsersTenants();
       // GetSpecificUser();
-      GetAllUsers();
+      GetUsersUsers();
       // GetAllTenants();
       // Set default value of dropdowns
       tState.value.type = "Owner";
       tState.value.user_id = "None";
     });
 
+    let filterCreatedBy = (Object, created_by) => {
+      let createdByFiltered = [];
+      for (var i = 0; i < Object.length; i++) {
+        if (Object[i].created_by == created_by) {
+          createdByFiltered.push(Object[i]);
+        }
+      }
+      return createdByFiltered;
+    };
+    const created_by = localStorage.getItem("userid");
+
     return {
+      filterCreatedBy,
+      created_by,
       Tenant,
       uState,
       User,
       UserId,
       GetSpecificUser,
-      GetAllUsers,
+      GetUsersUsers,
       tState,
       GetAllTenants,
       GetUsersTenants,

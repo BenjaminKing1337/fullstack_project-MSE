@@ -138,33 +138,31 @@ export default {
   setup() {
     const {
       pState,
-      GetAllProperties,
       GetUsersProperties,
       GetSpecificProperty,
       NewProperty,
       DeleteProperty,
     } = PropertyCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
-    const { tState, Tenant, GetAllTenants } = TenantCRUD();
+    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
+    const { tState, Tenant, GetUsersTenants } = TenantCRUD();
 
     onMounted(() => {
       GetUsersProperties();
       // GetSpecificUser();
-      GetAllUsers();
-      GetAllTenants();
+      GetUsersUsers();
+      GetUsersTenants();
     });
 
     return {
       tState,
       Tenant,
-      GetAllTenants,
+      GetUsersTenants,
       uState,
       User,
       UserId,
       GetSpecificUser,
-      GetAllUsers,
+      GetUsersUsers,
       pState,
-      GetAllProperties,
       GetUsersProperties,
       GetSpecificProperty,
       NewProperty,

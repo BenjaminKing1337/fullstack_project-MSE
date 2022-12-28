@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page">
+  <q-page class="page" align="center">
     <h4>Single Customer's page</h4>
     <p>Here you can edit and manage your individual Customer</p>
 
@@ -80,14 +80,13 @@ export default {
       cState,
       Customer,
       CustomerId,
-      // GetAllCustomers,
       GetSpecificCustomer,
       EditCustomer,
     } = CustomerCRUD();
-    const { uState, User, UserId, GetAllUsers } = UserCRUD();
+    const { uState, User, UserId, GetUsersUsers } = UserCRUD();
 
     GetSpecificCustomer();
-    GetAllUsers();
+    GetUsersUsers();
 
     const Router = useRouter();
 
@@ -98,7 +97,7 @@ export default {
       cState,
       Customer,
       CustomerId,
-      GetAllUsers,
+      GetUsersUsers,
       GetSpecificCustomer,
       EditCustomer,
       goBack() {

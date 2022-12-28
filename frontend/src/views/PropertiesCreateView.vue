@@ -1,7 +1,15 @@
 <template>
-  <q-page class="page">
-    <h4>Welcome to Properties page</h4>
-    <p>Here you can create and manage your Properties</p>
+  <q-page class="page" align="center">
+    <div class="pageheader">
+      <div>
+        <h4>Welcome to Properties page</h4>
+        <p align="left">Here you can create and manage your Properties</p>
+      </div>
+      <router-link to="/properties" class="remove_linkStyle">
+        <q-btn class="q-btn"> View All </q-btn>
+      </router-link>
+    </div>
+    <br />
     <!-- Create New -->
     <div class="create-card">
       <div class="title">
@@ -85,38 +93,36 @@ export default {
   setup() {
     const {
       pState,
-      GetAllProperties,
       GetUsersProperties,
       GetSpecificProperty,
       NewProperty,
       DeleteProperty,
     } = PropertyCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
-    const { tState, Tenant, GetAllTenants } = TenantCRUD();
-    const { bState, Building, GetAllBuildings } = BuildingCRUD();
+    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
+    const { tState, Tenant, GetUsersTenants } = TenantCRUD();
+    const { bState, Building, GetUsersBuildings } = BuildingCRUD();
 
     onMounted(() => {
       GetUsersProperties();
       // GetSpecificUser();
-      GetAllUsers();
-      GetAllTenants();
-      GetAllBuildings();
+      GetUsersUsers();
+      GetUsersTenants();
+      GetUsersBuildings();
     });
 
     return {
       bState,
       Building,
-      GetAllBuildings,
+      GetUsersBuildings,
       tState,
       Tenant,
-      GetAllTenants,
+      GetUsersTenants,
       uState,
       User,
       UserId,
       GetSpecificUser,
-      GetAllUsers,
+      GetUsersUsers,
       pState,
-      GetAllProperties,
       GetUsersProperties,
       GetSpecificProperty,
       NewProperty,

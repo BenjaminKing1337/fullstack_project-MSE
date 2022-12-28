@@ -69,10 +69,9 @@ import BuildingCRUD from "../modules/buildingCRUD";
 import { onMounted } from "vue";
 export default {
   setup() {
-    const { uState, User, GetAllUsers } = UserCRUD();
+    const { uState, User, GetUsersUsers } = UserCRUD();
     const {
       bState,
-      GetAllBuildings,
       GetUsersBuildings,
       GetSpecificBuilding,
       NewBuilding,
@@ -81,15 +80,14 @@ export default {
 
     onMounted(() => {
       GetUsersBuildings();
-      GetAllUsers();
+      GetUsersUsers();
     });
 
     return {
-      GetAllUsers,
+      GetUsersUsers,
       User,
       uState,
       bState,
-      GetAllBuildings,
       GetUsersBuildings,
       GetSpecificBuilding,
       NewBuilding,

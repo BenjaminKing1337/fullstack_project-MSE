@@ -3,13 +3,11 @@ import { useRoute, useRouter } from "vue-router";
 import baseURL from "./baseURL";
 import Notify from "../modules/utils.js";
 
-// import UserCRUD from "./userCRUD";
 
 const GetTenants = () => {
   const Route = useRoute();
   const Router = useRouter();
   const TenantId = computed(() => Route.params.id);
-  // const { User } = UserCRUD();
   const { NotifyError } = Notify();
 
   const tState = ref({

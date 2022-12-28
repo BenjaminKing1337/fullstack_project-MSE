@@ -1,7 +1,16 @@
 <template>
-  <q-page class="page">
-    <h4>Welcome to Buildings page</h4>
-    <p>Here you can create and manage your Buildings</p>
+  <q-page class="page" align="center">
+    <div class="pageheader">
+      <div>
+        <h4>Welcome to Buildings page</h4>
+        <p align="left">Here you can create and manage your Buildings</p>
+      </div>
+      <router-link to="/buildings" class="remove_linkStyle">
+        <q-btn class="q-btn"> View All </q-btn>
+      </router-link>
+    </div>
+    <br />
+
     <!-- Create New -->
     <div class="create-card">
       <div class="title">
@@ -22,15 +31,14 @@
 </template>
 
 <script>
-import UserCRUD from '../modules/userCRUD';
-import BuildingCRUD from '../modules/buildingCRUD';
-import { onMounted } from 'vue';
+import UserCRUD from "../modules/userCRUD";
+import BuildingCRUD from "../modules/buildingCRUD";
+import { onMounted } from "vue";
 export default {
   setup() {
-    const { uState, User, GetAllUsers } = UserCRUD();
+    const { uState, User, GetUsersUsers } = UserCRUD();
     const {
       bState,
-      GetAllBuildings,
       GetUsersBuildings,
       GetSpecificBuilding,
       NewBuilding,
@@ -39,15 +47,14 @@ export default {
 
     onMounted(() => {
       GetUsersBuildings();
-      GetAllUsers();
+      GetUsersUsers();
     });
 
     return {
-      GetAllUsers,
+      GetUsersUsers,
       User,
       uState,
       bState,
-      GetAllBuildings,
       GetUsersBuildings,
       GetSpecificBuilding,
       NewBuilding,
