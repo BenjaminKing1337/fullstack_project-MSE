@@ -118,19 +118,18 @@ export default {
     const {
       tState,
       Tenant,
-      GetAllTenants,
       GetUsersTenants,
       GetSpecificTenant,
       NewTenant,
       DeleteTenant,
     } = TenantCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
+    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
 
     onMounted(() => {
       GetUsersTenants();
       // GetSpecificUser();
-      GetAllUsers();
-      // GetAllTenants();
+      GetUsersUsers();
+      // GetUsersTenants();
     });
 
     return {
@@ -139,9 +138,8 @@ export default {
       User,
       UserId,
       GetSpecificUser,
-      GetAllUsers,
+      GetUsersUsers,
       tState,
-      GetAllTenants,
       GetUsersTenants,
       GetSpecificTenant,
       NewTenant,

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page">
+  <q-page class="page" align="center">
     <h4>Single Property's page</h4>
     <p>Here you can edit and manage your individual Property</p>
 
@@ -61,8 +61,8 @@
             <select v-model="Property.building_id">
               <option>Assign Building</option>
               <option
-                v-for="Building in bState.Buildings"
-                :key="Building._id"
+                v-for="Building in filterCreatedBy(bState.Buildings, created_by)"
+                :key="Building.created_by"
                 :value="Building._id"
               >
                 {{ Building.name }} {{ Building.number }}
@@ -74,8 +74,8 @@
             <select v-model="Property.owner_id">
               <option>Assign Owner</option>
               <option
-                v-for="Tenant in filterProps(tState.Tenants, created_by)"
-                :key="Tenant._id"
+                v-for="Tenant in filterCreatedBy(tState.Tenants, created_by)"
+                :key="Tenant.created_by"
                 :value="Tenant._id"
               >
                 {{ Tenant.forename }} {{ Tenant.surname }}
@@ -87,8 +87,8 @@
             <select v-model="Property.renter_id">
               <option>Assign Renter</option>
               <option
-                v-for="Tenant in tState.Tenants"
-                :key="Tenant._id"
+                v-for="Tenant in filterCreatedBy(tState.Tenants, created_by)"
+                :key="Tenant.created_by"
                 :value="Tenant._id"
               >
                 {{ Tenant.forename }} {{ Tenant.surname }}
@@ -126,20 +126,20 @@ export default {
 
     GetSpecificProperty();
     GetAllTenants();
+    GetAllBuildings();
 
     const Router = useRouter();
 
-    let filterCreatedBy = (Properties, tenantId) => {
-      let propsFiltered = [];
-      for (var i = 0; i < Properties.length; i++) {
+    let filterCreatedBy = (Object, created_by) => {
+      let createdByFiltered = [];
+      for (var i = 0; i < Object.length; i++) {
         if (
-          Properties[i].owner_id == tenantId ||
-          Properties[i].renter_id == tenantId
+          Object[i].created_by == created_by
         ) {
-          propsFiltered.push(Properties[i]);
+          createdByFiltered.push(Object[i]);
         }
       }
-      return propsFiltered;
+      return createdByFiltered;
     };
     const created_by = localStorage.getItem("userid");
 

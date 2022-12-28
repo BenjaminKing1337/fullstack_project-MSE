@@ -129,13 +129,13 @@ export default {
       pState,
       Property,
       PropertyId,
-      GetAllProperties,
+      GetUsersProperties,
       GetSpecificProperty,
       EditProperty,
     } = PropertyCRUD();
     const { tState, LoggedInTenant, /* TenantId, */ GetLoggedInTenant } =
       TenantCRUD();
-    const { bState, Building, GetAllBuildings } = BuildingCRUD();
+    const { bState, Building, GetUsersBuildings } = BuildingCRUD();
 
     let filterProps = (Properties, tenantId) => {
       let propsFiltered = [];
@@ -154,7 +154,7 @@ export default {
     onMounted(() => {
       GetLoggedInTenant();
       GetSpecificProperty();
-      GetAllProperties();
+      GetUsersProperties();
     });
 
     const Router = useRouter();
@@ -162,7 +162,7 @@ export default {
     return {
       bState,
       Building,
-      GetAllBuildings,
+      GetUsersBuildings,
       tState,
       LoggedInTenant,
       TenantId,
@@ -170,7 +170,7 @@ export default {
       Property,
       PropertyId,
       GetLoggedInTenant,
-      GetAllProperties,
+      GetUsersProperties,
       GetSpecificProperty,
       EditProperty,
       filterProps,

@@ -69,7 +69,6 @@ export default {
       uState,
       User,
       UserId,
-      // GetAllUsers,
       GetSpecificUser,
       EditPwd,
     } = UserCRUD();
@@ -83,11 +82,9 @@ export default {
       uState,
       User,
       UserId,
-      // GetAllUsers,
       GetSpecificUser,
       EditPwd,
       goBack() {
-        // return Router.go(-1);
         Router.push("/users/" + UserId.value);
       },
     };

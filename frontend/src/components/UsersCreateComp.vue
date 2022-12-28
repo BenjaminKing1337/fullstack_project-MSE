@@ -1,8 +1,16 @@
 <template>
   <q-page class="page" align="center">
-    <h4>Welcome to Users menu</h4>
-    <p>Here you can create and manage your Users</p>
+    <div class="pageheader">
+      <div>
+        <h4>Welcome to Users menu</h4>
+        <p align="left">Here you can create and manage your Users</p>
+      </div>
+      <router-link to="/users" class="remove_linkStyle">
+        <q-btn class="q-btn"> View All </q-btn>
+      </router-link>
+    </div>
     <br />
+    <!-- Create New  -->
     <div class="create-card">
       <div class="title">
         <div class="cardheader"><b>Create New User</b></div>
@@ -62,7 +70,7 @@ export default {
   setup() {
     const {
       uState,
-      GetAllUsers,
+      GetUsersUsers,
       DeleteUser,
       EditUser,
       RegisterUser,
@@ -71,7 +79,7 @@ export default {
     const RegisterForm = ref(null);
 
     onMounted(() => {
-      // GetAllUsers();
+      // GetUsersUsers();
     });
     const onSubmit = async () => {
       RegisterForm.value.validate().then((success) => {
@@ -89,7 +97,7 @@ export default {
     };
     return {
       uState,
-      GetAllUsers,
+      GetUsersUsers,
       DeleteUser,
       EditUser,
       RegisterUser,
@@ -98,7 +106,7 @@ export default {
       RegisterForm,
 
       async created() {
-        GetAllUsers();
+        GetUsersUsers();
       },
 
       onReset() {

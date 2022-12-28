@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page">
+  <q-page class="page" align="center">
     <h4>Single Tenant's page</h4>
     <p>Here you can edit and manage your individual Tenant</p>
 
@@ -94,7 +94,7 @@
             <div>User ID:</div>
             <select v-model="Tenant.user_id">
               <option
-                v-for="User in uState.Users"
+                v-for="User in filterCreatedBy(uState.Users, created_by)"
                 :key="User._id"
                 :value="User._id"
               >
@@ -134,7 +134,22 @@ export default {
 
     const Router = useRouter();
 
+    let filterCreatedBy = (Object, created_by) => {
+      let createdByFiltered = [];
+      for (var i = 0; i < Object.length; i++) {
+        if (
+          Object[i].created_by == created_by
+        ) {
+          createdByFiltered.push(Object[i]);
+        }
+      }
+      return createdByFiltered;
+    };
+    const created_by = localStorage.getItem("userid");
+
     return {
+      filterCreatedBy,
+      created_by,
       uState,
       User,
       UserId,

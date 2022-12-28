@@ -82,17 +82,16 @@ export default {
     const {
       cState,
       Customer,
-      GetAllCustomers,
       GetUsersCustomers,
       GetSpecificCustomer,
       NewCustomer,
       DeleteCustomer,
     } = CustomerCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
+    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
 
     onMounted(() => {
       GetUsersCustomers();
-      GetAllUsers();
+      GetUsersUsers();
     });
 
     return {
@@ -101,9 +100,8 @@ export default {
       User,
       UserId,
       GetSpecificUser,
-      GetAllUsers,
+      GetUsersUsers,
       cState,
-      GetAllCustomers,
       GetUsersCustomers,
       GetSpecificCustomer,
       NewCustomer,

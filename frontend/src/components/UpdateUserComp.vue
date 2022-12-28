@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page">
+  <q-page class="page" align="center">
     <h6>My Profile</h6>
     <div class="show-card">
       <div class="title">
@@ -59,7 +59,6 @@ export default {
       uState,
       User,
       UserId,
-      // GetAllUsers,
       GetSpecificUser,
       EditUser,
     } = UserCRUD();
@@ -89,12 +88,10 @@ export default {
       uState,
       User,
       UserId,
-      // GetAllUsers,
       GetSpecificUser,
       EditUser,
       editOptions,
       goBack() {
-        // return Router.go(-1);
         Router.push("/users");
       },
       adminAuth() {

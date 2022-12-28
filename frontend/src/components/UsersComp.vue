@@ -53,7 +53,6 @@ export default {
     const password = ref(null);
     const {
       uState,
-      GetAllUsers,
       GetUsersUsers,
       DeleteUser,
       EditUser,
@@ -61,14 +60,12 @@ export default {
       RegisterUserByAdmin,
     } = UserCRUD();
     onMounted(() => {
-      // GetAllUsers();
       GetUsersUsers();
     });
     return {
       email,
       password,
       uState,
-      GetAllUsers,
       GetUsersUsers,
       DeleteUser,
       EditUser,
@@ -78,7 +75,7 @@ export default {
       async created() {
         // if it is admin > get users by them
         // if it is superadmin > all users
-        GetAllUsers();
+        GetUsersUsers();
       },
 
       async onSubmit() {

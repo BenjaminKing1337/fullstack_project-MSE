@@ -1,7 +1,15 @@
 <template>
   <q-page class="page" align="center">
-    <h4>Welcome to Customers page</h4>
-    <p>Here you can create and manage your Customers</p>
+    <div class="pageheader">
+      <div>
+        <h4>Welcome to Customers page</h4>
+        <p align="left">Here you can create and manage your Customers</p>
+      </div>
+      <router-link to="/customers" class="remove_linkStyle">
+        <q-btn class="q-btn"> View All </q-btn>
+      </router-link>
+    </div>
+    <br />
     <!-- Create New -->
     <div>
       <form @submit.prevent="NewCustomer()">
@@ -54,30 +62,28 @@
         </div>
       </form>
     </div>
-    
   </q-page>
 </template>
 
 <script>
-import CustomerCRUD from '../modules/customerCRUD';
-import UserCRUD from '../modules/userCRUD';
-import { onMounted } from 'vue';
+import CustomerCRUD from "../modules/customerCRUD";
+import UserCRUD from "../modules/userCRUD";
+import { onMounted } from "vue";
 export default {
   setup() {
     const {
       cState,
       Customer,
-      GetAllCustomers,
       GetUsersCustomers,
       GetSpecificCustomer,
       NewCustomer,
       DeleteCustomer,
     } = CustomerCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
+    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
 
     onMounted(() => {
       GetUsersCustomers();
-      GetAllUsers();
+      GetUsersUsers();
     });
 
     return {
@@ -86,9 +92,8 @@ export default {
       User,
       UserId,
       GetSpecificUser,
-      GetAllUsers,
+      GetUsersUsers,
       cState,
-      GetAllCustomers,
       GetUsersCustomers,
       GetSpecificCustomer,
       NewCustomer,
