@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout id="app" view="lHh Lpr lFf">
     <q-header elevated class="toolbar glossy">
       <q-toolbar>
         <q-btn class="q-btn"
@@ -59,3 +59,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: map-get($cs, text);
+}
+</style>

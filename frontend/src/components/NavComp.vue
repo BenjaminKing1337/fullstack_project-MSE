@@ -288,7 +288,7 @@ nav {
     font-weight: bold;
     color: map-get($cs, text);
     &.router-link-exact-active {
-      color: map-get($cs, highlight-active);
+      color: map-get($cs, highlight-active) !important;
     }
   }
   .navitem {
@@ -308,4 +308,5 @@ nav {
     }
   }
 }
+
 </style>
