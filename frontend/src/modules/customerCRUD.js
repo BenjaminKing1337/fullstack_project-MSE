@@ -1,11 +1,13 @@
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import baseURL from "./baseURL";
+import Notify from "../modules/utils.js";
 
 const GetCustomers = () => {
   const Route = useRoute();
   const Router = useRouter();
   const CustomerId = computed(() => Route.params.id);
+  const { NotifyError } = Notify();
 
   const cState = ref({
     forename: "",
@@ -56,25 +58,38 @@ const GetCustomers = () => {
   };
   // CREATE NEW CUSTOMER
   const NewCustomer = () => {
-    const RequestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("Token"),
-      },
-      body: JSON.stringify({
-        forename: cState.value.forename,
-        surname: cState.value.surname,
-        email: cState.value.email,
-        company_name: cState.value.company_name,
-        contact_number: cState.value.contact_number,
-        user_id: "None",
-        created_by: cState.value.created_by,
-      }),
-    };
-    fetch(baseURL + "/customers/new", RequestOptions).then(() => {
-      GetUsersCustomers(); // Updates page
-    });
+    try {
+      const RequestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("Token"),
+        },
+        body: JSON.stringify({
+          forename: cState.value.forename,
+          surname: cState.value.surname,
+          email: cState.value.email,
+          company_name: cState.value.company_name,
+          contact_number: cState.value.contact_number,
+          user_id: "None",
+          created_by: cState.value.created_by,
+        }),
+      };
+      fetch(baseURL + "/customers/new", RequestOptions)
+        .then((res) => res.json())
+        .then((data) => {
+          return data;
+        })
+        .then((data) => {
+          if (data.error) {
+            NotifyError(data.error._message ? data.error._message : data.error);
+          } else {
+            Router.push("/customers");
+          }
+        });
+    } catch (e) {
+      NotifyError("Ooops. Something went wrong.");
+    }
   };
 
   // DELETE CUSTOMER BY ID
@@ -96,28 +111,39 @@ const GetCustomers = () => {
 
   // UPDATE CUSTOMER BY ID
   const EditCustomer = () => {
-    const RequestOptions = {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("Token"),
-      },
-      body: JSON.stringify({
-        // id:Route.params.id,
-        forename: Customer.value.forename,
-        surname: Customer.value.surname,
-        email: Customer.value.email,
-        company_name: Customer.value.company_name,
-        contact_number: Customer.value.contact_number,
-        user_id: Customer.value.user_id,
-        created_by: Customer.value.created_by,
-      }),
-    };
-    fetch(
-      baseURL + "/customers/update/" + CustomerId.value,
-      RequestOptions
-    ).then((res) => res.body);
-    Router.push("/customers");
+    try {
+      const RequestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("Token"),
+        },
+        body: JSON.stringify({
+          // id:Route.params.id,
+          forename: Customer.value.forename,
+          surname: Customer.value.surname,
+          email: Customer.value.email,
+          company_name: Customer.value.company_name,
+          contact_number: Customer.value.contact_number,
+          user_id: Customer.value.user_id,
+          created_by: Customer.value.created_by,
+        }),
+      };
+      fetch(baseURL + "/customers/update/" + CustomerId.value, RequestOptions)
+        .then((res) => res.json())
+        .then((data) => {
+          return data;
+        })
+        .then((data) => {
+          if (data.error) {
+            NotifyError(data.error._message ? data.error._message : data.error);
+          } else {
+            Router.push("/customers");
+          }
+        });
+    } catch (e) {
+      NotifyError("Ooops. Something went wrong.");
+    }
   };
 
   // GET CUSTOMER BY ID
