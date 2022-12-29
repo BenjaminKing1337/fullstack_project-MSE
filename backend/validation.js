@@ -1,7 +1,6 @@
-//joi import
 const Joi = require('joi');
-//jsonwebtoken import
 const Jwt = require('jsonwebtoken');
+
 // Register Validation
 const RegisterValidation = (data) => {
   delete data.pass_confirm;
@@ -35,5 +34,5 @@ const VerifyToken = (req, res, next) => {
     res.status(498).json({ error: 'Token is not valid' });
   }
 };
-// modular exportation
+
 module.exports = { RegisterValidation, LoginValidation, VerifyToken };
