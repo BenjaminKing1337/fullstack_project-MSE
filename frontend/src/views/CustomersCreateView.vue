@@ -12,55 +12,96 @@
     <br />
     <!-- Create New -->
     <div>
-      <form @submit.prevent="NewCustomer()">
+      <q-form @submit.prevent="NewCustomer()" class="q-gutter-xs">
         <div class="create-card">
           <div class="title">
             <div class="cardheader"><b>Create New Customer</b></div>
           </div>
-
           <br />
           <br />
           Personal Info: <br />
-          <input
+          <q-input
+            outlined
             type="text"
-            placeholder="First Name"
+            label="First Name *"
             v-model="cState.forename"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'First Name cannot be empty',
+              (val) =>
+                val.length > 1 ||
+                'First Name must be at least 2 characters long',
+            ]"
           />
           <br />
-          <input type="text" placeholder="Last Name" v-model="cState.surname" />
-          <br />
-          <input type="text" placeholder="Email" v-model="cState.email" />
-          <br />
-          <input
+          <q-input
+            outlined
             type="text"
-            placeholder="Company Name"
+            label="Last Name *"
+            v-model="cState.surname"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Last Name cannot be empty',
+              (val) =>
+                val.length > 1 ||
+                'First Name must be at least 2 characters long',
+            ]"
+          />
+          <br />
+          <q-input
+            outlined
+            type="email"
+            label="Email *"
+            v-model="cState.email"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Email cannot be empty',
+              (val) =>
+                val.length > 5 || 'Email must be at least 6 characters long',
+            ]"
+          />
+          <br />
+          <q-input
+            outlined
+            type="text"
+            label="Company Name"
             v-model="cState.company_name"
+            lazy-rules
+            :rules="[
+              (val) =>
+                validateNotRequiredField(val, 2) ||
+                'Company Name must be at least 2 characters long',
+            ]"
           />
           <br />
-          <input
+          <q-input
+            outlined
             type="text"
-            placeholder="Contact Number"
+            label="Contact Number"
             v-model="cState.contact_number"
+            lazy-rules
+            :rules="[
+              (val) =>
+                validateNotRequiredField(val, 2) ||
+                'Contact Number must be at least 2 characters long',
+            ]"
           />
           <br />
           <div>Assigned User Login:</div>
           <div>
-            <select v-model="cState.user_id">
-              <option>None</option>
-              <option
-                v-for="User in uState.Users"
-                :key="User._id"
-                :value="User._id"
-              >
-                {{ User.email }}
-              </option>
-            </select>
+            <q-select
+              v-model="cState.user_id"
+              outlined
+              :options="uState.UsersFormattedQ"
+              map-options
+              emit-value
+            />
           </div>
           <br />
           <br />
           <q-btn class="q-btn create-btn" type="submit">Add Customer</q-btn>
         </div>
-      </form>
+      </q-form>
     </div>
   </q-page>
 </template>
@@ -69,8 +110,11 @@
 import CustomerCRUD from "../modules/customerCRUD";
 import UserCRUD from "../modules/userCRUD";
 import { onMounted } from "vue";
+import Utils from "../modules/utils";
+
 export default {
   setup() {
+    const { validateNotRequiredField } = Utils();
     const {
       cState,
       Customer,
@@ -80,7 +124,6 @@ export default {
       DeleteCustomer,
     } = CustomerCRUD();
     const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
-
     onMounted(() => {
       GetUsersCustomers();
       GetUsersUsers();
@@ -98,6 +141,7 @@ export default {
       GetSpecificCustomer,
       NewCustomer,
       DeleteCustomer,
+      validateNotRequiredField,
     };
   },
 };

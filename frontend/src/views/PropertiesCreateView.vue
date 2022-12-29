@@ -11,75 +11,140 @@
     </div>
     <br />
     <!-- Create New -->
-    <div class="create-card">
-      <div class="title">
-        <div class="cardheader"><b>Create New Property</b></div>
-      </div>
-      <br />
-      <input placeholder="Name" v-model="pState.name" /> <br />
-      <input placeholder="Floor" v-model="pState.floor" /> <br />
-      <input placeholder="Number" v-model="pState.number" /> <br />
-      <input placeholder="Address" v-model="pState.address" /> <br />
-      <input placeholder="Postal Code" v-model="pState.postal_code" /> <br />
-      <input placeholder="Value" v-model="pState.value" /> <br />
-      <input placeholder="Bank Note" v-model="pState.bank_note" /> <br />
-      <div>
+    <q-form @submit.prevent="NewProperty()" class="q-gutter-xs">
+      <div class="create-card">
+        <div class="title">
+          <div class="cardheader"><b>Create New Property</b></div>
+        </div>
         <br />
-        Add Building:
+        <q-input
+          outlined
+          type="text"
+          label="Name *"
+          v-model="pState.name"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || 'Name cannot be empty',
+            (val) =>
+              val.length > 1 || 'Name must be at least 2 characters long',
+          ]"
+        />
+        <q-input
+          outlined
+          type="text"
+          label="Floor *"
+          v-model="pState.floor"
+          lazy-rules
+          :rules="[
+            (val) =>
+              (val && val.length > 0) ||
+              'Floor must be at least 1 character long',
+          ]"
+        />
+        <q-input
+          outlined
+          type="text"
+          label="Number *"
+          v-model="pState.number"
+          lazy-rules
+          :rules="[
+            (val) =>
+              (val && val.length > 0) ||
+              'Number must be at least 1 character long',
+          ]"
+        />
+        <q-input
+          outlined
+          type="text"
+          label="Address *"
+          v-model="pState.address"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || 'Address cannot be empty',
+            (val) =>
+              val.length > 1 || 'Address must be at least 2 characters long',
+          ]"
+        />
+        <q-input
+          outlined
+          type="text"
+          label="Postal Code *"
+          v-model="pState.postal_code"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || 'Postal Code cannot be empty',
+            (val) =>
+              val.length > 3 ||
+              'Postal Code must be at least 4 characters long',
+          ]"
+        />
+        <q-input
+          outlined
+          type="number"
+          label="Value (Percentage %) *"
+          v-model="pState.value"
+          lazy-rules
+          :rules="[
+            (val) => val > 0 || 'Value cannot be empty',
+            (val) => val < 4 || 'Value must be maximum 3 digits long',
+          ]"
+        />
+        <q-input
+          outlined
+          type="text"
+          label="Bank Note *"
+          v-model="pState.bank_note"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || 'Bank Note cannot be empty',
+            (val) =>
+              val.length > 1 || 'Bank Note must be at least 2 characters long',
+          ]"
+        />
+        <div>
+          <br />
+          Add Building
+          <br />
+          <div>
+            <q-select
+              v-model="pState.building_id"
+              outlined
+              :options="bState.BuildingsFormattedQ"
+              map-options
+              emit-value
+            />
+          </div>
+        </div>
         <br />
         <div>
-          <select v-model="pState.building_id">
-            <option>Assign Building</option>
-            <option
-              v-for="Building in bState.Buildings"
-              :key="Building._id"
-              :value="Building._id"
-            >
-              <div>{{ Building.name }} {{ Building.number }}</div>
-              <br />
-            </option>
-          </select>
+          <br />
+          Add Tenants
+          <br />
+          <div>
+            <q-select
+              v-model="pState.owner_id"
+              outlined
+              :options="tState.OwnersFormattedQ"
+              map-options
+              emit-value
+            />
+          </div>
+          <div>
+            <q-select
+              v-model="pState.renter_id"
+              outlined
+              :options="tState.RentersFormattedQ"
+              map-options
+              emit-value
+            />
+          </div>
         </div>
-      </div>
-      <br />
-      <div>
-        <br />
-        Add Tenants:
         <br />
         <div>
-          <select v-model="pState.owner_id">
-            <option>Assign Owner</option>
-            <!-- <option>None</option> -->
-            <option
-              v-for="Tenant in tState.Tenants"
-              :key="Tenant._id"
-              :value="Tenant._id"
-            >
-              <div>{{ Tenant.forename }} {{ Tenant.surname }}</div>
-              <br />
-            </option>
-          </select>
-        </div>
-        <div>
-          <select v-model="pState.renter_id">
-            <option>Assign Renter</option>
-            <option
-              v-for="Tenant in tState.Tenants"
-              :key="Tenant._id"
-              :value="Tenant._id"
-            >
-              <div>{{ Tenant.forename }} {{ Tenant.surname }}</div>
-            </option>
-          </select>
+          <q-btn class="q-btn create-btn" type="submit"> Add Property </q-btn>
         </div>
       </div>
-      <br />
-      <div>
-        <q-btn class="q-btn create-btn" @click="NewProperty()">
-          Create New Property
-        </q-btn>
-      </div>
-    </div>
+    </q-form>
   </q-page>
 </template>
 

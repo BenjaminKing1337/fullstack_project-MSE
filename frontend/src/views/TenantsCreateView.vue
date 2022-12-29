@@ -23,12 +23,7 @@
             v-model="tState.type"
             outlined
             :options="tenantTypeOptions"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || 'Type cannot be empty',
-            ]"
           />
-
           Personal Info <br /><br />
           <q-input
             outlined
@@ -142,11 +137,6 @@
               :options="uState.UsersFormattedQ"
               map-options
               emit-value
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) || 'Assigned User Id cannot be empty',
-              ]"
             />
           </div>
           <br />
@@ -186,8 +176,11 @@
 import TenantCRUD from "../modules/tenantCRUD";
 import UserCRUD from "../modules/userCRUD";
 import { onMounted } from "vue";
+import Utils from "../modules/utils";
+
 export default {
   setup() {
+    const { validateNotRequiredField } = Utils();
     const {
       tState,
       Tenant,
@@ -199,12 +192,6 @@ export default {
     } = TenantCRUD();
     const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
     const tenantTypeOptions = ["Owner", "Renter"];
-    const validateNotRequiredField = (value, rule) => {
-      let isFieldOk = true;
-      if (value != "" && value != undefined && value.length < rule)
-        isFieldOk = false;
-      return isFieldOk;
-    };
     onMounted(() => {
       GetUsersTenants();
       // GetSpecificUser();

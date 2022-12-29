@@ -16,7 +16,10 @@
           <div class="show-card">
             <div class="title">
               <div class="cardheader">
-                <b>{{ Property.name }}</b>
+                <b>{{ Property.name }} &nbsp;</b>
+                <span v-if="bState.Buildings.length > 0"
+                  ><q-icon :name="getPropertyIcon(Property.building_id)"
+                /></span>
               </div>
             </div>
             <br />
@@ -47,7 +50,7 @@
             </div>
             <div class="spaced">
               <div>Value:</div>
-              <div>{{ Property.value }}</div>
+              <div>{{ Property.value }} %</div>
             </div>
             <div class="spaced">
               <div>Bank Note:</div>
@@ -64,16 +67,20 @@
                 {{ User.email.split("@")[0] }}
               </div>
             </div>
-            <!-- <div class="spaced"
+
+            <div
+              class="spaced"
               v-for="Building in bState.Buildings"
               :key="Building._id"
               :value="Building._id"
             >
-              <div v-if="Property.building_id === Tenant._id">Building ID:</div>
-              <div v-if="Property.building_id === Tenant._id">
-                {{ Building._id }}
+              <div v-if="Property.building_id === Building._id">
+                Building ID:
               </div>
-            </div> -->
+              <div v-if="Property.building_id === Building._id">
+                {{ Building.name }}
+              </div>
+            </div>
             <div
               class="spaced"
               v-for="Tenant in tState.Tenants"
@@ -133,7 +140,9 @@
 import PropertyCRUD from "../modules/propertyCRUD";
 import UserCRUD from "../modules/userCRUD";
 import TenantCRUD from "../modules/tenantCRUD";
-import { onMounted } from "vue";
+import BuildingCRUD from "../modules/buildingCRUD";
+import { onMounted, ref } from "vue";
+
 export default {
   setup() {
     const {
@@ -145,15 +154,32 @@ export default {
     } = PropertyCRUD();
     const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
     const { tState, Tenant, GetUsersTenants } = TenantCRUD();
+    const { bState, Building, GetUsersBuildings } = BuildingCRUD();
 
     onMounted(() => {
       GetUsersProperties();
       // GetSpecificUser();
       GetUsersUsers();
       GetUsersTenants();
+      GetUsersBuildings();
     });
 
+    const getPropertyIcon = (buildingId) => {
+      const buildingsObj = ref();
+      let aux = ref();
+      aux.value = bState.value.Buildings;
+      let propertyIcon = "";
+      buildingsObj.value = aux.value.filter((b) => buildingId == b._id);
+      buildingsObj.value.length > 0
+        ? (propertyIcon = "apartment")
+        : (propertyIcon = "home");
+      return propertyIcon;
+    };
+
     return {
+      bState,
+      Building,
+      GetUsersBuildings,
       tState,
       Tenant,
       GetUsersTenants,
@@ -167,6 +193,7 @@ export default {
       GetSpecificProperty,
       NewProperty,
       DeleteProperty,
+      getPropertyIcon,
     };
   },
 };

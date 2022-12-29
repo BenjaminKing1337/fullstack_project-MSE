@@ -24,8 +24,28 @@ const GetTenants = () => {
     user_id: "None",
     created_by: localStorage.getItem("userid"),
     Tenants: {},
+    OwnersFormattedQ: [],
+    RentersFormattedQ: [],
   });
-
+  const formatTenants = (tenantsArr, tenantType) => {
+    let tenantsArrFormatted = [
+      {
+        label: "Assign" + " " + tenantType,
+        value: "Assign" + " " + tenantType,
+      },
+    ];
+    for (let i = 0; i < tenantsArr.length; i++) {
+      // This will save an array with only owners or renters
+      // depending on tenantType value
+      if (tenantsArr[i].type === tenantType) {
+        tenantsArrFormatted.push({
+          label: tenantsArr[i].forename + " " + tenantsArr[i].surname,
+          value: tenantsArr[i]._id,
+        });
+      }
+    }
+    return tenantsArrFormatted;
+  };
   // GET ALL
   const GetAllTenants = async () => {
     try {
@@ -37,6 +57,8 @@ const GetTenants = () => {
         .then((Res) => Res.json())
         .then((Data) => {
           tState.value.Tenants = Data;
+          tState.value.OwnersFormattedQ = formatTenants(Data, "Owner");
+          tState.value.RentersFormattedQ = formatTenants(Data, "Renter");
         });
     } catch (Error) {
       console.log(Error);
@@ -56,6 +78,8 @@ const GetTenants = () => {
         .then((Res) => Res.json())
         .then((Data) => {
           tState.value.Tenants = Data;
+          tState.value.OwnersFormattedQ = formatTenants(Data, "Owner");
+          tState.value.RentersFormattedQ = formatTenants(Data, "Renter");
         });
     } catch (Error) {
       console.log(Error);
@@ -136,7 +160,9 @@ const GetTenants = () => {
           })
           .then((data) => {
             if (data.error) {
-              NotifyError(data.error);
+              NotifyError(
+                data.error._message ? data.error._message : data.error
+              );
             } else {
               GetUsersTenants(); // Updates page
               Router.push("/tenants");
@@ -210,7 +236,9 @@ const GetTenants = () => {
           })
           .then((data) => {
             if (data.error) {
-              NotifyError(data.error);
+              NotifyError(
+                data.error._message ? data.error._message : data.error
+              );
             } else {
               Router.push("/tenants");
             }

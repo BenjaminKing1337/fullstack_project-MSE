@@ -211,8 +211,10 @@
 import TenantCRUD from "../modules/tenantCRUD";
 import UserCRUD from "../modules/userCRUD";
 import { useRouter } from "vue-router";
+import Utils from "../modules/utils";
 export default {
   setup() {
+    const { validateNotRequiredField } = Utils();
     const {
       tState,
       Tenant,
@@ -226,12 +228,6 @@ export default {
     GetSpecificTenant();
     GetUsersUsers();
     const tenantTypeOptions = ["Owner", "Renter"];
-    const validateNotRequiredField = (value, rule) => {
-      let isFieldOk = true;
-      if (value != "" && value != undefined && value.length < rule)
-        isFieldOk = false;
-      return isFieldOk;
-    };
     const formatFromISO = (date) => {
       const formattedDate = new Date(date);
       return formattedDate;

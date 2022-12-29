@@ -1,4 +1,4 @@
-const Mongoose = require('mongoose');
+const Mongoose = require("mongoose");
 const BuildingSchema = new Mongoose.Schema({
   name: {
     type: String,
@@ -15,7 +15,7 @@ const BuildingSchema = new Mongoose.Schema({
   postal_code: {
     type: String,
     required: true,
-    min: 2,
+    min: 4,
     max: 10,
   },
   created_by: {
@@ -29,4 +29,4 @@ const BuildingSchema = new Mongoose.Schema({
     required: true,
   },
 });
-module.exports = Mongoose.model('Building', BuildingSchema);
+module.exports = Mongoose.model("Building", BuildingSchema);

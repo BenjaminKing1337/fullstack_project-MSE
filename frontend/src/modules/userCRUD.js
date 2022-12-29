@@ -91,7 +91,7 @@ const GetUsers = () => {
         })
         .then((data) => {
           if (data.error) {
-            NotifyError(data.error);
+            NotifyError(data.error._message ? data.error._message : data.error);
           } else {
             // data.body;
             Router.push("/login");
@@ -124,7 +124,7 @@ const GetUsers = () => {
         .then((data) => {
           // data.body;
           if (data.error) {
-            NotifyError(data.error);
+            NotifyError(data.error._message ? data.error._message : data.error);
           } else {
             Router.push("/users");
             GetUsersUsers(); // Updates page
@@ -156,7 +156,9 @@ const GetUsers = () => {
         .then((data) => {
           if (data.error) {
             uState.value.response = data.error;
-            NotifyError(uState.value.response);
+            NotifyError(
+              data.error._message ? data.error._message : uState.value.response
+            );
           } else {
             localStorage.setItem("Token", data.data.Token);
             localStorage.setItem("level", data.level);
@@ -176,9 +178,13 @@ const GetUsers = () => {
   };
   // DELETE User BY ID
   const DeleteUser = (UserId) => {
-    var choice = confirm("Are you sure you want to delete this User and all of their created data?");
+    var choice = confirm(
+      "Are you sure you want to delete this User and all of their created data?"
+    );
     if (choice) {
-      var choice2 = confirm("Are you absolutely sure? All the data added by this user will be gone forever.");
+      var choice2 = confirm(
+        "Are you absolutely sure? All the data added by this user will be gone forever."
+      );
       if (choice2) {
         fetch(baseURL + "/users/delete/" + UserId, {
           method: "DELETE",
@@ -219,7 +225,7 @@ const GetUsers = () => {
         })
         .then((data) => {
           if (data.error) {
-            NotifyError(data.error);
+            NotifyError(data.error._message ? data.error._message : data.error);
           } else {
             // data.body;
             GetAllUsers();
@@ -252,7 +258,7 @@ const GetUsers = () => {
         })
         .then((data) => {
           if (data.error) {
-            NotifyError(data.error);
+            NotifyError(data.error._message ? data.error._message : data.error);
           } else {
             GetAllUsers();
             Router.push("/users/" + UserId.value);

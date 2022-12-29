@@ -1,4 +1,4 @@
-const Mongoose = require('mongoose');
+const Mongoose = require("mongoose");
 const CustomerSchema = new Mongoose.Schema({
   forename: {
     type: String,
@@ -15,7 +15,7 @@ const CustomerSchema = new Mongoose.Schema({
   email: {
     type: String,
     required: true,
-    min: 2,
+    min: 6,
     max: 255,
   },
   company_name: {
@@ -32,7 +32,8 @@ const CustomerSchema = new Mongoose.Schema({
   user_id: {
     // FK
     type: String,
-    required: false,
+    required: true,
+    default: "None",
   },
   created_by: {
     // FK
@@ -45,4 +46,4 @@ const CustomerSchema = new Mongoose.Schema({
     required: true,
   },
 });
-module.exports = Mongoose.model('Customer', CustomerSchema);
+module.exports = Mongoose.model("Customer", CustomerSchema);

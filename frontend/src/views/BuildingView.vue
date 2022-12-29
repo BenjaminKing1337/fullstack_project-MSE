@@ -9,28 +9,50 @@
       </div>
       <br />
       <br />
-      <form @submit.prevent="EditBuilding">
+      <form @submit.prevent="EditBuilding" class="q-gutter-xs">
         <div>
           <div class="spaced">
-            <div>Name:</div>
-            <input type="text" placeholder="Name" v-model="Building.name" />
-          </div>
-          <div class="spaced">
-            <div>No.:</div>
-            <input
+            <div>Name *</div>
+            <q-input
+              outlined
               type="text"
-              placeholder="Number"
-              required
-              v-model="Building.number"
+              v-model="Building.name"
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Name cannot be empty',
+                (val) =>
+                  val.length > 1 || 'Name must be at least 2 characters long',
+              ]"
             />
           </div>
           <div class="spaced">
-            <div>Postal Code:</div>
-            <input
+            <div>Number *</div>
+            <q-input
+              outlined
               type="text"
-              placeholder="Number"
-              required
+              v-model="Building.number"
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Number cannot be empty',
+                (val) =>
+                  val.length > 0 || 'Number must be at least 1 character long',
+              ]"
+            />
+          </div>
+          <div class="spaced">
+            <div>Postal Code *</div>
+            <q-input
+              outlined
+              type="text"
               v-model="Building.postal_code"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'Postal Code cannot be empty',
+                (val) =>
+                  val.length > 3 ||
+                  'Postal Code must be at least 4 characters long',
+              ]"
             />
           </div>
         </div>
@@ -44,8 +66,8 @@
 </template>
 
 <script>
-import BuildingCRUD from '../modules/buildingCRUD';
-import { useRouter } from 'vue-router';
+import BuildingCRUD from "../modules/buildingCRUD";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -64,7 +86,7 @@ export default {
       EditBuilding,
       goBack() {
         // return Router.go(-1);
-        Router.push('/buildings');
+        Router.push("/buildings");
       },
     };
   },
