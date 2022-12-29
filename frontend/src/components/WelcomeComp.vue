@@ -18,6 +18,16 @@
         </q-item>
       </router-link>
     </q-btn>
+    <q-btn v-if="superadminAuth()" class="q-btn center">
+      <q-item clickable tag="a" class="navitem" href="https://mse-a9ir.onreder.com/api/docs">
+          <q-item-section avatar>
+            <q-icon name="description" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label> <b> Swagger </b> </q-item-label>
+          </q-item-section>
+        </q-item>
+    </q-btn>
   </q-page>
 </template>
 
@@ -34,6 +44,9 @@ export default {
           localStorage.getItem("Token") !== null &&
           localStorage.getItem("Token") !== undefined
         );
+      },
+      superadminAuth() {
+        return localStorage.getItem("level") === "superadmin";
       },
     };
   },
