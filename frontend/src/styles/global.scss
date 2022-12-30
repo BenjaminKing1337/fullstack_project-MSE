@@ -1,5 +1,4 @@
 $cs: (
-  // bg: linear-gradient(#e66465, #9198e5),
   linear-bg: linear-gradient(#ffffff, #e1e1e1, #ffffff),
   bg: white,
   bg2: lightgrey,
@@ -12,6 +11,20 @@ $cs: (
   highlight-active: Magenta
 );
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: map-get($cs, linear-bg);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: map-get($cs, text);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: map-get($cs, highlight-active);
+}
+
 // Global classes
 :root {
   background: map-get($cs, linear-bg);
@@ -19,13 +32,17 @@ $cs: (
   }
   .page {
     padding: 0 25px;
+    margin-bottom: 50px;
     .pageheader {
       display: flex;
       justify-content: space-between;
       align-items: center;
       .q-btn {
-        font-weight: 900;
-        font-size: 16px;
+        font-weight: 700;
+        font-size: 14px;
+        &:hover {
+          color: map-get($cs, highlight-active);
+        }
       }
     }
     .center {
@@ -91,6 +108,11 @@ $cs: (
     float: right;
     margin-top: 10px;
     margin-bottom: -10px;
+      font-weight: 600;
+      font-size: 12px;
+      &:hover {
+        color: map-get($cs, highlight-active);
+      }
   }
 }
 // SHOW ALL cards
@@ -128,6 +150,13 @@ $cs: (
     float: right;
     display: flex;
     flex-direction: row;
+    .q-btn {
+      font-weight: 600;
+      font-size: 12px;
+      &:hover {
+        color: map-get($cs, highlight-active);
+      }
+    }
   }
 }
 
