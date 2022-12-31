@@ -11,7 +11,7 @@
     </div>
     <br />
     <!-- Create New  -->
-    <div class="create-card">
+    <div class="show-card">
       <div class="title">
         <div class="cardheader"><b>Create New User</b></div>
       </div>
@@ -46,7 +46,7 @@
               val.length > 5 || 'Password must be at least 6 characters long',
           ]"
         />
-        <div class="create-btn">
+        <div class="show-btns">
           <q-btn class="q-btn" label="Register" type="submit" />
           <q-btn class="q-btn" label="Reset" type="reset">
             <q-tooltip>This button will reset the form values</q-tooltip>

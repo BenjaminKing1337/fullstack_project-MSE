@@ -211,7 +211,7 @@
         <router-link
           v-if="userAuth()"
           class="navheader remove_linkStyle"
-          to="/"
+          :to="`/profile/${userID()}`"
         >
           <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>

@@ -120,7 +120,7 @@ const routes = [
   {
     path: '/profile/:id',
     name: 'profile',
-    component: () => import('../components/UpdateUserComp.vue'),
+    component: () => import('../components/ProfileComp.vue'),
     beforeEnter: AuthGuard,
   },
   {

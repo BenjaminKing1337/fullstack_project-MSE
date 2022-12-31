@@ -88,12 +88,13 @@
             <div>Value (Percentage %) *</div>
             <q-input
               outlined
-              type="number"
+              type="integer"
               v-model="Property.value"
               lazy-rules
               :rules="[
-                (val) => val > 0 || 'Value cannot be empty',
-                (val) => val < 4 || 'Value must be maximum 3 digits long',
+                (val) => val.length > 0 || 'Value cannot be empty',
+                (val) => val.length < 7 || 'Value must be maximum 5 digits long',
+                (val) => val <= 100 || 'Value must be maximum 100.00%',
               ]"
             />
           </div>
@@ -164,16 +165,15 @@ export default {
       pState,
       Property,
       PropertyId,
-      // GetAllProperties,
       GetSpecificProperty,
       EditProperty,
     } = PropertyCRUD();
-    const { tState, Tenant, TenantId, GetAllTenants } = TenantCRUD();
-    const { bState, Building, GetAllBuildings } = BuildingCRUD();
+    const { tState, Tenant, TenantId, GetUsersTenants } = TenantCRUD();
+    const { bState, Building, GetUsersBuildings } = BuildingCRUD();
 
     GetSpecificProperty();
-    GetAllTenants();
-    GetAllBuildings();
+    GetUsersTenants();
+    GetUsersBuildings();
 
     const Router = useRouter();
 
@@ -193,14 +193,14 @@ export default {
       created_by,
       bState,
       Building,
-      GetAllBuildings,
+      GetUsersBuildings,
       tState,
       Tenant,
       TenantId,
       pState,
       Property,
       PropertyId,
-      GetAllTenants,
+      GetUsersTenants,
       GetSpecificProperty,
       EditProperty,
       goBack() {

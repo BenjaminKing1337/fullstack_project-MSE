@@ -1,4 +1,11 @@
 const Mongoose = require("mongoose");
+
+function getValue(value) {
+  if (typeof value !== 'undefined') {
+     return parseFloat(value.toString());
+  }
+  return value;
+};
 // Can be an apartment or a house
 const PropertySchema = new Mongoose.Schema({
   name: {
@@ -33,10 +40,11 @@ const PropertySchema = new Mongoose.Schema({
     max: 10,
   },
   value: {
-    type: Number,
+    type: Mongoose.Types.Decimal128,
     required: true,
     min: 1,
     max: 10,
+    get: getValue,
   },
   bank_note: {
     type: String,
@@ -79,5 +87,7 @@ const PropertySchema = new Mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+},
+{toJSON: {getters: true}},
+);
 module.exports = Mongoose.model("Property", PropertySchema);

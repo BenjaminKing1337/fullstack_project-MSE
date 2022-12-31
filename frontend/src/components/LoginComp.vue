@@ -1,7 +1,7 @@
 <template>
   <q-page class="page" align="center">
     <h4>Welcome to MSE</h4>
-    <div class="create-card">
+    <div class="show-card">
       <div class="title">
         <div class="cardheader"><b>Verify Identity</b></div>
       </div>
@@ -30,7 +30,7 @@
             (val) => (val && val.length > 0) || 'Password cannot be empty',
           ]"
         />
-        <div class="create-btn">
+        <div class="show-btns">
           <q-btn class="q-btn" label="Login" type="submit" />
           <q-btn class="q-btn" label="Reset" type="reset">
             <q-tooltip>This button will reset the form values</q-tooltip>

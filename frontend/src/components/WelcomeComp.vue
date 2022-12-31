@@ -6,7 +6,7 @@
       style="width: 200px; height: 200px"
     />
     <br />
-    <q-btn v-if="!userAuth()" class="q-btn center">
+    <q-btn v-if="!userAuth()" class="q-btn center" style="height: 48px; width: 126px;">
       <router-link class="navheader remove_linkStyle" to="/login">
         <q-item clickable tag="a" class="navitem">
           <q-item-section avatar>
@@ -18,8 +18,8 @@
         </q-item>
       </router-link>
     </q-btn>
-    <q-btn v-if="superadminAuth()" class="q-btn center">
-      <q-item clickable tag="a" class="navitem" href="https://mse-a9ir.onreder.com/api/docs">
+    <q-btn v-if="superadminAuth()" class="q-btn center" style="height: 48px; width: 150px;">
+      <q-item clickable tag="a" class="navitem" href="https://mse-a9ir.onrender.com/api/docs/">
           <q-item-section avatar>
             <q-icon name="description" />
           </q-item-section>

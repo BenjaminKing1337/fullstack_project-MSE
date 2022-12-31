@@ -80,13 +80,14 @@
         />
         <q-input
           outlined
-          type="number"
+          type="integer"
           label="Value (Percentage %) *"
           v-model="pState.value"
           lazy-rules
           :rules="[
-            (val) => val > 0 || 'Value cannot be empty',
-            (val) => val < 4 || 'Value must be maximum 3 digits long',
+            (val) => val.length > 0 || 'Value cannot be empty',
+            (val) => val.length < 7 || 'Value must be maximum 5 digits long',
+            (val) => val <= 100 || 'Value must be maximum 100.00%', 
           ]"
         />
         <q-input

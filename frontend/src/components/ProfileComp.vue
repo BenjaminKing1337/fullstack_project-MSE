@@ -1,6 +1,6 @@
 <template>
   <q-page class="page" align="center">
-    <h6>User Profile</h6>
+    <h6>My Profile</h6>
     <div class="show-card">
       <div class="title">
         <div class="cardheader"><b>Update User</b></div>
@@ -23,15 +23,14 @@
             ]"
           />
         </div>
-        <div v-if="adminAuth() || superadminAuth()">
-          <!-- <div>Level:</div> -->
+        <!-- <div v-if="adminAuth() || superadminAuth()">
           <q-select
             v-model="User.userlevel"
             outlined
             :options="editOptions"
             label="User type"
           />
-        </div>
+        </div> -->
         <div v-if="loggedInAuth()" class="spaced">
           <div></div>
           <q-btn class="q-btn" @click="editPswd">
@@ -66,7 +65,10 @@ export default {
     const editOptions = ["user", "admin", "superadmin"];
     const { NotifyError } = Notify();
     const editPswd = () => {
-      
+      // Gets id from url
+      // var url = window.location.pathname.split("/");
+      // var url_id = url[2];
+      // console.log(url_id);
       if (localStorage.getItem("userid") === UserId.value) {
         // The user is the one logged in, so we send them to pswd change
         Router.push("/pwd/" + localStorage.getItem("userid") + "");

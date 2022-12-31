@@ -15,7 +15,7 @@ const GetCustomers = () => {
     email: "",
     company_name: "",
     contact_number: "",
-    user_id: "None",
+    user_id: "Assign User",
     created_by: localStorage.getItem("userid"),
     Customers: {},
   });
@@ -71,7 +71,10 @@ const GetCustomers = () => {
           email: cState.value.email,
           company_name: cState.value.company_name,
           contact_number: cState.value.contact_number,
-          user_id: "None",
+          user_id:
+            cState.value.user_id == "Assign User"
+              ? "None"
+              : cState.value.user_id,
           created_by: cState.value.created_by,
         }),
       };
