@@ -192,6 +192,7 @@ const GetProperties = () => {
 
   // GET PROPERTY BY LOGGED IN USER'S TENANT ID
   const LoggedInTenantsProperty = ref({});
+  let info = ref(true);
   const GetLoggedInTenantsProperty = async () => {
     try {
       fetch(baseURL + "/properties", {
@@ -206,6 +207,11 @@ const GetProperties = () => {
               P.owner_id === localStorage.getItem("tenantid") ||
               P.renter_id === localStorage.getItem("tenantid")
           );
+          if (LoggedInTenantsProperty.value.length === 0) {
+            info.value = false;
+          }
+          console.log(LoggedInTenantsProperty.value);
+          console.log(LoggedInTenantsProperty.value.length);
         });
     } catch (Error) {
       console.log(Error);
@@ -224,6 +230,7 @@ const GetProperties = () => {
     NewProperty,
     DeleteProperty,
     EditProperty,
+    info
   };
 };
 

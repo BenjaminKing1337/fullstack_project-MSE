@@ -52,7 +52,7 @@ const TenantSchema = new Mongoose.Schema({
   },
   move_out: {
     type: Date,
-    required: true,
+    required: false,
   },
   lease: {
     type: String,

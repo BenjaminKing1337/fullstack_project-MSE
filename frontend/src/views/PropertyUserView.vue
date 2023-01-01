@@ -3,7 +3,8 @@
     <h4>Single Property's page</h4>
     <p>Here you can view your Property info</p>
     <br />
-    <div class="show-card">
+    {{ LoggedInTenantsProperty.value }}
+    <div v-if="info" class="show-card">
       <div class="title">
         <div
           class="cardheader"
@@ -56,6 +57,7 @@
         <br />
       </div>
     </div>
+    <div v-else><h4>No Info to show...</h4></div>
   </q-page>
 </template>
 
@@ -64,15 +66,15 @@ import PropertyCRUD from "../modules/propertyCRUD";
 import TenantCRUD from "../modules/tenantCRUD";
 import BuildingCRUD from "../modules/buildingCRUD";
 import { useRouter } from "vue-router";
-import { onMounted } from "@vue/runtime-core";
+import { onMounted, ref } from "@vue/runtime-core";
 
 export default {
   setup() {
-    const { LoggedInTenantsProperty, GetLoggedInTenantsProperty } =
+    const { info, LoggedInTenantsProperty, GetLoggedInTenantsProperty } =
       PropertyCRUD();
     const { tState, LoggedInTenant, GetLoggedInTenant } = TenantCRUD();
     const { bState, Building, GetAllBuildings } = BuildingCRUD();
-
+    const userid = ref("");
     let filterProps = (Properties, tenantId) => {
       let propsFiltered = [];
       for (var i = 0; i < Properties.length; i++) {
@@ -96,6 +98,7 @@ export default {
     const Router = useRouter();
 
     return {
+      info,
       bState,
       Building,
       GetAllBuildings,
@@ -106,6 +109,10 @@ export default {
       filterProps,
       LoggedInTenantsProperty,
       GetLoggedInTenantsProperty,
+      userID() {
+        userid.value = localStorage.getItem("userid");
+        return userid.value;
+      },
       goBack() {
         Router.push("/properties");
       },

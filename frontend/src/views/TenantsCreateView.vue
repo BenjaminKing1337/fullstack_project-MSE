@@ -149,15 +149,12 @@
           ]"
         />
         <br />
-        Move Out Date * <br />
+        Move Out Date  <br />
         <q-input
           outlined
           type="date"
           v-model="tState.move_out"
-          lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || 'Move Out Date cannot be empty',
-          ]"
+          
         />
         <br />
         <br />

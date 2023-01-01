@@ -3,7 +3,7 @@
     <h4>Personal Info</h4>
     <p>Here you can view your info as a tenant</p>
 
-    <div class="show-card">
+    <div v-if="LoggedInTenant" class="show-card">
       <div class="title">
         <div class="cardheader">
           <b>{{ LoggedInTenant.email }}</b>
@@ -49,10 +49,12 @@
       </div>
       <br />
     </div>
+    <div v-else><h4>No Info to show...</h4></div>
   </q-page>
 </template>
 
 <script>
+import { onMounted } from "@vue/runtime-core";
 import TenantCRUD from "../modules/tenantCRUD";
 
 export default {
@@ -61,7 +63,10 @@ export default {
 
     const TenantId = localStorage.getItem("tenantid");
 
-    GetLoggedInTenant();
+
+    onMounted(() => {
+      GetLoggedInTenant();
+    });
 
     return {
       tState,
