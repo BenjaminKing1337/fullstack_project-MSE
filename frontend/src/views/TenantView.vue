@@ -9,14 +9,11 @@
       <br />
       <q-form @submit.prevent="EditTenant" class="q-gutter-xs">
         <div>
-          <!-- <div class="spaced">
-            <div>ID:</div>
-            {{ Tenant._id }}
-          </div> -->
           <div class="spaced">
             <div>Type *</div>
             <div>
               <q-select
+                color="color"
                 v-model="Tenant.type"
                 outlined
                 :options="tenantTypeOptions"
@@ -45,11 +42,6 @@
           </div>
           <div class="spaced">
             <div>Last Name *</div>
-            <!-- <input
-              type="text"
-              placeholder="Last Name"
-              v-model="Tenant.surname"
-            /> -->
             <q-input
               outlined
               type="text"
@@ -150,7 +142,6 @@
                   (val && val.length > 0) || 'Move In Date cannot be empty',
               ]"
             />
-            <br />
           </div>
           <div class="spaced">
             <div>Move Out *</div>
@@ -183,6 +174,7 @@
             <div>User ID</div>
             <div>
               <q-select
+                color="color"
                 v-model="Tenant.user_id"
                 outlined
                 :options="uState.UsersFormattedQ"
@@ -212,21 +204,17 @@ import TenantCRUD from "../modules/tenantCRUD";
 import UserCRUD from "../modules/userCRUD";
 import { useRouter } from "vue-router";
 import Utils from "../modules/utils";
+import { onMounted } from "@vue/runtime-core";
 export default {
   setup() {
     const { validateNotRequiredField } = Utils();
-    const {
-      tState,
-      Tenant,
-      TenantId,
-      // GetAllTenants,
-      GetSpecificTenant,
-      EditTenant,
-    } = TenantCRUD();
+    const { tState, Tenant, TenantId, GetSpecificTenant, EditTenant } =
+      TenantCRUD();
     const { uState, User, UserId, GetUsersUsers } = UserCRUD();
-
-    GetSpecificTenant();
-    GetUsersUsers();
+    onMounted(() => {
+      GetSpecificTenant();
+      GetUsersUsers();
+    });
     const tenantTypeOptions = ["Owner", "Renter"];
     const formatFromISO = (date) => {
       const formattedDate = new Date(date);
@@ -238,17 +226,16 @@ export default {
       uState,
       User,
       UserId,
+      GetUsersUsers,
       tState,
       Tenant,
       TenantId,
-      GetUsersUsers,
       GetSpecificTenant,
       EditTenant,
       tenantTypeOptions,
       validateNotRequiredField,
       formatFromISO,
       goBack() {
-        // return Router.go(-1);
         Router.push("/tenants");
       },
     };

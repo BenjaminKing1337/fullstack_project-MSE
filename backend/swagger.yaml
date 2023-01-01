@@ -1,18 +1,18 @@
 openapi: 3.0.0
 info:
-  title: MSE
+  title: MSE - Main Solution Estates
   description: MongoDB ExpressJS NodeJS REST API for a Real Estate App.<br />Github repository available [here](https://github.com/BenjaminKing1337/fullstack_project-MSE).<br />Some endpoints require `auth-token` in order to be executed.
   version: 1.0.0
 servers:
-  # - url: http://???
-  #   description: Remote server
+  - url: https://mse-a9ir.onrender.com/api/
+    description: Remote server
   - url: http://localhost:3000/api/
     description: Localhost development server
 components:
   securitySchemes:
-    ApiKeyAuth: # arbitrary name for the security scheme
+    ApiKeyAuth: 
       type: apiKey
-      in: header # can be "header", "query" or "cookie"
+      in: header 
       name: auth-token
 
   schemas:

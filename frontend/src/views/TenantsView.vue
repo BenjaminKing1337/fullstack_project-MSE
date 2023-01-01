@@ -20,22 +20,10 @@
             </div>
             <br />
             <br />
-            <!-- <div class="spaced">
-            <div>ID:</div>
-            <div>{{ Tenant._id }} <br /></div>
-          </div> -->
             <div class="spaced">
               <div>Type:</div>
               <div>{{ Tenant.type }} <br /></div>
             </div>
-            <!-- <div class="spaced">
-              <div>First Name:</div>
-              <div>{{ Tenant.forename }} <br /></div>
-            </div> -->
-            <!-- <div class="spaced">
-              <div>Last Name:</div>
-              <div>{{ Tenant.surname }} <br /></div>
-            </div> -->
             <div class="spaced">
               <div>Email:</div>
               <div>{{ Tenant.email }} <br /></div>
@@ -115,34 +103,22 @@ import UserCRUD from "../modules/userCRUD";
 import { onMounted } from "vue";
 export default {
   setup() {
-    const {
-      tState,
-      Tenant,
-      GetUsersTenants,
-      GetSpecificTenant,
-      NewTenant,
-      DeleteTenant,
-    } = TenantCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
+    const { tState, Tenant, GetUsersTenants, DeleteTenant } = TenantCRUD();
+    const { uState, User, UserId, GetUsersUsers } = UserCRUD();
 
     onMounted(() => {
       GetUsersTenants();
-      // GetSpecificUser();
       GetUsersUsers();
-      // GetUsersTenants();
     });
 
     return {
-      Tenant,
       uState,
       User,
       UserId,
-      GetSpecificUser,
       GetUsersUsers,
       tState,
+      Tenant,
       GetUsersTenants,
-      GetSpecificTenant,
-      NewTenant,
       DeleteTenant,
     };
   },

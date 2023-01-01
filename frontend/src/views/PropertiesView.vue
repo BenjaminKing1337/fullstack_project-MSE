@@ -17,6 +17,8 @@
             <div class="title">
               <div class="cardheader">
                 <b>{{ Property.name }} &nbsp;</b>
+              </div>
+              <div class="cardheader" style="float: right">
                 <span v-if="bState.Buildings.length > 0"
                   ><q-icon :name="getPropertyIcon(Property.building_id)"
                 /></span>
@@ -24,14 +26,6 @@
             </div>
             <br />
             <br />
-            <!-- <div class="spaced">
-              <div>ID:</div>
-              <div>{{ Property._id }}</div>
-            </div> -->
-            <!-- <div class="spaced">
-              <div>Name:</div>
-              <div>{{ Property.name }}</div>
-            </div> -->
             <div class="spaced">
               <div>Floor No.:</div>
               <div>{{ Property.floor }}</div>
@@ -75,10 +69,10 @@
               :value="Building._id"
             >
               <div v-if="Property.building_id === Building._id">
-                Building ID:
+                Building:
               </div>
               <div v-if="Property.building_id === Building._id">
-                {{ Building.name }}
+                {{ Building.name }} {{ Building.number }}
               </div>
             </div>
             <div
@@ -145,20 +139,13 @@ import { onMounted, ref } from "vue";
 
 export default {
   setup() {
-    const {
-      pState,
-      GetUsersProperties,
-      GetSpecificProperty,
-      NewProperty,
-      DeleteProperty,
-    } = PropertyCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
+    const { pState, GetUsersProperties, DeleteProperty } = PropertyCRUD();
+    const { uState, User, UserId, GetUsersUsers } = UserCRUD();
     const { tState, Tenant, GetUsersTenants } = TenantCRUD();
     const { bState, Building, GetUsersBuildings } = BuildingCRUD();
 
     onMounted(() => {
       GetUsersProperties();
-      // GetSpecificUser();
       GetUsersUsers();
       GetUsersTenants();
       GetUsersBuildings();
@@ -186,12 +173,9 @@ export default {
       uState,
       User,
       UserId,
-      GetSpecificUser,
       GetUsersUsers,
       pState,
       GetUsersProperties,
-      GetSpecificProperty,
-      NewProperty,
       DeleteProperty,
       getPropertyIcon,
     };

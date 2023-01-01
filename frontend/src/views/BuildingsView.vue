@@ -31,17 +31,6 @@
               <div>{{ Building.postal_code }}</div>
             </div>
 
-            <div
-              class="spaced"
-              v-for="User in uState.Users"
-              :key="User._id"
-              :value="User._id"
-            >
-              <div v-if="Building.created_by === User._id">Created by:</div>
-              <div v-if="Building.created_by === User._id">
-                {{ User.email.split("@")[0] }}
-              </div>
-            </div>
             <br />
             <div class="show-btns">
               <router-link
@@ -64,33 +53,19 @@
 </template>
 
 <script>
-import UserCRUD from "../modules/userCRUD";
 import BuildingCRUD from "../modules/buildingCRUD";
 import { onMounted } from "vue";
 export default {
   setup() {
-    const { uState, User, GetUsersUsers } = UserCRUD();
-    const {
-      bState,
-      GetUsersBuildings,
-      GetSpecificBuilding,
-      NewBuilding,
-      DeleteBuilding,
-    } = BuildingCRUD();
+    const { bState, GetUsersBuildings, DeleteBuilding } = BuildingCRUD();
 
     onMounted(() => {
       GetUsersBuildings();
-      GetUsersUsers();
     });
 
     return {
-      GetUsersUsers,
-      User,
-      uState,
       bState,
       GetUsersBuildings,
-      GetSpecificBuilding,
-      NewBuilding,
       DeleteBuilding,
     };
   },

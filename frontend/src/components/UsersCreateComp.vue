@@ -61,7 +61,6 @@
 
 <script>
 import UserCRUD from "../modules/userCRUD";
-import { onMounted } from "vue";
 import { ref } from "vue";
 
 export default {
@@ -70,17 +69,12 @@ export default {
   setup() {
     const {
       uState,
-      GetUsersUsers,
-      DeleteUser,
-      EditUser,
       RegisterUser,
       RegisterUserByAdmin,
     } = UserCRUD();
     const RegisterForm = ref(null);
 
-    onMounted(() => {
-      // GetUsersUsers();
-    });
+   
     const onSubmit = async () => {
       RegisterForm.value.validate().then((success) => {
         if (success) {
@@ -97,16 +91,12 @@ export default {
     };
     return {
       uState,
-      GetUsersUsers,
-      DeleteUser,
-      EditUser,
       RegisterUser,
       RegisterUserByAdmin,
       onSubmit,
       RegisterForm,
 
       async created() {
-        GetUsersUsers();
       },
 
       onReset() {

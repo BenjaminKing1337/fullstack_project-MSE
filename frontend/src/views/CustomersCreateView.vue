@@ -90,6 +90,7 @@
           <div>Assigned User Login:</div>
           <div>
             <q-select
+              color="color"
               v-model="cState.user_id"
               outlined
               :options="uState.UsersFormattedQ"
@@ -115,32 +116,20 @@ import Utils from "../modules/utils";
 export default {
   setup() {
     const { validateNotRequiredField } = Utils();
-    const {
-      cState,
-      Customer,
-      GetUsersCustomers,
-      GetSpecificCustomer,
-      NewCustomer,
-      DeleteCustomer,
-    } = CustomerCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
+    const { cState, Customer, NewCustomer } = CustomerCRUD();
+    const { uState, User, UserId, GetUsersUsers } = UserCRUD();
     onMounted(() => {
-      GetUsersCustomers();
       GetUsersUsers();
     });
 
     return {
-      Customer,
       uState,
       User,
       UserId,
-      GetSpecificUser,
       GetUsersUsers,
       cState,
-      GetUsersCustomers,
-      GetSpecificCustomer,
+      Customer,
       NewCustomer,
-      DeleteCustomer,
       validateNotRequiredField,
     };
   },

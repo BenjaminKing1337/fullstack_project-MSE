@@ -1,6 +1,6 @@
 <template>
-  <q-page class="page">
-    <h4>My Profile</h4>
+  <q-page class="page" align="center">
+    <h4>Personal Info</h4>
     <p>Here you can view your info as a tenant</p>
 
     <div class="show-card">

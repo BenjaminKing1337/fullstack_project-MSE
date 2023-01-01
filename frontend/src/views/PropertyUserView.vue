@@ -1,22 +1,57 @@
 <template>
-  <q-page class="page">
+  <q-page class="page" align="center">
     <h4>Single Property's page</h4>
     <p>Here you can view your Property info</p>
-
+    <br />
     <div class="show-card">
       <div class="title">
-        <div class="cardheader"><b>My Property</b></div>
+        <div
+          class="cardheader"
+          v-for="Item in LoggedInTenantsProperty"
+          :key="Item._id"
+        >
+          <b>{{ Item.name }}</b>
+        </div>
       </div>
       <br />
       <br />
-      <div
-        v-for="Property in filterProps(pState.Properties, TenantId)"
-        :key="Property._id"
-      >
+      <div v-for="Item in LoggedInTenantsProperty" :key="Item._id">
         <div>
-          ID: {{ Property._id }} <br />
-          Name: {{ Property.name }} <br />
-          Address: {{ Property.address }}
+          <div
+            class="spaced"
+            v-for="Building in bState.Buildings"
+            :key="Building._id"
+            :value="Building._id"
+          >
+            <div v-if="Item.building_id === Building._id">Building:</div>
+            <div v-if="Item.building_id === Building._id">
+              {{ Building.name }} {{ Building.number }}
+            </div>
+          </div>
+          <div class="spaced">
+            <div>Floor No.:</div>
+            <div>{{ Item.floor }}</div>
+          </div>
+          <div class="spaced">
+            <div>Number:</div>
+            <div>{{ Item.number }}</div>
+          </div>
+          <div class="spaced">
+            <div>Address:</div>
+            <div>{{ Item.address }}</div>
+          </div>
+          <div class="spaced">
+            <div>Postal Code:</div>
+            <div>{{ Item.postal_code }}</div>
+          </div>
+          <div class="spaced">
+            <div>Value:</div>
+            <div>{{ Item.value }} %</div>
+          </div>
+          <div class="spaced">
+            <div>Bank Note:</div>
+            <div>{{ Item.bank_note }}</div>
+          </div>
         </div>
         <br />
       </div>
@@ -33,17 +68,10 @@ import { onMounted } from "@vue/runtime-core";
 
 export default {
   setup() {
-    const {
-      pState,
-      Property,
-      PropertyId,
-      GetUsersProperties,
-      GetSpecificProperty,
-      EditProperty,
-    } = PropertyCRUD();
-    const { tState, LoggedInTenant, /* TenantId, */ GetLoggedInTenant } =
-      TenantCRUD();
-    const { bState, Building, GetUsersBuildings } = BuildingCRUD();
+    const { LoggedInTenantsProperty, GetLoggedInTenantsProperty } =
+      PropertyCRUD();
+    const { tState, LoggedInTenant, GetLoggedInTenant } = TenantCRUD();
+    const { bState, Building, GetAllBuildings } = BuildingCRUD();
 
     let filterProps = (Properties, tenantId) => {
       let propsFiltered = [];
@@ -61,8 +89,8 @@ export default {
 
     onMounted(() => {
       GetLoggedInTenant();
-      GetSpecificProperty();
-      GetUsersProperties();
+      GetLoggedInTenantsProperty();
+      GetAllBuildings();
     });
 
     const Router = useRouter();
@@ -70,20 +98,15 @@ export default {
     return {
       bState,
       Building,
-      GetUsersBuildings,
+      GetAllBuildings,
       tState,
       LoggedInTenant,
       TenantId,
-      pState,
-      Property,
-      PropertyId,
       GetLoggedInTenant,
-      GetUsersProperties,
-      GetSpecificProperty,
-      EditProperty,
       filterProps,
+      LoggedInTenantsProperty,
+      GetLoggedInTenantsProperty,
       goBack() {
-        // return Router.go(-1);
         Router.push("/properties");
       },
     };

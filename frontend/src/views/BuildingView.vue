@@ -85,7 +85,6 @@ export default {
       GetSpecificBuilding,
       EditBuilding,
       goBack() {
-        // return Router.go(-1);
         Router.push("/buildings");
       },
     };

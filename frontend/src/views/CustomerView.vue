@@ -89,6 +89,7 @@
           <div class="spaced">
             <div>User ID:</div>
             <q-select
+              color="color"
               v-model="Customer.user_id"
               outlined
               :options="uState.UsersFormattedQ"

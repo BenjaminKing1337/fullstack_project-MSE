@@ -8,7 +8,6 @@
       <q-form @submit.prevent="EditUser" class="q-gutter-xs">
         <br />
         <div class="spaced">
-          <!-- <div>Email:</div> -->
           <q-input
             outlined
             type="email"
@@ -23,14 +22,6 @@
             ]"
           />
         </div>
-        <!-- <div v-if="adminAuth() || superadminAuth()">
-          <q-select
-            v-model="User.userlevel"
-            outlined
-            :options="editOptions"
-            label="User type"
-          />
-        </div> -->
         <div v-if="loggedInAuth()" class="spaced">
           <div></div>
           <q-btn class="q-btn" @click="editPswd">
@@ -62,13 +53,8 @@ export default {
       EditUser,
     } = UserCRUD();
     const Router = useRouter();
-    const editOptions = ["user", "admin", "superadmin"];
     const { NotifyError } = Notify();
     const editPswd = () => {
-      // Gets id from url
-      // var url = window.location.pathname.split("/");
-      // var url_id = url[2];
-      // console.log(url_id);
       if (localStorage.getItem("userid") === UserId.value) {
         // The user is the one logged in, so we send them to pswd change
         Router.push("/pwd/" + localStorage.getItem("userid") + "");
@@ -90,7 +76,6 @@ export default {
       UserId,
       GetSpecificUser,
       EditUser,
-      editOptions,
       
       goBack() {
         Router.push("/users");

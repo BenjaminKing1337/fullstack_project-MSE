@@ -8,7 +8,6 @@
       <q-form @submit.prevent="EditUser" class="q-gutter-xs">
         <br />
         <div class="spaced">
-          <!-- <div>Email:</div> -->
           <q-input
             outlined
             type="email"
@@ -23,12 +22,19 @@
             ]"
           />
         </div>
-        <div v-if="adminAuth() || superadminAuth()">
-          <!-- <div>Level:</div> -->
-          <q-select
+        <div v-if="superadminAuth()">
+          <q-select color="color"
             v-model="User.userlevel"
             outlined
             :options="editOptions"
+            label="User type"
+          />
+        </div>
+        <div v-if="adminAuth()">
+          <q-select color="color"
+            v-model="User.userlevel"
+            outlined
+            :options="editOptions2"
             label="User type"
           />
         </div>
@@ -64,6 +70,7 @@ export default {
     } = UserCRUD();
     const Router = useRouter();
     const editOptions = ["user", "admin", "superadmin"];
+    const editOptions2 = ["user", "admin"];
     const { NotifyError } = Notify();
     const editPswd = () => {
       
@@ -89,6 +96,7 @@ export default {
       GetSpecificUser,
       EditUser,
       editOptions,
+      editOptions2,
       
       goBack() {
         Router.push("/users");

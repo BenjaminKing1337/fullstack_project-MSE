@@ -8,7 +8,7 @@ $cs: (
   user: green,
   highlight: lightgrey,
   highlight2: grey,
-  highlight-active: Magenta
+  highlight-active: rgb(2, 164, 2),
 );
 
 ::-webkit-scrollbar {
@@ -23,6 +23,13 @@ $cs: (
 }
 ::-webkit-scrollbar-thumb:hover {
   background: map-get($cs, highlight-active);
+}
+
+.q-field__control {
+  color: map-get($cs, highlight-active) !important;
+}
+.text-color {
+  color: map-get($cs, highlight-active) !important;
 }
 
 // Global classes
@@ -80,6 +87,7 @@ $cs: (
     background-color: map-get($cs, bg2) !important;
   }
 }
+
 // ADD NEW cards
 .create-card {
   border: 1px solid map-get($cs, border);
@@ -108,13 +116,14 @@ $cs: (
     float: right;
     margin-top: 10px;
     margin-bottom: -10px;
-      font-weight: 600;
-      font-size: 12px;
-      &:hover {
-        color: map-get($cs, highlight-active);
-      }
+    font-weight: 600;
+    font-size: 12px;
+    &:hover {
+      color: map-get($cs, highlight-active);
+    }
   }
 }
+
 // SHOW ALL cards
 .show-card {
   border: 1px solid map-get($cs, border);

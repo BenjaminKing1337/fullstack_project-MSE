@@ -2,7 +2,8 @@
   <q-layout id="app" view="lHh Lpr lFf">
     <q-header elevated class="toolbar glossy">
       <q-toolbar>
-        <q-btn class="q-btn"
+        <q-btn
+          class="q-btn"
           flat
           dense
           round
@@ -18,6 +19,18 @@
           <b class="login-name">{{
             email.charAt(0).toUpperCase() + email.slice(1).split("@")[0]
           }}</b>
+          <!-- Logout  -->
+          <router-link
+            v-if="userAuth()"
+            class="navelement remove_linkStyle"
+            to="/logout"
+          >
+            <q-icon
+              style="font-size: 20px; margin-left: 10px"
+              color="red"
+              name="logout"
+            />
+          </router-link>
         </div>
       </q-toolbar>
     </q-header>

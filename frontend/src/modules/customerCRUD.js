@@ -7,7 +7,7 @@ const GetCustomers = () => {
   const Route = useRoute();
   const Router = useRouter();
   const CustomerId = computed(() => Route.params.id);
-  const { NotifyError } = Notify();
+  const { NotifyError, NotifySuccess } = Notify();
 
   const cState = ref({
     forename: "",
@@ -56,6 +56,7 @@ const GetCustomers = () => {
       console.log(Error);
     }
   };
+
   // CREATE NEW CUSTOMER
   const NewCustomer = () => {
     try {
@@ -88,6 +89,7 @@ const GetCustomers = () => {
             NotifyError(data.error._message ? data.error._message : data.error);
           } else {
             Router.push("/customers");
+            NotifySuccess("New Customer has been created.");
           }
         });
     } catch (e) {
@@ -106,6 +108,7 @@ const GetCustomers = () => {
         },
       }).then(() => {
         GetUsersCustomers(); // Updates page
+        NotifySuccess("Customer has been deleted.");
       });
     } else {
       Router.push("/customers");
@@ -142,6 +145,7 @@ const GetCustomers = () => {
             NotifyError(data.error._message ? data.error._message : data.error);
           } else {
             Router.push("/customers");
+            NotifySuccess("Customer has been updated.");
           }
         });
     } catch (e) {
@@ -161,7 +165,6 @@ const GetCustomers = () => {
         .then((Res) => Res.json())
         .then((Data) => {
           Customer.value = Data;
-          // .filter((P) => P._id === CustomerId.value);
         });
     } catch (Error) {
       console.log(Error);

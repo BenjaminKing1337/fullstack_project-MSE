@@ -88,13 +88,13 @@
             <div>Value (Percentage %) *</div>
             <q-input
               outlined
-              type="integer"
+              type="text"
               v-model="Property.value"
               lazy-rules
               :rules="[
-                (val) => val.length > 0 || 'Value cannot be empty',
-                (val) => val.length < 7 || 'Value must be maximum 5 digits long',
+                (val) => (val !== null && val !== '') || 'Value cannot be empty',
                 (val) => val <= 100 || 'Value must be maximum 100.00%',
+                (val) => val.length < 7 || 'Value must be maximum 5 characters',
               ]"
             />
           </div>
@@ -115,7 +115,7 @@
           </div>
           <div class="spaced">
             <div>Building:</div>
-            <q-select
+            <q-select color="color"
               v-model="Property.building_id"
               outlined
               :options="bState.BuildingsFormattedQ"
@@ -125,7 +125,7 @@
           </div>
           <div class="spaced">
             <div>Owner:</div>
-            <q-select
+            <q-select color="color"
               v-model="Property.owner_id"
               outlined
               :options="tState.OwnersFormattedQ"
@@ -135,7 +135,7 @@
           </div>
           <div class="spaced">
             <div>Renter:</div>
-            <q-select
+            <q-select color="color"
               v-model="Property.renter_id"
               outlined
               :options="tState.RentersFormattedQ"
@@ -158,22 +158,21 @@ import PropertyCRUD from "../modules/propertyCRUD";
 import TenantCRUD from "../modules/tenantCRUD";
 import BuildingCRUD from "../modules/buildingCRUD";
 import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
 
 export default {
   setup() {
-    const {
-      pState,
-      Property,
-      PropertyId,
-      GetSpecificProperty,
-      EditProperty,
-    } = PropertyCRUD();
+    const { pState, Property, PropertyId, GetSpecificProperty, EditProperty } =
+      PropertyCRUD();
     const { tState, Tenant, TenantId, GetUsersTenants } = TenantCRUD();
     const { bState, Building, GetUsersBuildings } = BuildingCRUD();
 
-    GetSpecificProperty();
-    GetUsersTenants();
-    GetUsersBuildings();
+    onMounted(() => {
+      GetSpecificProperty();
+      GetUsersTenants();
+      GetUsersBuildings();
+    });
+
 
     const Router = useRouter();
 
@@ -197,10 +196,10 @@ export default {
       tState,
       Tenant,
       TenantId,
+      GetUsersTenants,
       pState,
       Property,
       PropertyId,
-      GetUsersTenants,
       GetSpecificProperty,
       EditProperty,
       goBack() {

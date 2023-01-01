@@ -85,7 +85,7 @@ export default {
       GetSpecificUser,
       EditPwd,
       goBack() {
-        Router.push("/users/" + UserId.value);
+        Router.push("/profile/" + UserId.value);
       },
     };
   },

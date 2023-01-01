@@ -79,15 +79,9 @@ import UserCRUD from "../modules/userCRUD";
 import { onMounted } from "vue";
 export default {
   setup() {
-    const {
-      cState,
-      Customer,
-      GetUsersCustomers,
-      GetSpecificCustomer,
-      NewCustomer,
-      DeleteCustomer,
-    } = CustomerCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
+    const { cState, Customer, GetUsersCustomers, DeleteCustomer } =
+      CustomerCRUD();
+    const { uState, User, UserId, GetUsersUsers } = UserCRUD();
 
     onMounted(() => {
       GetUsersCustomers();
@@ -95,16 +89,13 @@ export default {
     });
 
     return {
-      Customer,
       uState,
       User,
       UserId,
-      GetSpecificUser,
       GetUsersUsers,
       cState,
+      Customer,
       GetUsersCustomers,
-      GetSpecificCustomer,
-      NewCustomer,
       DeleteCustomer,
     };
   },

@@ -87,7 +87,7 @@
           :rules="[
             (val) => val.length > 0 || 'Value cannot be empty',
             (val) => val.length < 7 || 'Value must be maximum 5 digits long',
-            (val) => val <= 100 || 'Value must be maximum 100.00%', 
+            (val) => val <= 100 || 'Value must be maximum 100.00%',
           ]"
         />
         <q-input
@@ -108,6 +108,7 @@
           <br />
           <div>
             <q-select
+              color="color"
               v-model="pState.building_id"
               outlined
               :options="bState.BuildingsFormattedQ"
@@ -123,6 +124,7 @@
           <br />
           <div>
             <q-select
+              color="color"
               v-model="pState.owner_id"
               outlined
               :options="tState.OwnersFormattedQ"
@@ -132,6 +134,7 @@
           </div>
           <div>
             <q-select
+              color="color"
               v-model="pState.renter_id"
               outlined
               :options="tState.RentersFormattedQ"
@@ -157,20 +160,12 @@ import BuildingCRUD from "../modules/buildingCRUD";
 import { onMounted } from "vue";
 export default {
   setup() {
-    const {
-      pState,
-      GetUsersProperties,
-      GetSpecificProperty,
-      NewProperty,
-      DeleteProperty,
-    } = PropertyCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetUsersUsers } = UserCRUD();
+    const { pState, NewProperty } = PropertyCRUD();
+    const { uState, User, UserId, GetUsersUsers } = UserCRUD();
     const { tState, Tenant, GetUsersTenants } = TenantCRUD();
     const { bState, Building, GetUsersBuildings } = BuildingCRUD();
 
     onMounted(() => {
-      GetUsersProperties();
-      // GetSpecificUser();
       GetUsersUsers();
       GetUsersTenants();
       GetUsersBuildings();
@@ -186,16 +181,13 @@ export default {
       uState,
       User,
       UserId,
-      GetSpecificUser,
       GetUsersUsers,
       pState,
-      GetUsersProperties,
-      GetSpecificProperty,
       NewProperty,
-      DeleteProperty,
     };
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

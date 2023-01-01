@@ -42,53 +42,24 @@
 
 <script>
 import UserCRUD from "../modules/userCRUD";
-import { ref } from "vue";
 import { onMounted } from "vue";
 
 export default {
   name: "UsersComp",
 
   setup() {
-    const email = ref(null);
-    const password = ref(null);
-    const {
-      uState,
-      GetUsersUsers,
-      DeleteUser,
-      EditUser,
-      RegisterUser,
-      RegisterUserByAdmin,
-    } = UserCRUD();
+    const { uState, GetUsersUsers, DeleteUser } = UserCRUD();
     onMounted(() => {
       GetUsersUsers();
     });
     return {
-      email,
-      password,
       uState,
       GetUsersUsers,
       DeleteUser,
-      EditUser,
-      RegisterUser,
-      RegisterUserByAdmin,
-
       async created() {
         // if it is admin > get users by them
         // if it is superadmin > all users
         GetUsersUsers();
-      },
-
-      async onSubmit() {
-        if (localStorage.getItem("level") === "admin") {
-          RegisterUserByAdmin();
-        } else {
-          RegisterUser();
-        }
-      },
-
-      onReset() {
-        email.value = null;
-        password.value = null;
       },
       userAuth() {
         return (

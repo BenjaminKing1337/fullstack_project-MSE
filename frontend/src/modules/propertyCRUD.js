@@ -7,7 +7,7 @@ const GetProperties = () => {
   const Route = useRoute();
   const Router = useRouter();
   const PropertyId = computed(() => Route.params.id);
-  const { NotifyError } = Notify();
+  const { NotifyError, NotifySuccess } = Notify();
 
   const pState = ref({
     name: "",
@@ -15,7 +15,7 @@ const GetProperties = () => {
     number: "",
     address: "",
     postal_code: "",
-    value: "",
+    value: 0,
     bank_note: "",
     created_by: localStorage.getItem("userid"),
     building_id: "Assign Building",
@@ -92,9 +92,7 @@ const GetProperties = () => {
               : pState.value.owner_id,
         }),
       };
-      // GetUsersProperties(); // updates page
       fetch(baseURL + "/properties/new", RequestOptions)
-        // GetAllProperties()
         .then((res) => res.json())
         .then((data) => {
           return data;
@@ -105,6 +103,7 @@ const GetProperties = () => {
           } else {
             GetUsersProperties(); // updates page
             Router.push("/properties");
+            NotifySuccess("New Property has been created.");
           }
         });
     } catch (e) {
@@ -123,6 +122,7 @@ const GetProperties = () => {
         },
       }).then(() => {
         GetUsersProperties(); // Updates page
+        NotifySuccess("Property has been deleted.");
       });
     } else {
       Router.push("/properties");
@@ -139,7 +139,6 @@ const GetProperties = () => {
           "auth-token": localStorage.getItem("Token"),
         },
         body: JSON.stringify({
-          // id:Route.params.id,
           name: Property.value.name,
           floor: Property.value.floor,
           number: Property.value.number,
@@ -164,6 +163,7 @@ const GetProperties = () => {
           } else {
             GetUsersProperties(); // updates page
             Router.push("/properties");
+            NotifySuccess("Property has been updated.");
           }
         });
     } catch (e) {
@@ -183,33 +183,44 @@ const GetProperties = () => {
         .then((Res) => Res.json())
         .then((Data) => {
           Property.value = Data;
-          // .filter((P) => P._id === PropertyId.value);
+          Property.value.value = Property.value.value.toString();
         });
     } catch (Error) {
       console.log(Error);
     }
   };
+
   // GET PROPERTY BY LOGGED IN USER'S TENANT ID
-  // const LoggedInTenantsProperty = ref({});
-  // const GetLoggedInTenantsProperty = async () => {
-  //   try {
-  //     fetch(baseURL + '/properties')
-  //       .then((Res) => Res.json())
-  //       .then((Data) => {
-  //         LoggedInTenantsProperty.value = Data.filter((P) => P._id === PropertyId.value);
-  //       });
-  //   } catch (Error) {
-  //     console.log(Error);
-  //   }
-  // };
+  const LoggedInTenantsProperty = ref({});
+  const GetLoggedInTenantsProperty = async () => {
+    try {
+      fetch(baseURL + "/properties", {
+        headers: {
+          "auth-token": localStorage.getItem("Token"),
+        },
+      })
+        .then((Res) => Res.json())
+        .then((Data) => {
+          LoggedInTenantsProperty.value = Data.filter(
+            (P) =>
+              P.owner_id === localStorage.getItem("tenantid") ||
+              P.renter_id === localStorage.getItem("tenantid")
+          );
+        });
+    } catch (Error) {
+      console.log(Error);
+    }
+  };
 
   return {
     Property,
+    LoggedInTenantsProperty,
     PropertyId,
     GetSpecificProperty,
     pState,
     GetAllProperties,
     GetUsersProperties,
+    GetLoggedInTenantsProperty,
     NewProperty,
     DeleteProperty,
     EditProperty,

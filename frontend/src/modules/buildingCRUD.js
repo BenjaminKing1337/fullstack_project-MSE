@@ -7,7 +7,7 @@ const GetBuildings = () => {
   const Route = useRoute();
   const Router = useRouter();
   const BuildingId = computed(() => Route.params.id);
-  const { NotifyError } = Notify();
+  const { NotifyError, NotifySuccess } = Notify();
 
   const bState = ref({
     name: "",
@@ -29,6 +29,7 @@ const GetBuildings = () => {
     }
     return buildingsArrFormatted;
   };
+  
   // GET ALL BUILDINGS
   const GetAllBuildings = async () => {
     try {
@@ -93,6 +94,7 @@ const GetBuildings = () => {
             NotifyError(data.error._message ? data.error._message : data.error);
           } else {
             Router.push("/buildings");
+            NotifySuccess("New Building has been created.");
           }
         });
     } catch (e) {
@@ -111,6 +113,7 @@ const GetBuildings = () => {
         },
       }).then(() => {
         GetUsersBuildings(); // Updates page
+        NotifySuccess("Building has been deleted.");
       });
     } else {
       Router.push("/buildings");
@@ -127,7 +130,6 @@ const GetBuildings = () => {
           "auth-token": localStorage.getItem("Token"),
         },
         body: JSON.stringify({
-          // id:Route.params.id,
           name: Building.value.name,
           number: Building.value.number,
           postal_code: Building.value.postal_code,
@@ -144,6 +146,7 @@ const GetBuildings = () => {
             NotifyError(data.error._message ? data.error._message : data.error);
           } else {
             Router.push("/buildings");
+            NotifySuccess("Building has been updated.");
           }
         });
     } catch (e) {
@@ -163,12 +166,12 @@ const GetBuildings = () => {
         .then((Res) => Res.json())
         .then((Data) => {
           Building.value = Data;
-          // .filter((P) => P._id === PropertyId.value);
         });
     } catch (Error) {
       console.log(Error);
     }
   };
+
 
   return {
     Building,

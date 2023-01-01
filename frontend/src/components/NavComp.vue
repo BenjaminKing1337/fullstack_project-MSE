@@ -219,10 +219,7 @@
             </q-item-section>
             <q-item-section>
               <q-item-label>
-                Hello,
-                <b class="login-name">{{
-                  email.charAt(0).toUpperCase() + email.slice(1).split("@")[0]
-                }}</b></q-item-label
+               Settings</q-item-label
               >
               <q-item-label caption
                 ><router-link class="navelement remove_linkStyle" :to="`/profile/${userID()}`"

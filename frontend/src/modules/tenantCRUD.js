@@ -7,7 +7,7 @@ const GetTenants = () => {
   const Route = useRoute();
   const Router = useRouter();
   const TenantId = computed(() => Route.params.id);
-  const { NotifyError } = Notify();
+  const { NotifyError, NotifySuccess } = Notify();
 
   const tState = ref({
     type: "",
@@ -46,6 +46,7 @@ const GetTenants = () => {
     }
     return tenantsArrFormatted;
   };
+
   // GET ALL
   const GetAllTenants = async () => {
     try {
@@ -117,6 +118,7 @@ const GetTenants = () => {
     }
     return areDatesOk;
   };
+
   // CREATE NEW
   const NewTenant = () => {
     try {
@@ -153,7 +155,6 @@ const GetTenants = () => {
           }),
         };
         fetch(baseURL + "/tenants/new", RequestOptions)
-          // GetAllTenants()
           .then((res) => res.json())
           .then((data) => {
             return data;
@@ -166,6 +167,7 @@ const GetTenants = () => {
             } else {
               GetUsersTenants(); // Updates page
               Router.push("/tenants");
+              NotifySuccess("New Tenant has been created.");
             }
           });
       }
@@ -185,6 +187,7 @@ const GetTenants = () => {
         },
       }).then(() => {
         GetUsersTenants(); // Updates page
+        NotifySuccess("Tenant has been deleted.");
       });
     } else {
       Router.push("/tenants");
@@ -225,7 +228,6 @@ const GetTenants = () => {
             move_out: Tenant.value.move_out_formatted,
             lease: Tenant.value.lease,
             user_id: Tenant.value.user_id,
-            // created_by: tState.value.created_by,
           }),
         };
         fetch(baseURL + "/tenants/update/" + TenantId.value, RequestOptions)
@@ -241,6 +243,7 @@ const GetTenants = () => {
               );
             } else {
               Router.push("/tenants");
+              NotifySuccess("Tenant has been updated.");
             }
           });
       }
@@ -263,12 +266,12 @@ const GetTenants = () => {
           Tenant.value = Data;
           Tenant.value.move_in_formatted = Data.move_in.slice(0, 10);
           Tenant.value.move_out_formatted = Data.move_out.slice(0, 10);
-          // .filter((P) => P._id === TenantId.value);
         });
     } catch (Error) {
       console.log(Error);
     }
   };
+
   // GET BY ID OF LOGGEDI IN USER
   const LoggedInTenant = ref({});
   const GetLoggedInTenant = async () => {
@@ -284,7 +287,6 @@ const GetTenants = () => {
             (T) => T.user_id === localStorage.getItem("userid")
           )[0];
           localStorage.setItem("tenantid", LoggedInTenant.value._id);
-          console.log(LoggedInTenant.value);
         });
     } catch (Error) {
       console.log(Error);
@@ -292,7 +294,6 @@ const GetTenants = () => {
   };
 
   return {
-    // User,
     Tenant,
     LoggedInTenant,
     TenantId,
