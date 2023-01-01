@@ -29,18 +29,7 @@
               val.length > 1 || 'Name must be at least 2 characters long',
           ]"
         />
-        <q-input
-          outlined
-          type="text"
-          label="Floor *"
-          v-model="pState.floor"
-          lazy-rules
-          :rules="[
-            (val) =>
-              (val && val.length > 0) ||
-              'Floor must be at least 1 character long',
-          ]"
-        />
+        <q-input outlined type="text" label="Floor " v-model="pState.floor" />
         <q-input
           outlined
           type="text"
@@ -189,5 +178,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

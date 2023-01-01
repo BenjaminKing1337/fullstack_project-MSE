@@ -144,17 +144,8 @@
             />
           </div>
           <div class="spaced">
-            <div>Move Out *</div>
-            <q-input
-              outlined
-              type="date"
-              v-model="Tenant.move_out_formatted"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) || 'Move Out Date cannot be empty',
-              ]"
-            />
+            <div>Move Out</div>
+            <q-input outlined type="date" v-model="Tenant.move_out_formatted" />
           </div>
           <div class="spaced">
             <div>Lease</div>

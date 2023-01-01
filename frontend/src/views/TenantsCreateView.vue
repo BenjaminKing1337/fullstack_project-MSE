@@ -149,13 +149,8 @@
           ]"
         />
         <br />
-        Move Out Date  <br />
-        <q-input
-          outlined
-          type="date"
-          v-model="tState.move_out"
-          
-        />
+        Move Out Date<br />
+        <q-input outlined type="date" v-model="tState.move_out" />
         <br />
         <br />
         <q-btn class="q-btn create-btn" type="submit">Add Tenant</q-btn>

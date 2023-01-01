@@ -50,7 +50,9 @@
             </div>
             <div class="spaced">
               <div>Move Out:</div>
-              <div>{{ Tenant.move_out.slice(0, 10) }} <br /></div>
+              <div>
+                {{ Tenant.move_out ? Tenant.move_out.slice(0, 10) : "" }} <br />
+              </div>
             </div>
             <div class="spaced">
               <div>Lease:</div>
