@@ -27,6 +27,7 @@ const GetTenants = () => {
     OwnersFormattedQ: [],
     RentersFormattedQ: [],
   });
+  let moveOutDateExists = ref(false);
   const formatTenants = (tenantsArr, tenantType) => {
     let tenantsArrFormatted = [
       {
@@ -98,8 +99,17 @@ const GetTenants = () => {
       requestType === "new"
         ? tState.value.move_out
         : Tenant.value.move_out_formatted;
-    moveOutDate = new Date(moveOutDate);
-    moveOutDate = moveOutDate.toISOString();
+
+    if (
+      moveOutDate.length > 0 &&
+      moveOutDate != null &&
+      moveOutDate != undefined &&
+      moveOutDate != ""
+    ) {
+      moveOutDateExists.value = true;
+      moveOutDate = new Date(moveOutDate);
+      moveOutDate = moveOutDate.toISOString();
+    }
 
     let areDatesOk = false;
     let nowDate = new Date();
@@ -107,11 +117,15 @@ const GetTenants = () => {
 
     if (moveInDate < nowDate && requestType === "new") {
       NotifyError("Move In date must start from tomorrow");
-    } else if (moveOutDate < nowDate && requestType === "new") {
+    } else if (
+      moveOutDateExists.value &&
+      moveOutDate < nowDate &&
+      requestType === "new"
+    ) {
       NotifyError("Move Out date must start from tomorrow");
-    } else if (moveInDate === moveOutDate) {
+    } else if (moveOutDateExists.value && moveInDate === moveOutDate) {
       NotifyError("Move In Date must be different than Move Out Date");
-    } else if (moveInDate > moveOutDate) {
+    } else if (moveOutDateExists.value && moveInDate > moveOutDate) {
       NotifyError("Move In Date cannot be greater than Move Out Date");
     } else {
       areDatesOk = true;
@@ -130,8 +144,13 @@ const GetTenants = () => {
       if (DatesAreOK("new")) {
         tState.value.move_in = new Date(tState.value.move_in);
         tState.value.move_in = tState.value.move_in.toISOString();
-        tState.value.move_out = new Date(tState.value.move_out);
-        tState.value.move_out = tState.value.move_out.toISOString();
+        if (moveOutDateExists.value) {
+          tState.value.move_out = new Date(tState.value.move_out);
+          tState.value.move_out = tState.value.move_out.toISOString();
+        } else {
+          tState.value.move_out = "";
+        }
+
         const RequestOptions = {
           method: "POST",
           headers: {
@@ -204,11 +223,17 @@ const GetTenants = () => {
         );
         Tenant.value.move_in_formatted =
           Tenant.value.move_in_formatted.toISOString();
-        Tenant.value.move_out_formatted = new Date(
-          Tenant.value.move_out_formatted
-        );
-        Tenant.value.move_out_formatted =
-          Tenant.value.move_out_formatted.toISOString();
+
+        if (moveOutDateExists.value) {
+          Tenant.value.move_out_formatted = new Date(
+            Tenant.value.move_out_formatted
+          );
+          Tenant.value.move_out_formatted =
+            Tenant.value.move_out_formatted.toISOString();
+        } else {
+          Tenant.value.move_out_formatted = "";
+        }
+
         const RequestOptions = {
           method: "PUT",
           headers: {
@@ -265,7 +290,9 @@ const GetTenants = () => {
         .then((Data) => {
           Tenant.value = Data;
           Tenant.value.move_in_formatted = Data.move_in.slice(0, 10);
-          Tenant.value.move_out_formatted = Data.move_out.slice(0, 10);
+          Tenant.value.move_out_formatted = Data.move_out
+            ? Data.move_out.slice(0, 10)
+            : "";
         });
     } catch (Error) {
       console.log(Error);

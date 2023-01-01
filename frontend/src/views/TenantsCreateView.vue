@@ -149,16 +149,8 @@
           ]"
         />
         <br />
-        Move Out Date * <br />
-        <q-input
-          outlined
-          type="date"
-          v-model="tState.move_out"
-          lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || 'Move Out Date cannot be empty',
-          ]"
-        />
+        Move Out Date<br />
+        <q-input outlined type="date" v-model="tState.move_out" />
         <br />
         <br />
         <q-btn class="q-btn create-btn" type="submit">Add Tenant</q-btn>

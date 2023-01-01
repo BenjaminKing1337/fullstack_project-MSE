@@ -28,7 +28,7 @@
             <br />
             <div class="spaced">
               <div>Floor No.:</div>
-              <div>{{ Property.floor }}</div>
+              <div>{{ Property.floor ? Property.floor : ''}}</div>
             </div>
             <div class="spaced">
               <div>Number:</div>

@@ -26,18 +26,8 @@
             />
           </div>
           <div class="spaced">
-            <div>Floor *</div>
-            <q-input
-              outlined
-              type="text"
-              v-model="Property.floor"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.length > 0) ||
-                  'Floor must be at least 1 character long',
-              ]"
-            />
+            <div>Floor</div>
+            <q-input outlined type="text" v-model="Property.floor" />
           </div>
           <div class="spaced">
             <div>No. *</div>
@@ -92,7 +82,8 @@
               v-model="Property.value"
               lazy-rules
               :rules="[
-                (val) => (val !== null && val !== '') || 'Value cannot be empty',
+                (val) =>
+                  (val !== null && val !== '') || 'Value cannot be empty',
                 (val) => val <= 100 || 'Value must be maximum 100.00%',
                 (val) => val.length < 7 || 'Value must be maximum 5 characters',
               ]"
@@ -115,7 +106,8 @@
           </div>
           <div class="spaced">
             <div>Building:</div>
-            <q-select color="color"
+            <q-select
+              color="color"
               v-model="Property.building_id"
               outlined
               :options="bState.BuildingsFormattedQ"
@@ -125,7 +117,8 @@
           </div>
           <div class="spaced">
             <div>Owner:</div>
-            <q-select color="color"
+            <q-select
+              color="color"
               v-model="Property.owner_id"
               outlined
               :options="tState.OwnersFormattedQ"
@@ -135,7 +128,8 @@
           </div>
           <div class="spaced">
             <div>Renter:</div>
-            <q-select color="color"
+            <q-select
+              color="color"
               v-model="Property.renter_id"
               outlined
               :options="tState.RentersFormattedQ"
@@ -172,7 +166,6 @@ export default {
       GetUsersTenants();
       GetUsersBuildings();
     });
-
 
     const Router = useRouter();
 
