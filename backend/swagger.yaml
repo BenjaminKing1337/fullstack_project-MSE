@@ -10,9 +10,9 @@ servers:
     description: Localhost development server
 components:
   securitySchemes:
-    ApiKeyAuth: 
+    ApiKeyAuth:
       type: apiKey
-      in: header 
+      in: header
       name: auth-token
 
   schemas:
@@ -124,6 +124,7 @@ components:
           type: string
         user_id:
           type: string
+          default: "None"
         created_by:
           type: string
           description: "Id of the logged in user"
