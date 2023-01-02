@@ -31,6 +31,7 @@ router.get("/get/:id", VerifyToken, async (req, res) => {
     res.status(400).json({ error });
   }
 });
+
 // Get Buildings by user id
 router.get("/get/byUser/:id", VerifyToken, async (req, res) => {
   try {

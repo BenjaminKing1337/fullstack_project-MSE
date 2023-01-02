@@ -2,7 +2,7 @@
   <q-page class="page">
     <div class="pageheader">
       <h4>Welcome to Tenants menu</h4>
-      <router-link to="/newbuilding" class="remove_linkStyle">
+      <router-link to="/newtenant" class="remove_linkStyle">
         <q-btn class="q-btn"> Create New </q-btn>
       </router-link>
     </div>
@@ -20,22 +20,10 @@
             </div>
             <br />
             <br />
-            <!-- <div class="spaced">
-            <div>ID:</div>
-            <div>{{ Tenant._id }} <br /></div>
-          </div> -->
             <div class="spaced">
               <div>Type:</div>
               <div>{{ Tenant.type }} <br /></div>
             </div>
-            <!-- <div class="spaced">
-              <div>First Name:</div>
-              <div>{{ Tenant.forename }} <br /></div>
-            </div> -->
-            <!-- <div class="spaced">
-              <div>Last Name:</div>
-              <div>{{ Tenant.surname }} <br /></div>
-            </div> -->
             <div class="spaced">
               <div>Email:</div>
               <div>{{ Tenant.email }} <br /></div>
@@ -62,7 +50,9 @@
             </div>
             <div class="spaced">
               <div>Move Out:</div>
-              <div>{{ Tenant.move_out.slice(0, 10) }} <br /></div>
+              <div>
+                {{ Tenant.move_out ? Tenant.move_out.slice(0, 10) : "" }} <br />
+              </div>
             </div>
             <div class="spaced">
               <div>Lease:</div>
@@ -115,36 +105,22 @@ import UserCRUD from "../modules/userCRUD";
 import { onMounted } from "vue";
 export default {
   setup() {
-    const {
-      tState,
-      Tenant,
-      GetAllTenants,
-      GetUsersTenants,
-      GetSpecificTenant,
-      NewTenant,
-      DeleteTenant,
-    } = TenantCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
+    const { tState, Tenant, GetUsersTenants, DeleteTenant } = TenantCRUD();
+    const { uState, User, UserId, GetUsersUsers } = UserCRUD();
 
     onMounted(() => {
       GetUsersTenants();
-      // GetSpecificUser();
-      GetAllUsers();
-      // GetAllTenants();
+      GetUsersUsers();
     });
 
     return {
-      Tenant,
       uState,
       User,
       UserId,
-      GetSpecificUser,
-      GetAllUsers,
+      GetUsersUsers,
       tState,
-      GetAllTenants,
+      Tenant,
       GetUsersTenants,
-      GetSpecificTenant,
-      NewTenant,
       DeleteTenant,
     };
   },

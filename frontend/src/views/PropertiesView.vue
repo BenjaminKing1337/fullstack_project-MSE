@@ -1,12 +1,12 @@
 <template>
   <q-page class="page">
     <div class="pageheader">
-    <h4>Welcome to Properties menu</h4>
-      <router-link to="/newbuilding" class="remove_linkStyle">
+      <h4>Welcome to Properties menu</h4>
+      <router-link to="/newproperty" class="remove_linkStyle">
         <q-btn class="q-btn"> Create New </q-btn>
       </router-link>
     </div>
-    
+
     <!-- Show All -->
     <div>
       <h5>My Properties</h5>
@@ -16,22 +16,19 @@
           <div class="show-card">
             <div class="title">
               <div class="cardheader">
-                <b>{{ Property.name }}</b>
+                <b>{{ Property.name }} &nbsp;</b>
+              </div>
+              <div class="cardheader" style="float: right">
+                <span v-if="bState.Buildings.length > 0"
+                  ><q-icon :name="getPropertyIcon(Property.building_id)"
+                /></span>
               </div>
             </div>
             <br />
             <br />
-            <!-- <div class="spaced">
-              <div>ID:</div>
-              <div>{{ Property._id }}</div>
-            </div> -->
-            <!-- <div class="spaced">
-              <div>Name:</div>
-              <div>{{ Property.name }}</div>
-            </div> -->
             <div class="spaced">
               <div>Floor No.:</div>
-              <div>{{ Property.floor }}</div>
+              <div>{{ Property.floor ? Property.floor : ''}}</div>
             </div>
             <div class="spaced">
               <div>Number:</div>
@@ -47,7 +44,7 @@
             </div>
             <div class="spaced">
               <div>Value:</div>
-              <div>{{ Property.value }}</div>
+              <div>{{ Property.value }} %</div>
             </div>
             <div class="spaced">
               <div>Bank Note:</div>
@@ -64,16 +61,20 @@
                 {{ User.email.split("@")[0] }}
               </div>
             </div>
-            <!-- <div class="spaced"
+
+            <div
+              class="spaced"
               v-for="Building in bState.Buildings"
               :key="Building._id"
               :value="Building._id"
             >
-              <div v-if="Property.building_id === Tenant._id">Building ID:</div>
-              <div v-if="Property.building_id === Tenant._id">
-                {{ Building._id }}
+              <div v-if="Property.building_id === Building._id">
+                Building:
               </div>
-            </div> -->
+              <div v-if="Property.building_id === Building._id">
+                {{ Building.name }} {{ Building.number }}
+              </div>
+            </div>
             <div
               class="spaced"
               v-for="Tenant in tState.Tenants"
@@ -118,7 +119,9 @@
                   <strong>Update</strong>
                 </q-btn>
               </router-link>
-              <q-btn class="q-btn" @click="DeleteProperty(Property._id)">Delete</q-btn>
+              <q-btn class="q-btn" @click="DeleteProperty(Property._id)"
+                >Delete</q-btn
+              >
             </div>
           </div>
         </div>
@@ -131,42 +134,50 @@
 import PropertyCRUD from "../modules/propertyCRUD";
 import UserCRUD from "../modules/userCRUD";
 import TenantCRUD from "../modules/tenantCRUD";
-import { onMounted } from "vue";
+import BuildingCRUD from "../modules/buildingCRUD";
+import { onMounted, ref } from "vue";
+
 export default {
   setup() {
-    const {
-      pState,
-      GetAllProperties,
-      GetUsersProperties,
-      GetSpecificProperty,
-      NewProperty,
-      DeleteProperty,
-    } = PropertyCRUD();
-    const { uState, User, UserId, GetSpecificUser, GetAllUsers } = UserCRUD();
-    const { tState, Tenant, GetAllTenants } = TenantCRUD();
+    const { pState, GetUsersProperties, DeleteProperty } = PropertyCRUD();
+    const { uState, User, UserId, GetUsersUsers } = UserCRUD();
+    const { tState, Tenant, GetUsersTenants } = TenantCRUD();
+    const { bState, Building, GetUsersBuildings } = BuildingCRUD();
 
     onMounted(() => {
       GetUsersProperties();
-      // GetSpecificUser();
-      GetAllUsers();
-      GetAllTenants();
+      GetUsersUsers();
+      GetUsersTenants();
+      GetUsersBuildings();
     });
 
+    const getPropertyIcon = (buildingId) => {
+      const buildingsObj = ref();
+      let aux = ref();
+      aux.value = bState.value.Buildings;
+      let propertyIcon = "";
+      buildingsObj.value = aux.value.filter((b) => buildingId == b._id);
+      buildingsObj.value.length > 0
+        ? (propertyIcon = "apartment")
+        : (propertyIcon = "home");
+      return propertyIcon;
+    };
+
     return {
+      bState,
+      Building,
+      GetUsersBuildings,
       tState,
       Tenant,
-      GetAllTenants,
+      GetUsersTenants,
       uState,
       User,
       UserId,
-      GetSpecificUser,
-      GetAllUsers,
+      GetUsersUsers,
       pState,
-      GetAllProperties,
       GetUsersProperties,
-      GetSpecificProperty,
-      NewProperty,
       DeleteProperty,
+      getPropertyIcon,
     };
   },
 };

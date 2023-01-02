@@ -13,10 +13,10 @@ router.get("/", VerifyToken, async (req, res) => {
 router.post("/new", VerifyToken, async (req, res) => {
   try {
     const NewProperty = new Property(
-      req.body // What the Vue App is sending
+      req.body 
     );
-    const SavedProperty = await NewProperty.save(); // mongo save method
-    res.json(SavedProperty); // respond with json to our post endpoint
+    const SavedProperty = await NewProperty.save(); 
+    res.json(SavedProperty); 
   } catch (error) {
     res.status(400).json({ error });
   }
@@ -31,6 +31,7 @@ router.get("/get/:id", VerifyToken, async (req, res) => {
     res.status(400).json({ error });
   }
 });
+
 // Get Properties by user id route
 router.get("/get/byUser/:id", VerifyToken, async (req, res) => {
   try {

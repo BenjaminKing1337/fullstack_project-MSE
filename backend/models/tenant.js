@@ -1,9 +1,9 @@
-const Mongoose = require('mongoose');
+const Mongoose = require("mongoose");
 const TenantSchema = new Mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ['Owner', 'Renter'], // Only accepts these 2 types
+    enum: ["Owner", "Renter"], // Only accepts these 2 types
   },
   forename: {
     type: String,
@@ -20,7 +20,7 @@ const TenantSchema = new Mongoose.Schema({
   email: {
     type: String,
     required: false,
-    min: 2,
+    min: 6,
     max: 255,
   },
   phone_number: {
@@ -52,7 +52,7 @@ const TenantSchema = new Mongoose.Schema({
   },
   move_out: {
     type: Date,
-    required: true,
+    required: false,
   },
   lease: {
     type: String,
@@ -75,4 +75,4 @@ const TenantSchema = new Mongoose.Schema({
     required: true,
   },
 });
-module.exports = Mongoose.model('Tenant', TenantSchema);
+module.exports = Mongoose.model("Tenant", TenantSchema);

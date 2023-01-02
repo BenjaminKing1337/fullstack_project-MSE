@@ -1,9 +1,21 @@
 <template>
-  <q-page class="page">
+  <q-page class="page" align="center">
+    <div class="pageheader">
+      <div>
+        <h4>Welcome to Users menu</h4>
+        <p align="left">Here you can create and manage your Users</p>
+      </div>
+      <router-link to="/users" class="remove_linkStyle">
+        <q-btn class="q-btn"> View All </q-btn>
+      </router-link>
+    </div>
     <br />
-    <br />
-    <br />
-    <div>
+    <!-- Create New  -->
+    <div class="show-card">
+      <div class="title">
+        <div class="cardheader"><b>Create New User</b></div>
+      </div>
+      <br />
       <q-form
         ref="RegisterForm"
         @submit="onSubmit"
@@ -34,7 +46,7 @@
               val.length > 5 || 'Password must be at least 6 characters long',
           ]"
         />
-        <div>
+        <div class="show-btns">
           <q-btn class="q-btn" label="Register" type="submit" />
           <q-btn class="q-btn" label="Reset" type="reset">
             <q-tooltip>This button will reset the form values</q-tooltip>
@@ -49,7 +61,6 @@
 
 <script>
 import UserCRUD from "../modules/userCRUD";
-import { onMounted } from "vue";
 import { ref } from "vue";
 
 export default {
@@ -58,17 +69,12 @@ export default {
   setup() {
     const {
       uState,
-      GetAllUsers,
-      DeleteUser,
-      EditUser,
       RegisterUser,
       RegisterUserByAdmin,
     } = UserCRUD();
     const RegisterForm = ref(null);
 
-    onMounted(() => {
-      // GetAllUsers();
-    });
+   
     const onSubmit = async () => {
       RegisterForm.value.validate().then((success) => {
         if (success) {
@@ -85,16 +91,12 @@ export default {
     };
     return {
       uState,
-      GetAllUsers,
-      DeleteUser,
-      EditUser,
       RegisterUser,
       RegisterUserByAdmin,
       onSubmit,
       RegisterForm,
 
       async created() {
-        GetAllUsers();
       },
 
       onReset() {

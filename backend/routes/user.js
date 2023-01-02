@@ -1,5 +1,8 @@
 const router = require("express").Router();
 const User = require("../models/user");
+const Building = require("../models/building");
+const Property = require("../models/property");
+const Tenant = require("../models/tenant");
 const Bcrypt = require("bcrypt");
 const Jwt = require("jsonwebtoken");
 const {
@@ -108,7 +111,12 @@ router.post("/login", async (req, res) => {
 // Delete by id route
 router.delete("/delete/:id", VerifyToken, async (req, res) => {
   try {
-    const DelUser = await User.findByIdAndDelete({ _id: req.params.id });
+    const DelUser = 
+    await User.findByIdAndDelete({ _id: req.params.id });
+    await Building.findOneAndDelete({ created_by: req.params.id });
+    await Property.findOneAndDelete({ created_by: req.params.id });
+    await Tenant.findOneAndDelete({ created_by: req.params.id });
+    await User.findOneAndDelete({ created_by: req.params.id });
     res.json(DelUser);
   } catch (error) {
     res.status(400).json({ error });
@@ -120,8 +128,15 @@ router.put("/update/:id", VerifyToken, async (req, res) => {
   try {
     // Does email exist?
     const EmailExist = await User.findOne({ email: req.body.email });
-    if (EmailExist) {
-      return res.status(400).json({ error: "This email already exists" });
+    const isEmailFromCurrentUser = await User.findOne({
+      email: req.body.email,
+      _id: req.params.id,
+    });
+
+    if (EmailExist && !isEmailFromCurrentUser) {
+      return res
+        .status(400)
+        .json({ error: "This email is already being used by another user" });
     } else {
       if (req.body.password) {
         // password hashing

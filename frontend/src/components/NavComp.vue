@@ -211,7 +211,7 @@
         <router-link
           v-if="userAuth()"
           class="navheader remove_linkStyle"
-          to="/"
+          :to="`/profile/${userID()}`"
         >
           <q-item clickable tag="a" class="navitem">
             <q-item-section avatar>
@@ -219,13 +219,10 @@
             </q-item-section>
             <q-item-section>
               <q-item-label>
-                Hello,
-                <b class="login-name">{{
-                  email.charAt(0).toUpperCase() + email.slice(1).split("@")[0]
-                }}</b></q-item-label
+               Settings</q-item-label
               >
               <q-item-label caption
-                ><router-link class="navelement remove_linkStyle" to="/"
+                ><router-link class="navelement remove_linkStyle" :to="`/profile/${userID()}`"
                   >- My Profile</router-link
                 ></q-item-label
               >
@@ -288,7 +285,7 @@ nav {
     font-weight: bold;
     color: map-get($cs, text);
     &.router-link-exact-active {
-      color: map-get($cs, highlight-active);
+      color: map-get($cs, highlight-active) !important;
     }
   }
   .navitem {
@@ -308,4 +305,5 @@ nav {
     }
   }
 }
+
 </style>

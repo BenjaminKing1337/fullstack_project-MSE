@@ -1,6 +1,6 @@
 <template>
   <q-page class="page" align="center">
-    <h6>User Profile</h6>
+    <h6>My Profile</h6>
     <div class="show-card">
       <div class="title">
         <div class="cardheader"><b>Update User</b></div>
@@ -20,22 +20,6 @@
               (val) =>
                 val.length > 5 || 'Email must be at least 6 characters long',
             ]"
-          />
-        </div>
-        <div v-if="superadminAuth()">
-          <q-select color="color"
-            v-model="User.userlevel"
-            outlined
-            :options="editOptions"
-            label="User type"
-          />
-        </div>
-        <div v-if="adminAuth()">
-          <q-select color="color"
-            v-model="User.userlevel"
-            outlined
-            :options="editOptions2"
-            label="User type"
           />
         </div>
         <div v-if="loggedInAuth()" class="spaced">
@@ -69,11 +53,8 @@ export default {
       EditUser,
     } = UserCRUD();
     const Router = useRouter();
-    const editOptions = ["user", "admin", "superadmin"];
-    const editOptions2 = ["user", "admin"];
     const { NotifyError } = Notify();
     const editPswd = () => {
-      
       if (localStorage.getItem("userid") === UserId.value) {
         // The user is the one logged in, so we send them to pswd change
         Router.push("/pwd/" + localStorage.getItem("userid") + "");
@@ -95,8 +76,6 @@ export default {
       UserId,
       GetSpecificUser,
       EditUser,
-      editOptions,
-      editOptions2,
       
       goBack() {
         Router.push("/users");

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page">
+  <q-page class="page" align="center">
     <h4>Single Customer's page</h4>
     <p>Here you can edit and manage your individual Customer</p>
 
@@ -8,86 +8,120 @@
         <div class="cardheader"><b>Update Customer</b></div>
       </div>
       <br />
-      <form @submit.prevent="EditCustomer">
+      <q-form @submit.prevent="EditCustomer" class="q-gutter-xs">
         <div>
           <div class="spaced">
-            <div>First Name:</div>
-            <input
+            <div>First Name *</div>
+            <q-input
+              outlined
               type="text"
-              placeholder="First Name"
               v-model="Customer.forename"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || 'First Name cannot be empty',
+                (val) =>
+                  val.length > 1 ||
+                  'First Name must be at least 2 characters long',
+              ]"
             />
           </div>
           <div class="spaced">
-            <div>Last Name:</div>
-            <input
+            <div>Last Name *</div>
+
+            <q-input
+              outlined
               type="text"
-              placeholder="Last Name"
               v-model="Customer.surname"
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Last Name cannot be empty',
+                (val) =>
+                  val.length > 1 ||
+                  'First Name must be at least 2 characters long',
+              ]"
             />
           </div>
           <div class="spaced">
-            <div>Email:</div>
-            <input type="text" placeholder="Email" v-model="Customer.email" />
+            <div>Email *</div>
+            <q-input
+              outlined
+              type="email"
+              v-model="Customer.email"
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || 'Email cannot be empty',
+                (val) =>
+                  val.length > 5 || 'Email must be at least 6 characters long',
+              ]"
+            />
           </div>
           <div class="spaced">
-            <div>Company Name:</div>
-            <input
+            <div>Company Name</div>
+
+            <q-input
+              outlined
               type="text"
-              placeholder="Email"
               v-model="Customer.company_name"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  validateNotRequiredField(val, 2) ||
+                  'Company Name must be at least 2 characters long',
+              ]"
             />
           </div>
           <div class="spaced">
             <div>Contact Number:</div>
-            <input
+            <q-input
+              outlined
               type="text"
-              placeholder="Email"
               v-model="Customer.contact_number"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  validateNotRequiredField(val, 2) ||
+                  'Contact Number must be at least 2 characters long',
+              ]"
             />
           </div>
 
           <div class="spaced">
             <div>User ID:</div>
-            <select v-model="Customer.user_id">
-              <option
-                v-for="User in uState.Users"
-                :key="User._id"
-                :value="User._id"
-              >
-                {{ User.email }}
-              </option>
-            </select>
+            <q-select
+              color="color"
+              v-model="Customer.user_id"
+              outlined
+              :options="uState.UsersFormattedQ"
+              map-options
+              emit-value
+            />
           </div>
         </div>
         <div class="show-btns">
           <q-btn class="q-btn" type="submit">Update</q-btn>
           <q-btn class="q-btn" type="button" @click="goBack()">Back</q-btn>
         </div>
-      </form>
+      </q-form>
     </div>
   </q-page>
 </template>
 
 <script>
-import CustomerCRUD from '../modules/customerCRUD';
-import UserCRUD from '../modules/userCRUD';
-import { useRouter } from 'vue-router';
+import CustomerCRUD from "../modules/customerCRUD";
+import UserCRUD from "../modules/userCRUD";
+import { useRouter } from "vue-router";
+import Utils from "../modules/utils";
 
 export default {
   setup() {
-    const {
-      cState,
-      Customer,
-      CustomerId,
-      // GetAllCustomers,
-      GetSpecificCustomer,
-      EditCustomer,
-    } = CustomerCRUD();
-    const { uState, User, UserId, GetAllUsers } = UserCRUD();
+    const { validateNotRequiredField } = Utils();
+    const { cState, Customer, CustomerId, GetSpecificCustomer, EditCustomer } =
+      CustomerCRUD();
+    const { uState, User, UserId, GetUsersUsers } = UserCRUD();
 
     GetSpecificCustomer();
-    GetAllUsers();
+    GetUsersUsers();
 
     const Router = useRouter();
 
@@ -98,12 +132,13 @@ export default {
       cState,
       Customer,
       CustomerId,
-      GetAllUsers,
+      GetUsersUsers,
       GetSpecificCustomer,
       EditCustomer,
+      validateNotRequiredField,
       goBack() {
         // return Router.go(-1);
-        Router.push('/customers');
+        Router.push("/customers");
       },
     };
   },
